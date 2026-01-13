@@ -1,19 +1,18 @@
 plugins {
     id 'java-library'
     id 'application'
+    id 'eclipse'
 }
 
-import org.gradle.internal.os.OperatingSystem
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'eclipse'
-mainClassName = 'pwcg.gui.maingui.PwcgMain'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-applicationName = 'PWCGTC'
+application {
+    mainClass = 'pwcg.gui.maingui.PwcgMain'
+    applicationName = 'PWCGTC'
+}
 
 repositories {
     mavenCentral()
@@ -24,19 +23,21 @@ dependencies {
 	implementation group: 'com.fasterxml', name: 'jackson-xml-databind', version: '0.6.2'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.0.1'
 	implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
-	implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.12.4'
+    implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.14.12'
     implementation(files("RelativeLayout/RelativeLayout-v1.0.jar"))
     implementation(files("RelativeLayout/Jama-1.0.2.jar"))
 
-	testImplementation(platform('org.junit:junit-bom:5.8.2'))
+    testImplementation(platform('org.junit:junit-bom:5.10.2'))
 	testImplementation('org.junit.jupiter:junit-jupiter')
-	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '4.2.0'
-	testImplementation group: 'org.mockito', name: 'mockito-inline', version: '4.2.0'
-    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.8.2')
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.2.0'
+    testImplementation group: 'org.mockito', name: 'mockito-inline', version: '5.2.0'
+        testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
 }
 
 jar {
     archiveFileName = "PWCGTC.jar"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
     
  	manifest {
         attributes 'Main-Class': 'pwcg.gui.maingui.PwcgMain'
@@ -47,7 +48,7 @@ jar {
   	}
 }
 
-def isWindows = OperatingSystem.current().isWindows()
+def isWindows = System.getProperty('os.name').toLowerCase().contains('windows')
 
 tasks.register('copyJar', Copy) {
     onlyIf { isWindows }
@@ -58,17 +59,27 @@ tasks.register('copyJar', Copy) {
 test {
   if (System.properties['test.profile'] != 'integration') {
     useJUnitPlatform()
-    maxParallelForks = Runtime.runtime.availableProcessors()
     exclude '**/*integration*'
+
+        testLogging {
+            events 'failed'
+            exceptionFormat 'full'
+        }
   } else {
     useJUnitPlatform()
     exclude '**/*pwcg/*'
+
+        testLogging {
+            events 'failed'
+            exceptionFormat 'full'
+        }
   }
 }
 
 
+
 task deployTC(type:JavaExec) {
-	main = "pwcg.dev.deploy.DeployPwcgTC"
+    mainClass.set("pwcg.dev.deploy.DeployPwcgTC")
 	classpath = sourceSets.main.runtimeClasspath
 	onlyIf { isWindows }
 }

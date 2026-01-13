@@ -20,7 +20,7 @@ public class PWCGStringValidatorTest
     @Test
     public void invalidDescriptorTest () throws PWCGException
     {
-        assert(PWCGStringValidator.isValidDescriptor("ABC123ü") == false);
+        assert(PWCGStringValidator.isValidDescriptor("ABC123\u00FC") == false);
         assert(PWCGStringValidator.isValidDescriptor("ABC123&") == false);
     }
 

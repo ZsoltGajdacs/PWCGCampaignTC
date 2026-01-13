@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import pwcg.core.exception.PWCGException;
+import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.core.utils.PWCGLogger.LogLevel;
 
@@ -37,12 +38,13 @@ public class ImageIconCache
     {
         try
         {
-            ImageIcon image = imageIconCache.get(imagePath);
+            String normalizedPath = PWCGPath.normalize(imagePath);
+            ImageIcon image = imageIconCache.get(normalizedPath);
             if (image == null)
             {
-                BufferedImage bufferedImage = ImageIO.read(new File(imagePath));
+                BufferedImage bufferedImage = ImageIO.read(new File(normalizedPath));
                 image = new ImageIcon(bufferedImage);  
-                imageIconCache.put(imagePath, image);
+                imageIconCache.put(normalizedPath, image);
             }
             
             return image;
@@ -59,7 +61,8 @@ public class ImageIconCache
     {
         try
         {
-            BufferedImage bufferedImage = ImageIO.read(new File(imagePath));
+            String normalizedPath = PWCGPath.normalize(imagePath);
+            BufferedImage bufferedImage = ImageIO.read(new File(normalizedPath));
             return bufferedImage;
         }
         catch (IOException e)
@@ -74,10 +77,11 @@ public class ImageIconCache
     {
         try
         {
-            ImageIcon image = imageIconCache.get(imagePath);
+            String normalizedPath = PWCGPath.normalize(imagePath);
+            ImageIcon image = imageIconCache.get(normalizedPath);
             if (image == null)
             {
-                BufferedImage bufferedImage = ImageIO.read(new File(imagePath));
+                BufferedImage bufferedImage = ImageIO.read(new File(normalizedPath));
                 image = new ImageIcon(bufferedImage);  
 
                 int width = 250;
@@ -90,7 +94,7 @@ public class ImageIconCache
                 g2.dispose();
                 
                 image = new ImageIcon(resizedImg);
-                imageIconCache.put(imagePath, image);
+                imageIconCache.put(normalizedPath, image);
             }
             
             return image;

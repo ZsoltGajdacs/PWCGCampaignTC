@@ -9,7 +9,7 @@ public class TargetPreferenceIOJson
 	public static TargetPreferenceSet readJson(String mapName) throws PWCGException, PWCGException
 	{
 		JsonObjectReader<TargetPreferenceSet> jsonReader = new JsonObjectReader<>(TargetPreferenceSet.class);
-		TargetPreferenceSet targetPreferenceSet = jsonReader.readJsonFile(PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + "\\", "TargetPreferences.json");
+		TargetPreferenceSet targetPreferenceSet = jsonReader.readJsonFile(PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + File.separator, "TargetPreferences.json");
 		return targetPreferenceSet;
 	}
 }

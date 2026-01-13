@@ -9,7 +9,7 @@ public class RankIOJson
 	public static Ranks readJson() throws PWCGException, PWCGException
 	{
 		JsonObjectReader<Ranks> jsonReader = new JsonObjectReader<>(Ranks.class);
-		Ranks ranks = jsonReader.readJsonFile(PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + "Ranks\\", "Ranks.json");
+		Ranks ranks = jsonReader.readJsonFile(PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + "Ranks" + File.separator, "Ranks.json");
 		return ranks;
 	}
 }

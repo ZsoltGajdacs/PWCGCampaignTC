@@ -15,7 +15,7 @@ public class IconicMissionsIOJson
 	public static List<IconicSingleMission> readJson() throws PWCGException
 	{
 		JsonObjectReader<IconicMissions> jsoReader = new JsonObjectReader<>(IconicMissions.class);
-		String directory = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + "\\IconicBattles\\";
+		String directory = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + File.separator + "IconicBattles" + File.separator;
 		
 		List<IconicSingleMission> iconicMissionList = new ArrayList<>();
         for (File file : FileUtils.getFilesInDirectory(directory))

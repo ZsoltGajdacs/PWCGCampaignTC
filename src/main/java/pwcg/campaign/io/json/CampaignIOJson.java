@@ -18,7 +18,7 @@ public class CampaignIOJson
 
     public static void writeJson(Campaign campaign) throws PWCGException
     {
-        String campaignDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\";
+        String campaignDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator;
         FileUtils.createDirIfNeeded(campaignDir);
         
         PwcgJsonWriter<CampaignData> jsonCampaignDataWriter = new PwcgJsonWriter<>();
@@ -36,7 +36,7 @@ public class CampaignIOJson
 
     public static void readJson(Campaign campaign) throws PWCGException
     {
-        String campaignDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\";
+        String campaignDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator;
 
         JsonObjectReader<CampaignData> jsoReader1 = new JsonObjectReader<>(CampaignData.class);
         CampaignData campaignData = jsoReader1.readJsonFile(campaignDir, "Campaign.json"); 
@@ -66,7 +66,7 @@ public class CampaignIOJson
         }
         catch (Exception exp)
         {
-            File file = new File(PWCGPath.normalize(campaignDir + "\\CampaignLog.json"));
+            File file = new File(PWCGPath.normalize(campaignDir + File.separator + "CampaignLog.json"));
             if (file.exists())
             {
                 boolean wasDeleted = file.delete();

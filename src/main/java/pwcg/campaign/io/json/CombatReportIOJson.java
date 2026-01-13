@@ -42,7 +42,7 @@ public class CombatReportIOJson
 
     public static String buildCombatReportPath(Campaign campaign, Integer crewMemberSerialNumber)
     {
-        String combatReportPath = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\CombatReports\\" + crewMemberSerialNumber + "\\";
+        String combatReportPath = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator + "CombatReports" + File.separator + crewMemberSerialNumber + File.separator;
         return combatReportPath;
     }
 }

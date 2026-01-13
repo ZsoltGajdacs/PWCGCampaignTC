@@ -31,6 +31,7 @@ import pwcg.core.location.Coordinate;
 import pwcg.core.location.LocationSet;
 import pwcg.core.location.PWCGLocation;
 import pwcg.core.utils.PWCGLogger;
+import pwcg.core.utils.PWCGPath;
 import pwcg.gui.colors.ColorMap;
 import pwcg.gui.rofmap.MapGUI;
 import pwcg.gui.rofmap.MapPanelBase;
@@ -370,6 +371,7 @@ public class EditorMapPanel extends MapPanelBase
 
     public void writeFile(Graphics g) throws IOException
     {
-        ImageIO.write(image, "jpg", new File("D:\\PWCG\\MAPFILE.jpg"));
+        String outputFile = PWCGContext.getInstance().getDirectoryManager().getPwcgReportDir() + "MAPFILE.jpg";
+        ImageIO.write(image, "jpg", new File(PWCGPath.normalize(outputFile)));
     }
 }

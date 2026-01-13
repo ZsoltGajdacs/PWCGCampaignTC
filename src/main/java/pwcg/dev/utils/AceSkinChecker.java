@@ -11,6 +11,7 @@ import pwcg.campaign.skin.Skin;
 import pwcg.campaign.tank.TankTypeInformation;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.core.utils.PWCGLogger.LogLevel;
+import pwcg.core.utils.PWCGPath;
 
 public class AceSkinChecker
 {
@@ -36,7 +37,7 @@ public class AceSkinChecker
             skinName = skinName + ".dds";
         }
 
-        String filename = System.getProperty("user.dir") + PWCGDirectorySimulatorManager.getInstance().getSkinsDir() + aircraftName + "\\" + skinName;
+        String filename = PWCGPath.normalize(PWCGDirectorySimulatorManager.getInstance().getSkinsDir() + aircraftName + "/" + skinName);
         File file = new File(filename);
         if (file.exists())
         {

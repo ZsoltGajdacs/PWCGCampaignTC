@@ -11,6 +11,7 @@ import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.FileUtils;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.core.utils.PWCGLogger.LogLevel;
+import pwcg.core.utils.PWCGPath;
 
 public class CampaignIOJson 
 {
@@ -65,7 +66,7 @@ public class CampaignIOJson
         }
         catch (Exception exp)
         {
-            File file = new File(campaignDir + "\\CampaignLog.json");
+            File file = new File(PWCGPath.normalize(campaignDir + "\\CampaignLog.json"));
             if (file.exists())
             {
                 boolean wasDeleted = file.delete();

@@ -26,7 +26,7 @@ public class InternationalizationFileReader
     
     public void readAndWrite() throws Exception 
     {
-        String hardCoded = "Aktivität";
+        String hardCoded = "Aktivit\u00E4t";
         
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("International.De.txt"), StandardCharsets.UTF_8));     
         String fromFile = in.readLine();

@@ -37,3 +37,6 @@ RoFData/User/*
 BoSData/User/*
 FCData/User/*
 Coop/*
+.vscode/settings.json
+.idea/
+.fake

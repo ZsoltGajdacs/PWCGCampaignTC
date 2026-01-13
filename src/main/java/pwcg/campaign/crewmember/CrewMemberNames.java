@@ -15,6 +15,7 @@ import pwcg.campaign.context.PWCGContext;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.core.utils.PWCGLogger.LogLevel;
+import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.RandomNumberGenerator;
 
 public class CrewMemberNames 
@@ -101,7 +102,7 @@ public class CrewMemberNames
 	{
 		try
         {
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            BufferedReader reader = new BufferedReader(new FileReader(PWCGPath.normalize(filename)));
             String line;
             while ((line = reader.readLine()) != null) 
             {

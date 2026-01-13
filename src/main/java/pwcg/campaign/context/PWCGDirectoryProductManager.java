@@ -1,5 +1,7 @@
 package pwcg.campaign.context;
 
+import pwcg.core.utils.PWCGPath;
+
 public class PWCGDirectoryProductManager
 {
     private String pwcgRootDir;
@@ -12,9 +14,8 @@ public class PWCGDirectoryProductManager
 
     private void createPwcgDataDir(PWCGProduct product)
     {
-        String userDir = System.getProperty("user.dir");
-        pwcgRootDir = userDir + "\\";
-        pwcgDataDir = pwcgRootDir + "TCData\\";
+        pwcgRootDir = PWCGPath.getRootDir();
+        pwcgDataDir = PWCGPath.join(pwcgRootDir, "TCData/");
     }
 
     public String getPwcgRootDir()
@@ -29,81 +30,81 @@ public class PWCGDirectoryProductManager
 
     public String getPwcgInputDir()
     {
-        return pwcgDataDir + "Input\\";
+        return PWCGPath.join(pwcgDataDir, "Input/");
     }
 
     public String getPwcgReportDir()
     {
-        return pwcgRootDir + "Report\\";
+        return PWCGPath.join(pwcgRootDir, "Report/");
     }
 
     public String getPwcgAircraftInfoDir()
     {
-        return getPwcgInputDir() + "Aircraft\\";
+        return PWCGPath.join(getPwcgInputDir(), "Aircraft/");
     }
 
     public String getPwcgTankInfoDir()
     {
-        return getPwcgInputDir() + "Tanks\\";
+        return PWCGPath.join(getPwcgInputDir(), "Tanks/");
     }
 
     public String getPwcgAirfieldHotSpotsDir()
     {
-        return getPwcgInputDir() + "AirfieldHotSpots\\";
+        return PWCGPath.join(getPwcgInputDir(), "AirfieldHotSpots/");
     }
 
     public String getPwcgConfigurationDir()
     {
-        return getPwcgInputDir() + "Configuration\\";
+        return PWCGPath.join(getPwcgInputDir(), "Configuration/");
     }
 
     public String getPwcgCompanyDir()
     {
-        return getPwcgInputDir() + "Company\\";
+        return PWCGPath.join(getPwcgInputDir(), "Company/");
     }
 
     public String getPwcgCompanyMovingFrontDir()
     {
-        return getPwcgInputDir() + "CompanyMovingFront\\";
+        return PWCGPath.join(getPwcgInputDir(), "CompanyMovingFront/");
     }
 
     public String getPwcgImagesDir()
     {
-        return pwcgDataDir + "Images\\";
+        return PWCGPath.join(pwcgDataDir, "Images/");
     }
 
     public String getPwcgNamesDir()
     {
-        return pwcgDataDir + "Names\\";
+        return PWCGPath.join(pwcgDataDir, "Names/");
     }
 
     public String getPwcgSkinsDir()
     {
-        return getPwcgInputDir() + "Skins\\";
+        return PWCGPath.join(getPwcgInputDir(), "Skins/");
     }
 
     public String getPwcgVehiclesDir()
     {
-        return getPwcgInputDir() + "Vehicles\\";
+        return PWCGPath.join(getPwcgInputDir(), "Vehicles/");
     }
 
     public String getPwcgStaticObjectDir()
     {
-        return getPwcgInputDir() + "StaticObjects\\";
+        return PWCGPath.join(getPwcgInputDir(), "StaticObjects/");
     }
 
     public String getPwcgAcesDir()
     {
-        return getPwcgInputDir() + "Aces\\";
+        return PWCGPath.join(getPwcgInputDir(), "Aces/");
     }
 
     public String getPwcgNewspaperDir()
     {
-        return getPwcgInputDir() + "Newspapers\\";
+        return PWCGPath.join(getPwcgInputDir(), "Newspapers/");
     }
 
     public String getPwcgInternationalizationDir()
     {
-        return getPwcgInputDir() + "International\\";
+        return PWCGPath.join(getPwcgInputDir(), "International/");
     }
 }

@@ -1,5 +1,7 @@
 package pwcg.campaign;
 
+import java.io.File;
+
 import pwcg.core.utils.FileUtils;
 
 public class CampaignDirectoryBuilder

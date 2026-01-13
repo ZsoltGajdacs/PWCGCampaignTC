@@ -1,5 +1,7 @@
 package pwcg.gui.utils;
 
+import java.io.File;
+
 import pwcg.campaign.Campaign;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.context.PWCGDirectoryUserManager;

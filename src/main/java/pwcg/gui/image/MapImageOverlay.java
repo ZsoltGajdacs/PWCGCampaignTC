@@ -1,5 +1,7 @@
 package pwcg.gui.image;
 
+import java.io.File;
+
 import java.awt.image.BufferedImage;
 
 import pwcg.campaign.Campaign;

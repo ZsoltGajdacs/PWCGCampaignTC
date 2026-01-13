@@ -1,5 +1,7 @@
 package pwcg.gui.campaign.crewmember;
 
+import java.io.File;
+
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

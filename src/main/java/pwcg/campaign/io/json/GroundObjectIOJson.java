@@ -1,5 +1,7 @@
 package pwcg.campaign.io.json;
 
+import java.io.File;
+
 import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.group.GroundStructureGroup;
 import pwcg.core.exception.PWCGException;

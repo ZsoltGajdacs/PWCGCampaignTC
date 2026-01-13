@@ -1,5 +1,7 @@
 package pwcg.campaign.io;
 
+import java.io.File;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

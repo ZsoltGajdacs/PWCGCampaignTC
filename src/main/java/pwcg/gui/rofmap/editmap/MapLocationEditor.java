@@ -1,5 +1,7 @@
 package pwcg.gui.rofmap.editmap;
 
+import java.io.File;
+
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 

@@ -1,5 +1,7 @@
 package pwcg.campaign.group.airfield;
 
+import java.io.File;
+
 import java.util.Map;
 import java.util.TreeMap;
 

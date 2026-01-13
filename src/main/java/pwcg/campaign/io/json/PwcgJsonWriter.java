@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import pwcg.core.exception.PWCGException;
+import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.PWCGLogger;
 
 public class PwcgJsonWriter<T>
@@ -16,7 +17,7 @@ public class PwcgJsonWriter<T>
 
     public void writeAsJson(T javaObject, String directory, String filename) throws PWCGException
     {
-        try (Writer writer = new OutputStreamWriter(new FileOutputStream(directory + filename), StandardCharsets.UTF_8))
+        try (Writer writer = new OutputStreamWriter(new FileOutputStream(PWCGPath.normalize(directory + filename)), StandardCharsets.UTF_8))
         {
             Gson gson = new GsonBuilder()
                     .setPrettyPrinting()

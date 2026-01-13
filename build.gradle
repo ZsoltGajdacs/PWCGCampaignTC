@@ -3,10 +3,15 @@ plugins {
     id 'application'
 }
 
+import org.gradle.internal.os.OperatingSystem
+
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 mainClassName = 'pwcg.gui.maingui.PwcgMain'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 applicationName = 'PWCGTC'
 
@@ -42,9 +47,12 @@ jar {
   	}
 }
 
-task copyJar(type: Exec) {
-    workingDir "$projectDir"
-    commandLine 'cmd', '/c', ' cp build/libs/PWCG.jar D:/PWCG/Deploy/PWCGTC.jar'
+def isWindows = OperatingSystem.current().isWindows()
+
+tasks.register('copyJar', Copy) {
+    onlyIf { isWindows }
+    from("$buildDir/libs/PWCGTC.jar")
+    into("D:/PWCG/Deploy")
 }
 
 test {
@@ -62,20 +70,23 @@ test {
 task deployTC(type:JavaExec) {
 	main = "pwcg.dev.deploy.DeployPwcgTC"
 	classpath = sourceSets.main.runtimeClasspath
+	onlyIf { isWindows }
 }
 
 task buildTC(type: Exec) {
     workingDir "$projectDir"
     commandLine 'cmd', '/c', 'D:/Utils/launch4j/launch4jc.exe D:/PWCG/Launch4JConfigs/TCLaunchConfig.xml'
+	onlyIf { isWindows }
 }
 
 task zipTC(type: Exec) {
     workingDir "$projectDir"
     commandLine 'cmd', '/c', ' D:/Utils/7Zip/7-zip/7z.exe a -tzip D:/PWCG/Deploy/PWCGTC.zip D:/PWCG/Deploy/PWCGTC'
+	onlyIf { isWindows }
 }
 
-tasks.named("build") { finalizedBy("copyJar") }
-tasks.named("copyJar") { finalizedBy("deployTC") }
-tasks.named("deployTC") { finalizedBy("buildTC") }
-tasks.named("buildTC") { finalizedBy("zipTC") }
+tasks.register('releaseWindows') {
+    onlyIf { isWindows }
+    dependsOn 'jar', 'copyJar', 'deployTC', 'buildTC', 'zipTC'
+}
 

@@ -8,6 +8,7 @@ import javax.swing.UIManager;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.utils.TestDriver;
 import pwcg.core.exception.PWCGException;
+import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.gui.colors.ColorMap;
 import pwcg.gui.dialogs.ErrorDialog;
@@ -16,6 +17,7 @@ public class PwcgMain
 {
 	public static void main(String[] args) 
 	{
+        PWCGPath.applyRootFromArgs(args);
         PwcgMain pwcg = new PwcgMain();
         pwcg.startPWCGTC();
 	}

@@ -20,10 +20,15 @@ import pwcg.core.exception.PWCGException;
 public class FileUtils
 {
 
+    private static String normalizePath(String path)
+    {
+        return PWCGPath.normalize(path);
+    }
+
     public static boolean createDirIfNeeded(String campaignConfigDir)
     {
         boolean exists = true;
-        File dir = new File(campaignConfigDir);
+        File dir = new File(normalizePath(campaignConfigDir));
         if (!dir.exists())
         {
             exists = dir.mkdirs();
@@ -33,7 +38,7 @@ public class FileUtils
 
     public static void deleteRecursive(String deleteDir)
     {
-        File deleteRoot = new File(deleteDir);
+        File deleteRoot = new File(normalizePath(deleteDir));
         if (deleteRoot.exists())
         {
             deleteFile(deleteRoot.getAbsolutePath());
@@ -43,13 +48,13 @@ public class FileUtils
     public static void deleteFilesInDirectory(String directoryName) throws PWCGException
     {
         deleteRecursive(directoryName);
-        File directory = new File(directoryName);
+        File directory = new File(normalizePath(directoryName));
         directory.mkdir();
     }
 
     public static boolean findInDirectory(String directoryName, String lookForFileName) throws PWCGException
     {
-        File directory = new File(directoryName);
+        File directory = new File(normalizePath(directoryName));
         if(!directory.exists())
         {
             return false;
@@ -69,7 +74,7 @@ public class FileUtils
 
     public static boolean fileExists(String filePath)
     {
-        File file = new File(filePath);
+        File file = new File(normalizePath(filePath));
         if (file.exists())
         {
             return true;
@@ -80,7 +85,7 @@ public class FileUtils
 
     public static void deleteFile(String sFilePath)
     {
-        File oFile = new File(sFilePath);
+        File oFile = new File(normalizePath(sFilePath));
         if (oFile.isDirectory())
         {
             File[] aFiles = oFile.listFiles();
@@ -97,7 +102,7 @@ public class FileUtils
     {
         for (String pathname : filesToDelete)
         {
-            File file = new File(pathname);
+            File file = new File(normalizePath(pathname));
             if (file.exists())
             {
                 file.delete();
@@ -108,7 +113,7 @@ public class FileUtils
     public static List<File> getFilesInDirectory(String directory) throws PWCGException
     {
         List<File> filesInDirectory = new ArrayList<>();
-        File directoryFile = new File(directory);
+        File directoryFile = new File(normalizePath(directory));
         if (directoryFile.exists())
         {
             if (directoryFile.isDirectory())
@@ -129,7 +134,7 @@ public class FileUtils
     public static List<File> getFilesWithFilter(String directory, String filterString) throws PWCGException
     {
         List<File> matchingFiles = new ArrayList<>();
-        File directoryFile = new File(directory);
+        File directoryFile = new File(normalizePath(directory));
         if (directoryFile.exists())
         {
             if (directoryFile.isDirectory())
@@ -151,7 +156,7 @@ public class FileUtils
     public static List<File> getDirectories(String directory) throws PWCGException
     {
         List<File> directoriesFound = new ArrayList<>();
-        File directoryFile = new File(directory);
+        File directoryFile = new File(normalizePath(directory));
         if (directoryFile.exists())
         {
             if (directoryFile.isDirectory())
@@ -171,7 +176,7 @@ public class FileUtils
 
     public static File retrieveFile(String directory, String filename)
     {
-        File file = new File(directory + filename);
+        File file = new File(normalizePath(directory + filename));
         return file;
     }
 
@@ -189,12 +194,12 @@ public class FileUtils
 
     public static long ageOfFilesInMillis(String pathname) throws PWCGException
     {
-        File file = new File(pathname);
+        File file = new File(normalizePath(pathname));
         if (file.exists())
         {
             try
             {
-                Path path = FileSystems.getDefault().getPath(pathname);
+                Path path = FileSystems.getDefault().getPath(normalizePath(pathname));
                 BasicFileAttributes attr = Files.readAttributes(path, BasicFileAttributes.class);
                 FileTime fileTime = attr.creationTime();
                 return fileTime.toMillis();

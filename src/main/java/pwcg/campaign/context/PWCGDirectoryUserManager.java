@@ -1,6 +1,7 @@
 package pwcg.campaign.context;
 
 import pwcg.core.utils.FileUtils;
+import pwcg.core.utils.PWCGPath;
 
 public class PWCGDirectoryUserManager
 {
@@ -25,14 +26,13 @@ public class PWCGDirectoryUserManager
 
     private void createUserDirs()
     {
-        String userDir = System.getProperty("user.dir");
-        String pwcgRootDir = userDir + "\\";
+        String pwcgRootDir = PWCGPath.getRootDir();
 
-        pwcgUserDir = pwcgRootDir + "User\\";
-        pwcgCampaignDir = pwcgUserDir + "Campaigns\\";
-        pwcgUserConfigDir = pwcgUserDir + "Config\\";
-        pwcgCoopDir = pwcgUserDir + "Coop\\";
-        pwcgAudioDir = pwcgUserDir + "Audio\\";
+        pwcgUserDir = PWCGPath.join(pwcgRootDir, "User/");
+        pwcgCampaignDir = PWCGPath.join(pwcgUserDir, "Campaigns/");
+        pwcgUserConfigDir = PWCGPath.join(pwcgUserDir, "Config/");
+        pwcgCoopDir = PWCGPath.join(pwcgUserDir, "Coop/");
+        pwcgAudioDir = PWCGPath.join(pwcgUserDir, "Audio/");
         
         FileUtils.createDirIfNeeded(pwcgUserDir);
         FileUtils.createDirIfNeeded(pwcgCampaignDir);

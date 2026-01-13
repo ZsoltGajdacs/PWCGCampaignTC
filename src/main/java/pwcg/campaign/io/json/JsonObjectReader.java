@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 import pwcg.core.exception.PWCGException;
+import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.core.utils.PWCGLogger.LogLevel;
 
@@ -28,7 +29,7 @@ public class JsonObjectReader<T>
 		try
 		{
 		    Gson gson= new GsonBuilder().setPrettyPrinting().setDateFormat("yyyyMMdd").create();
-			String filepath = directory + filename;
+            String filepath = PWCGPath.normalize(directory + filename);
 			
 			reader = new JsonReader(new InputStreamReader(new FileInputStream(filepath), StandardCharsets.UTF_8));
 			

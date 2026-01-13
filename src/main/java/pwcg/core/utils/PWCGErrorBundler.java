@@ -144,38 +144,38 @@ public class PWCGErrorBundler
 
 	private String createTargetDirPath() 
 	{
-		String campaignErrorDirPath = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + "\\" + targetErrorFileName; 
+		String campaignErrorDirPath = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + File.separator + targetErrorFileName; 
 		return campaignErrorDirPath;
 	}
 
     private String createTargetDirDataPath() 
     {
-        String campaignTargetDataDirPath = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + "\\" + targetErrorFileName + "\\Data"; 
+        String campaignTargetDataDirPath = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + File.separator + targetErrorFileName + File.separator + "Data"; 
         return campaignTargetDataDirPath;
     }
 
     private String createTargetDirSinglePlayerMissionPath() 
     {
-        String campaignTargetDataDirPath = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + "\\" + targetErrorFileName + "\\Data\\Mission\\PWCG"; 
+        String campaignTargetDataDirPath = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + File.separator + targetErrorFileName + File.separator + "Data" + File.separator + "Mission" + File.separator + "PWCG"; 
         return campaignTargetDataDirPath;
     }
 
     private String createTargetDirCoopMissionPath() 
     {
-        String campaignTargetDataDirPath = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + "\\" + targetErrorFileName + "\\Data\\Mission\\Cooperative"; 
+        String campaignTargetDataDirPath = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + File.separator + targetErrorFileName + File.separator + "Data" + File.separator + "Mission" + File.separator + "Cooperative"; 
         return campaignTargetDataDirPath;
     }
 
     private String createTargetDirCoopPath() 
     {
-        String campaignTargetDataDirPath = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + "\\" + targetErrorFileName + "\\Coop"; 
+        String campaignTargetDataDirPath = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + File.separator + targetErrorFileName + File.separator + "Coop"; 
         return campaignTargetDataDirPath;
     }
 
 	private String createTargetDirCampaignPath() 
 	{
 		Campaign campaign  = PWCGContext.getInstance().getCampaign();
-		String errorDateDir = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + "\\" + targetErrorFileName + "\\" + campaign.getCampaignData().getName();
+		String errorDateDir = PWCGContext.getInstance().getDirectoryManager().getPwcgRootDir() + ERROR_DIR_ROOT + File.separator + targetErrorFileName + File.separator + campaign.getCampaignData().getName();
 		return errorDateDir;
 	}
 
@@ -214,8 +214,8 @@ public class PWCGErrorBundler
 			{
                 if (prefix.equalsIgnoreCase("*") || file.getName().startsWith(prefix))
                 {
-                    String newSource = source + "\\" + file.getName();
-                    String newDestination = destination + "\\" + file.getName();
+                    String newSource = source + File.separator + file.getName();
+                    String newDestination = destination + File.separator + file.getName();
     			    copyDirectory(newSource, newDestination, "*");
                 }
 			}
@@ -266,7 +266,7 @@ public class PWCGErrorBundler
 
 	private void zipErrorFiles() throws IOException 
 	{
-		String zipFile = createErrorDirPath()  + "\\" + targetErrorFileName + ".zip";
+		String zipFile = createErrorDirPath()  + File.separator + targetErrorFileName + ".zip";
         FileOutputStream fos = new FileOutputStream(zipFile);
         ZipOutputStream zos = new ZipOutputStream(fos);
 
@@ -293,7 +293,7 @@ public class PWCGErrorBundler
 	            String newTargetDir = f.getName();
 	            if (!targetDir.isEmpty())
 	            {
-	                newTargetDir = targetDir + "\\" + newTargetDir;
+	                newTargetDir = targetDir + File.separator + newTargetDir;
 	            }
 	            compressDirectory(f.getPath(), newTargetDir,  zos);
 	            // continue the iteration
@@ -304,7 +304,7 @@ public class PWCGErrorBundler
 	             // prepare stream to read file.
 	             FileInputStream in = new FileInputStream(f);
 	             // create ZipEntry and add to outputting stream.
-	             String filename = targetDir + "\\" + f.getName();
+	             String filename = targetDir + File.separator + f.getName();
 	             ZipEntry zipEntry = new ZipEntry(filename);
 	             zos.putNextEntry(zipEntry);
 	             // write the data.

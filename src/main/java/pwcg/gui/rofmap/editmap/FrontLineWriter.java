@@ -92,7 +92,7 @@ public class FrontLineWriter
 
     private void writeFront() throws PWCGException, IOException
     {
-        String outputPath = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + PWCGContext.getInstance().getCurrentMap().getMapName() + "\\";      
+        String outputPath = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + PWCGContext.getInstance().getCurrentMap().getMapName() + File.separator;      
         
         LocationSet locationSet = new LocationSet("FrontLines");
         frontLinePointToLocationSet(locationSet, userFrontLines);

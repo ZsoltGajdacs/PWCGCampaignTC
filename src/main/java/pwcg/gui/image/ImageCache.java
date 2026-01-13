@@ -182,7 +182,8 @@ public class ImageCache
 
     private String getThemePath(String imagePath) throws PWCGException
     {
-        if (!imagePath.contains("\\images\\")) 
+        String imagesSeparator = File.separator + "images" + File.separator;
+        if (!imagePath.contains(imagesSeparator)) 
         {
             return null;
         }
@@ -200,8 +201,8 @@ public class ImageCache
         }
         
         ArmedService service = referencePlayer.determineService(campaign.getDate());
-        String substitute = "\\images\\themes\\" + service.getName() + "\\\\images\\"; 
-        String themeImagePath = imagePath.replace("\\images\\", substitute);
+        String substitute = File.separator + "images" + File.separator + "themes" + File.separator + service.getName() + File.separator + "images" + File.separator; 
+        String themeImagePath = imagePath.replace(imagesSeparator, substitute);
         return themeImagePath;
     }
 

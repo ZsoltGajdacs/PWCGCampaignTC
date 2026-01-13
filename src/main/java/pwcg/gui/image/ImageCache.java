@@ -201,7 +201,7 @@ public class ImageCache
         }
         
         ArmedService service = referencePlayer.determineService(campaign.getDate());
-        String substitute = File.separator + "images" + File.separator + "themes" + File.separator + service.getName() + File.separator + "images" + File.separator; 
+        String substitute = File.separator + "images" + File.separator + "themes" + File.separator + service.getName() + File.separator + File.separator + "images" + File.separator; 
         String themeImagePath = imagePath.replace(imagesSeparator, substitute);
         return themeImagePath;
     }

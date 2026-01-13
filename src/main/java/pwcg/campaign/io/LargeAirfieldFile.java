@@ -20,7 +20,7 @@ public class LargeAirfieldFile
 
         try 
         {
-            String iconFileLocation = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + "\\" + "AirfieldILarge.config";           
+            String iconFileLocation = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + File.separator + "AirfieldILarge.config";           
             largeAirfields = readLargeFieldFile(iconFileLocation);            
         } 
         catch (IOException e) 

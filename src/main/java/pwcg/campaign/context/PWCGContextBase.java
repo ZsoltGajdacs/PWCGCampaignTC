@@ -244,7 +244,7 @@ public abstract class PWCGContextBase
 
     public void setMissionLogDirectory(String missionLogPath)
     {
-        this.missionLogPath = missionLogPath + "\\";
+        this.missionLogPath = missionLogPath + File.separator;
     }
 
     public String getMissionLogDirectory()

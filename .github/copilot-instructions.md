@@ -5,6 +5,13 @@
 - Content is data-driven from `TCData/` (especially `TCData/Input/`, `TCData/Names/`, `TCData/Images/`).
 - Many systems assume the working directory is the repo root, but this can be overridden via `--root <dir>` (or `-Dpwcg.root=<dir>` / `PWCG_ROOT`).
 
+## Cross-platform requirements (MUST)
+- All new/modified code must be platform-independent (Linux/macOS/Windows).
+- Do not hardcode path separators (`"\\"` / `"/"`), drive letters (e.g. `D:/`), or OS-specific shell commands.
+- Prefer `java.nio.file.Path` / `Paths.get(...)` / `Files.*` for filesystem work.
+- If you must assemble a path as a `String` (legacy APIs), normalize at the boundary using `pwcg.core.utils.PWCGPath.normalize(...)`.
+- Windows-only packaging steps are allowed only when explicitly guarded by OS checks (e.g. `onlyIf { isWindows }`).
+
 ## Key entrypoints
 - GUI app entrypoint: `pwcg.gui.maingui.PwcgMain` (Gradle `mainClassName`).
 - Deploy entrypoint: `pwcg.dev.deploy.DeployPwcgTC` (invoked by the Gradle `deployTC` task).
@@ -23,7 +30,7 @@
 - Run the app: `./gradlew run`
 - Build the fat jar: `./gradlew jar` (the `jar { from { runtimeClasspath zipTree(...) } }` block produces an “uber jar”).
 - Windows packaging pipeline is explicit: use `./gradlew releaseWindows` (Windows-only; Launch4j/7-Zip).
-- Java version note: target is Java 8; set `JAVA_HOME` to a JDK 8 install (or pass `./gradlew -Dorg.gradle.java.home=/path/to/jdk8 ...`).
+- Java version note: target is Java 21; set `JAVA_HOME` to a JDK 21 install (or pass `./gradlew -Dorg.gradle.java.home=/path/to/jdk21 ...`).
 
 ## Tests
 - Test stack: JUnit 5 + Mockito (see `build.gradle`).
@@ -33,5 +40,6 @@
 - Integration profile: `./gradlew test -Dtest.profile=integration`.
 
 ## Project-specific conventions
-- Paths are commonly assembled with Windows separators (`"\\"`) in code; keep this consistent unless you’re doing a deliberate cross-platform refactor.
+- Keep changes cross-platform: always build/resolve filesystem paths in a platform-neutral way.
+- If an external/game data format requires Windows-style paths inside the *file contents* (not the local filesystem path), isolate that formatting to the smallest possible boundary and keep local disk IO platform-independent.
 - Deployment is blocked when `TestDriver` is enabled; don’t ship changes that accidentally enable it.

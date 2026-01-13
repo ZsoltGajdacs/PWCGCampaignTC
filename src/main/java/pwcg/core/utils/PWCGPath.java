@@ -89,7 +89,8 @@ public class PWCGPath
         {
             return null;
         }
-        return path.replace('\\', '/');
+        return path.replace('\\', System.getProperty("file.separator").charAt(0))
+                   .replace('/', System.getProperty("file.separator").charAt(0));
     }
 
     public static String ensureTrailingSlash(String path)

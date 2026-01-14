@@ -1,5 +1,7 @@
 package pwcg.campaign.context;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +43,7 @@ public class FrontLinesForMap
         frontLinesAxis.clear();
         
         String dateDir = DateUtils.getDateStringYYYYMMDD(frontDate);
-        String frontFilePath = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + "\\" + dateDir +  "\\";			
+        String frontFilePath = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + File.separator + dateDir + File.separator;			
         read(frontFilePath);
     }
 

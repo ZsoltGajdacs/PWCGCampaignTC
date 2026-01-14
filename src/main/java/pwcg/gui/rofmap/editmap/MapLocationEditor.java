@@ -1,5 +1,7 @@
 package pwcg.gui.rofmap.editmap;
 
+import java.io.File;
+
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
@@ -44,7 +46,7 @@ public class MapLocationEditor
                 city.setOrientation(new Orientation());
                 cities.addLocation(city);
                 
-                LocationIOJson.writeJson(PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + "Arras" + "\\", "MapLocations.json", cities);
+                LocationIOJson.writeJson(PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + "Arras" + File.separator, "MapLocations.json", cities);
             }
 
         }

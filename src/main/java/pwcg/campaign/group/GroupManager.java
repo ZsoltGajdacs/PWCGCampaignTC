@@ -1,5 +1,7 @@
 package pwcg.campaign.group;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +37,7 @@ public class GroupManager
         bridgeFinder = new BridgeFinder(groundStructureGroup.getBridges());
         railroadStationFinder = new RailroadStationFinder(groundStructureGroup.getRailroadStations());
 
-	    String pwcgInputDir = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + "\\";
+	    String pwcgInputDir = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + File.separator;
 	    LocationSet townLocations = LocationIOJson.readJson(pwcgInputDir, TOWN_LOCATION_FILE_NAME);
         townFinder = new TownFinder(townLocations);
 	}

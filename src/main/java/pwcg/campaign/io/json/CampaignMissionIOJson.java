@@ -40,7 +40,7 @@ public class CampaignMissionIOJson
 
 	public static String buildMissionDataPath(Campaign campaign)
     {
-        String combatReportPath = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\MissionData\\";
+        String combatReportPath = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator + "MissionData" + File.separator;
         return combatReportPath;
     }
 

@@ -1,5 +1,7 @@
 package pwcg.campaign.context;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -244,7 +246,7 @@ public abstract class PWCGContextBase
 
     public void setMissionLogDirectory(String missionLogPath)
     {
-        this.missionLogPath = missionLogPath + "\\";
+        this.missionLogPath = missionLogPath + File.separator;
     }
 
     public String getMissionLogDirectory()

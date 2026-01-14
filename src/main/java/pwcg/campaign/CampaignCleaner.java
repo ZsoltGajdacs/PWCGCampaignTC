@@ -52,14 +52,14 @@ public class CampaignCleaner
             {
                 if (campaign.getPersonnelManager().getCompanyPersonnel(company.getCompanyId()) == null)
                 {
-                    String campaignPersonnelDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\Personnel\\";
+                    String campaignPersonnelDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator + "Personnel" + File.separator;
                     File companyPersonnelFile = new File(campaignPersonnelDir + company.getCompanyId() + ".json");
                     if (companyPersonnelFile.exists())
                     {
                         companyPersonnelFile.delete();
                     }
                     
-                    String campaignEquipmentDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\Equipment\\";
+                    String campaignEquipmentDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator + "Equipment" + File.separator;
                     File campaignEquipmentFile = new File(campaignEquipmentDir + company.getCompanyId() + ".json");
                     if (campaignEquipmentFile.exists())
                     {

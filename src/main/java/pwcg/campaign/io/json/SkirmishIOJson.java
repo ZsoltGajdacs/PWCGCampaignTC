@@ -12,7 +12,7 @@ public class SkirmishIOJson
 	public static Skirmishes readJson(String mapName) throws PWCGException
 	{
 		JsonObjectReader<Skirmishes> jsoReader = new JsonObjectReader<>(Skirmishes.class);
-		String directory = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + "\\Skirmishes\\";
+		String directory = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + File.separator + "Skirmishes" + File.separator;
 		
 		Skirmishes skirmishesForMap = new Skirmishes();
         for (File file : FileUtils.getFilesInDirectory(directory))

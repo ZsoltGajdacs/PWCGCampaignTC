@@ -71,7 +71,7 @@ public class Skin implements Cloneable
             skinNameForLookup = skinNameForLookup + ".dds";
         }
 
-        String filename = directory + planeType + "\\" + skinNameForLookup;
+        String filename = directory + planeType + File.separator + skinNameForLookup;
         File file = new File(filename);
         if (file.exists())
         {

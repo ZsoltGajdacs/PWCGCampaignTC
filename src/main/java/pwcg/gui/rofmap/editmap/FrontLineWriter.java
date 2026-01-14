@@ -1,5 +1,7 @@
 package pwcg.gui.rofmap.editmap;
 
+import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +94,7 @@ public class FrontLineWriter
 
     private void writeFront() throws PWCGException, IOException
     {
-        String outputPath = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + PWCGContext.getInstance().getCurrentMap().getMapName() + "\\";      
+        String outputPath = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + PWCGContext.getInstance().getCurrentMap().getMapName() + File.separator;      
         
         LocationSet locationSet = new LocationSet("FrontLines");
         frontLinePointToLocationSet(locationSet, userFrontLines);

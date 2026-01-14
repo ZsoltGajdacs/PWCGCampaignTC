@@ -1,5 +1,7 @@
 package pwcg.campaign.io;
 
+import java.io.File;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,7 +22,7 @@ public class LargeAirfieldFile
 
         try 
         {
-            String iconFileLocation = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + "\\" + "AirfieldILarge.config";           
+            String iconFileLocation = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + File.separator + "AirfieldILarge.config";           
             largeAirfields = readLargeFieldFile(iconFileLocation);            
         } 
         catch (IOException e) 

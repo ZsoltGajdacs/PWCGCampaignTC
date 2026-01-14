@@ -179,7 +179,7 @@ public class PwcgMainScreen extends ImageResizingPanel implements ActionListener
 
     private void validateInstallDirectory()
     {
-        String missionFilepath = PWCGDirectorySimulatorManager.getInstance().getSimulatorRootDir() + "Data\\Missions";
+        String missionFilepath = PWCGDirectorySimulatorManager.getInstance().getSimulatorRootDir() + "Data" + File.separator + "Missions";
         try
         {
             File file = new File(missionFilepath);

@@ -1,5 +1,7 @@
 package pwcg.aar;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,16 +104,16 @@ public class MissionFileCleaner
     {
         for (String filename : fileNames)
         {
-            results.add(missionDir + "\\" + filename + ".mission");
-            results.add(missionDir + "\\" + filename + ".msnbin");
-            results.add(missionDir + "\\" + filename + ".list");
-            results.add(missionDir + "\\" + filename + ".spa");
-            results.add(missionDir + "\\" + filename + ".eng");
-            results.add(missionDir + "\\" + filename + ".fra");
-            results.add(missionDir + "\\" + filename + ".rus");
-            results.add(missionDir + "\\" + filename + ".ger");
-            results.add(missionDir + "\\" + filename + ".pol");
-            results.add(missionDir + "\\" + filename + ".chs");
+            results.add(missionDir + File.separator + filename + ".mission");
+            results.add(missionDir + File.separator + filename + ".msnbin");
+            results.add(missionDir + File.separator + filename + ".list");
+            results.add(missionDir + File.separator + filename + ".spa");
+            results.add(missionDir + File.separator + filename + ".eng");
+            results.add(missionDir + File.separator + filename + ".fra");
+            results.add(missionDir + File.separator + filename + ".rus");
+            results.add(missionDir + File.separator + filename + ".ger");
+            results.add(missionDir + File.separator + filename + ".pol");
+            results.add(missionDir + File.separator + filename + ".chs");
         }
     }
 

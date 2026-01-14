@@ -1,5 +1,7 @@
 package pwcg.gui.campaign.crewmember;
 
+import java.io.File;
+
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -64,7 +66,7 @@ public class CampaignPaperDollPanel extends ImageResizingPanel
     {
         ICountry country = CountryFactory.makeCountryByCountry(crewMember.getCountry());
         String paperDollDirectory = ContextSpecificImages.imagesPlayerPaperDoll() + country.getCountryName();
-        String paperDollPath = paperDollDirectory + "\\PaperDoll.png";
+        String paperDollPath = paperDollDirectory + File.separator + "PaperDoll.png";
         BufferedImage paperDoll = ImageRetriever.getImageFromFile(paperDollPath);
         return paperDoll;
     }
@@ -74,7 +76,7 @@ public class CampaignPaperDollPanel extends ImageResizingPanel
         BufferedImage paperDoll;
         ICountry country = CountryFactory.makeCountryByCountry(crewMember.getCountry());
         String paperDollDirectory = ContextSpecificImages.imagesPaperDoll() + country.getCountryName();
-        String paperDollPath = paperDollDirectory + "\\PaperDoll.png";
+        String paperDollPath = paperDollDirectory + File.separator + "PaperDoll.png";
         paperDoll = ImageRetriever.getImageFromFile(paperDollPath);
         return paperDoll;
     }
@@ -130,7 +132,7 @@ public class CampaignPaperDollPanel extends ImageResizingPanel
     {
         try
         {
-            String medalPath = paperDollDirectory + "\\" + imageName + ".png";
+            String medalPath = paperDollDirectory + File.separator + imageName + ".png";
             BufferedImage medalOverlay = ImageRetriever.getImageFromFile(medalPath);
             if (medalOverlay != null)
             {

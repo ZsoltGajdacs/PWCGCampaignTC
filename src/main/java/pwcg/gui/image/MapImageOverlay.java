@@ -1,5 +1,7 @@
 package pwcg.gui.image;
 
+import java.io.File;
+
 import java.awt.image.BufferedImage;
 
 import pwcg.campaign.Campaign;
@@ -42,8 +44,8 @@ public class MapImageOverlay
             return null;
         }
         
-        String mapOverlayFullPath = ContextSpecificImages.imagesMaps() + "Overlay\\" + PWCGContext.getInstance().getCurrentMap().getMapName() + "\\";
-        mapOverlayFullPath += DateUtils.getDateStringYYYYMMDD(campaign.getDate()) + "\\" + mapFileName + ".png";
+        String mapOverlayFullPath = ContextSpecificImages.imagesMaps() + "Overlay" + File.separator + PWCGContext.getInstance().getCurrentMap().getMapName() + File.separator;
+        mapOverlayFullPath += DateUtils.getDateStringYYYYMMDD(campaign.getDate()) + File.separator + mapFileName + ".png";
 
         return mapOverlayFullPath;
     }

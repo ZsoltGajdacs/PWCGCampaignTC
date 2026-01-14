@@ -1,5 +1,7 @@
 package pwcg.campaign.group.airfield;
 
+import java.io.File;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,7 +20,7 @@ public class AirfieldConfiguration
         
         airfields.clear();
 
-        String pwcgInputDir = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapIdentifier.getMapName() + "\\";
+        String pwcgInputDir = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapIdentifier.getMapName() + File.separator;
         AirfieldDescriptorSet airfieldDescriptors = AirfieldDescriptorIOJson.readJson(pwcgInputDir, AIRFIELD_LOCATION_FILE_NAME);
         for (AirfieldDescriptor desc : airfieldDescriptors.getLocations())
         {

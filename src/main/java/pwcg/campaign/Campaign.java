@@ -111,7 +111,7 @@ public class Campaign
 
     public void initializeCampaignConfigs() throws PWCGException
     {
-        String campaignConfigDir = getCampaignPathAutoCreateDirectory() + "config\\";
+        String campaignConfigDir = getCampaignPathAutoCreateDirectory() + "config" + File.separator;
         campaignConfigManager = new ConfigManagerCampaign(campaignConfigDir);
         campaignConfigManager.initialize();
     }
@@ -144,7 +144,7 @@ public class Campaign
         {
             for (String campaignName : campaignNames)
             {
-                String campaignDirPath = campaignRootDirName + "\\" + campaignName;
+                String campaignDirPath = campaignRootDirName + File.separator + campaignName;
 
                 File campaignDir = new File(campaignDirPath);
                 if (campaignDir.isDirectory())
@@ -182,7 +182,7 @@ public class Campaign
     public String getCampaignPath()
     {
         String dir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir();
-        String campaignPath = dir + campaignData.getName() + "\\";
+        String campaignPath = dir + campaignData.getName() + File.separator;
         return campaignPath;
     }
 

@@ -1,5 +1,7 @@
 package pwcg.campaign.context;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class DrifterManager
 
     public void configure(String mapName) throws PWCGException
 	{
-		String pwcgInputDir = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + "\\";
+		String pwcgInputDir = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + mapName + File.separator;
     	bargePositions = LocationIOJson.readJson(pwcgInputDir, BARGE_FILE_NAME);
 	}
 

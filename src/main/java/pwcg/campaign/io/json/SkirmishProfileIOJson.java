@@ -15,7 +15,7 @@ public class SkirmishProfileIOJson
 	public static Map<SkirmishProfileType, SkirmishProfile> readJson() throws PWCGException
 	{
 		JsonObjectReader<SkirmishProfile> jsoReader = new JsonObjectReader<>(SkirmishProfile.class);
-		String directory = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + "\\SkirmishProfiles\\";
+		String directory = PWCGContext.getInstance().getDirectoryManager().getPwcgInputDir() + File.separator + "SkirmishProfiles" + File.separator;
 		
 		Map<SkirmishProfileType, SkirmishProfile> skirmishesProfiles = new HashMap<>();
         for (File file : FileUtils.getFilesInDirectory(directory))

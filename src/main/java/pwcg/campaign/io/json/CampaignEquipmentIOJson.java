@@ -21,10 +21,10 @@ public class CampaignEquipmentIOJson
     
     private static void makeEquipmentDir(Campaign campaign)
     {
-        String campaignEquipmentDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\Equipment\\";
+        String campaignEquipmentDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator + "Equipment" + File.separator;
         FileUtils.createDirIfNeeded(campaignEquipmentDir);
         
-        String campaignReplacementsDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\Equipment\\Replacements\\";
+        String campaignReplacementsDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator + "Equipment" + File.separator + "Replacements" + File.separator;
         FileUtils.createDirIfNeeded(campaignReplacementsDir);
     }
 
@@ -41,13 +41,13 @@ public class CampaignEquipmentIOJson
         Equipment companyEquipment = campaign.getEquipmentManager().getEquipmentForCompany(companyId);
 
         PwcgJsonWriter<Equipment> jsonWriterEquipment = new PwcgJsonWriter<>();
-        String campaignEquipmentReplacementDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\Equipment\\";
+        String campaignEquipmentReplacementDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator + "Equipment" + File.separator;
         jsonWriterEquipment.writeAsJson(companyEquipment, campaignEquipmentReplacementDir, companyId + ".json");
     }
 
     private static void writeReplacements(Campaign campaign) throws PWCGException
     {
-        String campaignEquipmentReplacementDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\Equipment\\Replacements\\";
+        String campaignEquipmentReplacementDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator + "Equipment" + File.separator + "Replacements" + File.separator;
         PwcgJsonWriter<EquipmentDepot> jsonWriterReplacements = new PwcgJsonWriter<>();
         for (Integer serviceId : campaign.getEquipmentManager().getServiceIdsForDepots())
         {
@@ -64,7 +64,7 @@ public class CampaignEquipmentIOJson
 
     private static void readCompanys(Campaign campaign) throws PWCGException
     {
-        String campaignEquipmentDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\Equipment\\";
+        String campaignEquipmentDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator + "Equipment" + File.separator;
         List<File> jsonFiles = FileUtils.getFilesWithFilter(campaignEquipmentDir, ".json");
         for (File jsonFile : jsonFiles)
         {
@@ -77,7 +77,7 @@ public class CampaignEquipmentIOJson
 
     private static void readReplacements(Campaign campaign) throws PWCGException
     {
-        String campaignEquipmentReplacementDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + "\\Equipment\\Replacements\\";
+        String campaignEquipmentReplacementDir = PWCGDirectoryUserManager.getInstance().getPwcgCampaignsDir() + campaign.getCampaignData().getName() + File.separator + "Equipment" + File.separator + "Replacements" + File.separator;
         List<File> jsonFiles = FileUtils.getFilesWithFilter(campaignEquipmentReplacementDir, ".json");
         for (File jsonFile : jsonFiles)
         {

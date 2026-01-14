@@ -49,7 +49,7 @@ public class PictureManager
 
 	private static File getAcePictureFile(CrewMember ace) throws PWCGUserException 
 	{
-		String picPath = PWCGContext.getInstance().getDirectoryManager().getPwcgAcesDir() + "Pictures\\" + ace.getName();
+		String picPath = PWCGContext.getInstance().getDirectoryManager().getPwcgAcesDir() + "Pictures" + File.separator + ace.getName();
 		
 		if (!picPath.contains(".jpg"))
 		{

@@ -21,7 +21,7 @@ public class LooseSkinLoader
     {
         try
         {
-            String skinDirName = "..\\data\\graphics\\skins\\";
+            String skinDirName = ".." + File.separator + "data" + File.separator + "graphics" + File.separator + "skins" + File.separator;
             File dir = new File(skinDirName);
             if (dir.exists())
             {

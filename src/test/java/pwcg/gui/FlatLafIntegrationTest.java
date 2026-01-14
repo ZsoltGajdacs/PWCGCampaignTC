@@ -21,8 +21,16 @@ public class FlatLafIntegrationTest
     @Test
     public void testFlatLafIsAvailable()
     {
-        // Test that FlatLaf classes are available on the classpath
-        assertNotNull(FlatLightLaf.class, "FlatLightLaf class should be available");
+        // Test that FlatLaf can be instantiated
+        try
+        {
+            FlatLightLaf laf = new FlatLightLaf();
+            assertNotNull(laf, "FlatLightLaf instance should be created successfully");
+        }
+        catch (Exception e)
+        {
+            fail("FlatLightLaf should be instantiable: " + e.getMessage());
+        }
     }
     
     @Test

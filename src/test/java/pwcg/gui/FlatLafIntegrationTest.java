@@ -39,9 +39,9 @@ public class FlatLafIntegrationTest
         // Initialize FlatLaf
         FlatLightLaf.setup();
         
-        // Verify that the Look and Feel is set
-        String lafName = UIManager.getLookAndFeel().getClass().getName();
-        assertTrue(lafName.contains("FlatLaf") || lafName.contains("flatlaf"), 
-                   "Look and Feel should be FlatLaf-based, but was: " + lafName);
+        // Verify that the Look and Feel is an instance of FlatLightLaf
+        assertTrue(UIManager.getLookAndFeel() instanceof FlatLightLaf,
+                   "Look and Feel should be FlatLightLaf, but was: " + 
+                   UIManager.getLookAndFeel().getClass().getName());
     }
 }

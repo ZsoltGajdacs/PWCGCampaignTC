@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import pwcg.aar.ui.events.model.AAREvent;
 import pwcg.aar.ui.events.model.ClaimDeniedEvent;
 import pwcg.aar.ui.events.model.CrewMemberStatusEvent;
@@ -14,6 +15,7 @@ import pwcg.campaign.crewmember.CrewMember;
 import pwcg.campaign.crewmember.CrewMembers;
 import pwcg.mission.data.MissionHeader;
 
+@Getter
 public class AARCombatReportPanelData
 {
     private MissionHeader missionHeader;
@@ -33,39 +35,9 @@ public class AARCombatReportPanelData
         return allEvents;
     }
 
-    public MissionHeader getMissionHeader()
-    {
-        return missionHeader;
-    }
-
     public void setMissionAARHeader(MissionHeader missionHeader)
     {
         this.missionHeader = missionHeader;
-    }
-
-    public Map<Integer, CrewMember> getCrewsInMission()
-    {
-        return crewsInMission;
-    }
-    
-    public Map<Integer, CrewMemberStatusEvent> getCrewMembersLostInMission()
-    {
-        return crewMembersLostInMission;
-    }
-
-    public Map<Integer, TankStatusEvent> getCompanyTanksLostInMission()
-    {
-        return companyTanksLostInMission;
-    }
-
-    public List<VictoryEvent> getVictoriesForCrewMembersInMission()
-    {
-        return victoriesForCrewMembersInMission;
-    }
-
-    public List<ClaimDeniedEvent> getClaimsDenied()
-    {
-        return claimsDenied;
     }
 
     public void addClaimsDenied(List<ClaimDeniedEvent> sourceClaimDeniedEvents)

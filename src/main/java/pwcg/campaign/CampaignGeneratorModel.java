@@ -2,6 +2,8 @@ package pwcg.campaign;
 
 import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.campaign.company.Company;
 import pwcg.campaign.company.CompanyManager;
 import pwcg.campaign.context.PWCGContext;
@@ -9,6 +11,8 @@ import pwcg.core.exception.PWCGException;
 import pwcg.core.exception.PWCGUserException;
 import pwcg.core.utils.DateUtils;
 
+@Getter
+@Setter
 public class CampaignGeneratorModel
 {
     private ArmedService service;
@@ -20,96 +24,6 @@ public class CampaignGeneratorModel
     private Date campaignDate;
     private String playerRegion;
     private CampaignMode campaignMode = CampaignMode.CAMPAIGN_MODE_NONE;
-
-    public ArmedService getService()
-    {
-        return service;
-    }
-
-    public void setService(ArmedService service)
-    {
-        this.service = service;
-    }
-
-    public String getCampaignName()
-    {
-        return campaignName;
-    }
-
-    public void setCampaignName(String campaignName)
-    {
-        this.campaignName = campaignName;
-    }
-
-    public String getPlayerName()
-    {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName)
-    {
-        this.playerName = playerName;
-    }
-
-    public String getPlayerRank()
-    {
-        return playerRank;
-    }
-
-    public String getUserName()
-    {
-        return userName;
-    }
-
-    public void setUserName(String userName)
-    {
-        this.userName = userName;
-    }
-
-    public void setPlayerRank(String playerRank)
-    {
-        this.playerRank = playerRank;
-    }
-
-    public String getCompanyName()
-    {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName)
-    {
-        this.companyName = companyName;
-    }
-
-    public Date getCampaignDate()
-    {
-        return campaignDate;
-    }
-
-    public void setCampaignDate(Date campaignDate)
-    {
-        this.campaignDate = campaignDate;
-    }
-
-    public String getPlayerRegion()
-    {
-        return playerRegion;
-    }
-
-    public void setPlayerRegion(String playerRegion)
-    {
-        this.playerRegion = playerRegion;
-    }
-
-    public CampaignMode getCampaignMode()
-    {
-        return campaignMode;
-    }
-
-    public void setCampaignMode(CampaignMode campaignMode)
-    {
-        this.campaignMode = campaignMode;
-    }
 
     public Company getCampaignCompany() throws PWCGException
     {

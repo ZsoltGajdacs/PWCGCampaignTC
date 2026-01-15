@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.aar.data.ui.UIDebriefData;
 import pwcg.aar.inmission.phase2.logeval.AARMissionEvaluationData;
 import pwcg.aar.outofmission.phase2.awards.HistoricalAceAwards;
@@ -15,6 +17,8 @@ import pwcg.campaign.Campaign;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.logfiles.LogEventData;
 
+@Getter
+@Setter
 public class AARContext
 {
     private Campaign campaign;
@@ -61,21 +65,6 @@ public class AARContext
         return new UICombatReportData(companyId);
     }
 
-    public AARPreliminaryData getPreliminaryData()
-    {
-        return preliminaryData;
-    }
-
-    public LogEventData getLogEventData()
-    {
-        return logEventData;
-    }
-
-    public AARMissionEvaluationData getMissionEvaluationData()
-    {
-        return missionEvaluationData;
-    }
-
     public void mergeDebriefUiData(UIDebriefData uiDebriefData) throws PWCGException
     {
         this.uiDebriefData.merge(campaign, uiDebriefData);
@@ -116,31 +105,6 @@ public class AARContext
         return dailyData.getResupplyData();
     }    
 
-    public UIDebriefData getUiDebriefData()
-    {
-        return uiDebriefData;
-    }
-
-    public void setPreliminaryData(AARPreliminaryData preliminaryData)
-    {
-        this.preliminaryData = preliminaryData;
-    }
-
-    public void setLogEventData(LogEventData logEventData)
-    {
-        this.logEventData = logEventData;        
-    }
-
-    public void setNewDate(Date newDate)
-    {
-        this.newDate = newDate;                
-    }
-
-    public void setMissionEvaluationData(AARMissionEvaluationData missionEvaluationData)
-    {
-        this.missionEvaluationData = missionEvaluationData;
-    }
-
     public void addPersonnelLosses(AARPersonnelLosses newPersonnelLosses)
     {
         dailyData.getPersonnelLosses().merge(newPersonnelLosses);
@@ -149,11 +113,6 @@ public class AARContext
     public void addEquipmentLossesInMission(AAREquipmentLosses newEquipmentLosses)
     {
         dailyData.getEquipmentLosses().merge(newEquipmentLosses);
-    }
-
-    public Date getNewDate()
-    {
-        return newDate;
     }
 
     public void addElapsedTimeEvents(ElapsedTimeEvents elapsedTimeEvents)

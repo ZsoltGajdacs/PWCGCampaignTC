@@ -3,11 +3,15 @@ package pwcg.mission.mcu;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.campaign.api.ICountry;
 import pwcg.campaign.api.Side;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.PWCGLogger;
 
+@Getter
+@Setter
 public class McuMissionObjective  extends BaseFlightMcu
 {
 
@@ -62,51 +66,6 @@ public class McuMissionObjective  extends BaseFlightMcu
         }
     }
 
-    public int getEnabled()
-    {
-        return this.enabled;
-    }
-
-    public void setEnabled(int enabled)
-    {
-        this.enabled = enabled;
-    }
-
-    public int getLcName()
-    {
-        return this.lcName;
-    }
-
-    public void setLcName(int lcName)
-    {
-        this.lcName = lcName;
-    }
-
-    public int getLcDesc()
-    {
-        return this.lcDesc;
-    }
-
-    public void setLcDesc(int lcDesc)
-    {
-        this.lcDesc = lcDesc;
-    }
-
-    public int getTaskType()
-    {
-        return this.taskType;
-    }
-
-    public void setTaskType(int taskType)
-    {
-        this.taskType = taskType;
-    }
-
-    public Coalition getCoalition()
-    {
-        return this.coalition;
-    }
-
     public void setCoalition(ICountry country)
     {
         if (country.getSide() == Side.ALLIED)
@@ -118,25 +77,5 @@ public class McuMissionObjective  extends BaseFlightMcu
             coalition = Coalition.COALITION_AXIS;
         }
      }
-
-    public int getSuccess()
-    {
-        return this.success;
-    }
-
-    public void setSuccess(int success)
-    {
-        this.success = success;
-    }
-
-    public int getIconType()
-    {
-        return this.iconType;
-    }
-
-    public void setIconType(int iconType)
-    {
-        this.iconType = iconType;
-    }
 
 }

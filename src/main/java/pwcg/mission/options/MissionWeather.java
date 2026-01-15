@@ -3,6 +3,9 @@ package pwcg.mission.options;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.campaign.Campaign;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.core.config.ConfigItemKeys;
@@ -12,6 +15,8 @@ import pwcg.core.utils.RandomNumberGenerator;
 import pwcg.mission.flight.FlightTypes;
 import pwcg.mission.options.MapSeasonalParameters.Season;
 
+@Getter
+@Setter
 public class MissionWeather
 {
     private String weatherDescription = "";
@@ -22,6 +27,8 @@ public class MissionWeather
     private int cloudLevel = 2100;
     private int cloudDensity = 600;
     private int precLevel = 0;
+    @Getter(AccessLevel.NONE) 
+    @Setter(AccessLevel.NONE)
     private PrecipitationType precType = PrecipitationType.CLEAR;
     private double turbulence = 1.0;
     private int tempPressLevel = 0;
@@ -322,19 +329,9 @@ public class MissionWeather
         temperature = MissionWeatherTemperatature.calculateTemperature(campaign.getDate(), timeHours);
     }
 
-    public int getCloudLevel()
-    {
-        return cloudLevel;
-    }
-
     public int getCloudHeight()
     {
         return cloudDensity;
-    }
-
-    public int getPrecLevel()
-    {
-        return precLevel;
     }
 
     public int getPrecType()
@@ -342,63 +339,8 @@ public class MissionWeather
         return precType.getPrecipitationValue();
     }
 
-    public String getCloudConfig()
+    public void setPrecType(PrecipitationType precType)
     {
-        return cloudConfig;
-    }
-
-    public double getTurbulence()
-    {
-        return turbulence;
-    }
-
-    public String getWeatherDescription()
-    {
-        return weatherDescription;
-    }
-
-    public List<WindLayer> getWindLayers()
-    {
-        return windLayers;
-    }
-
-    public int getTempPressLevel()
-    {
-        return tempPressLevel;
-    }
-
-    public int getTemperature()
-    {
-        return temperature;
-    }
-
-    public void setTemperature(int temperature)
-    {
-        this.temperature = temperature;
-    }
-
-    public int getPressure()
-    {
-        return pressure;
-    }
-
-    public int getWindDirection()
-    {
-        return windDirection;
-    }
-
-    public void setWindDirection(int windDirection)
-    {
-        this.windDirection = windDirection;
-    }
-
-    public double getHaze()
-    {
-        return haze;
-    }
-
-    public int getSeaState()
-    {
-        return seaState;
+        this.precType = precType;
     }
 }

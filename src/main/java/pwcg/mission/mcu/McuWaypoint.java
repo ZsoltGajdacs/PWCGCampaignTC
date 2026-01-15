@@ -3,6 +3,8 @@ package pwcg.mission.mcu;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.core.utils.PWCGLogger.LogLevel;
@@ -10,6 +12,8 @@ import pwcg.mission.flight.waypoint.WaypointAction;
 import pwcg.mission.flight.waypoint.WaypointPriority;
 import pwcg.mission.flight.waypoint.WaypointType;
 
+@Getter
+@Setter
 public class McuWaypoint extends BaseFlightMcu implements Cloneable
 {
     public static long NO_WAYPOINT_ID = -1;
@@ -69,36 +73,6 @@ public class McuWaypoint extends BaseFlightMcu implements Cloneable
         return clone;
     }
 
-    public int getTriggerArea()
-    {
-        return triggerArea;
-    }
-
-    public void setTriggerArea(int area)
-    {
-        this.triggerArea = area;
-    }
-
-    public int getSpeed()
-    {
-        return speed;
-    }
-
-    public void setSpeed(int speed)
-    {
-        this.speed = speed;
-    }
-
-    public WaypointPriority getPriority()
-    {
-        return priority;
-    }
-
-    public void setPriority(WaypointPriority priority)
-    {
-        this.priority = priority;
-    }
-
     public void setWaypointAltitude(double altitude)
     {
         this.position.setYPos(altitude);
@@ -109,44 +83,14 @@ public class McuWaypoint extends BaseFlightMcu implements Cloneable
         return this.position.getYPos();
     }
 
-    public WaypointAction getWpAction()
-    {
-        return wpAction;
-    }
-
-    public void setWpAction(WaypointAction wpAction)
-    {
-        this.wpAction = wpAction;
-    }
-
     public void setTarget(int target)
     {
         super.setTarget(target);
     }
 
-    public boolean isTargetWaypoint()
-    {
-        return isTargetWaypoint;
-    }
-
-    public void setTargetWaypoint(boolean isTargetWaypoint)
-    {
-        this.isTargetWaypoint = isTargetWaypoint;
-    }
-
     public void setDesc(String name, String desc)
     {
         this.desc = name + ": " + desc;
-    }
-
-    public WaypointType getWaypointType()
-    {
-        return waypointType;
-    }
-    
-    public long getWaypointID()
-    {
-        return waypointID;
     }
 
     public void write(BufferedWriter writer) throws PWCGException

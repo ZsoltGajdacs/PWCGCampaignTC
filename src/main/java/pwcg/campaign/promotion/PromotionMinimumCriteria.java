@@ -2,11 +2,13 @@ package pwcg.campaign.promotion;
 
 import java.util.Date;
 
+import lombok.Getter;
 import pwcg.campaign.crewmember.CrewMember;
 import pwcg.campaign.tank.PwcgRoleCategory;
 import pwcg.core.exception.PWCGException;
 import pwcg.product.bos.country.TCServiceManager;
 
+@Getter
 public class PromotionMinimumCriteria
 {
     private int crewMemberRankMedMinMissions = 15;
@@ -96,46 +98,6 @@ public class PromotionMinimumCriteria
         crewMemberRankHighMinVictories = 5;
         crewMemberRankExecMinVictories = 10;
         crewMemberRankCommandMinVictories = 15;
-    }
-
-    public int getCrewMemberRankMedMinMissions()
-    {
-        return crewMemberRankMedMinMissions;
-    }
-
-    public int getCrewMemberRankHighMinMissions()
-    {
-        return crewMemberRankHighMinMissions;
-    }
-
-    public int getCrewMemberRankExecMinMissions()
-    {
-        return crewMemberRankExecMinMissions;
-    }
-
-    public int getCrewMemberRankCommandMinMissions()
-    {
-        return crewMemberRankCommandMinMissions;
-    }
-
-    public int getCrewMemberRankMedMinVictories()
-    {
-        return crewMemberRankMedMinVictories;
-    }
-
-    public int getCrewMemberRankHighMinVictories()
-    {
-        return crewMemberRankHighMinVictories;
-    }
-
-    public int getCrewMemberRankExecMinVictories()
-    {
-        return crewMemberRankExecMinVictories;
-    }
-
-    public int getCrewMemberRankCommandMinVictories()
-    {
-        return crewMemberRankCommandMinVictories;
     }
 
 }

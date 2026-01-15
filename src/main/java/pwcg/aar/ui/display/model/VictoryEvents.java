@@ -3,25 +3,22 @@ package pwcg.aar.ui.display.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
 import pwcg.aar.ui.events.model.VictoryEvent;
 
+@Getter
 public class VictoryEvents
 {
-    private List<VictoryEvent> victoryEvents = new ArrayList<>();
-
-    public List<VictoryEvent> getOutOfMissionVictoryEvents()
-    {
-        return victoryEvents;
-    }
+    private List<VictoryEvent> outOfMissionVictoryEvents = new ArrayList<>();
 
     public void addVictory(VictoryEvent victory)
     {
-        victoryEvents.add(victory);
+        outOfMissionVictoryEvents.add(victory);
         
     }
 
     public void merge(VictoryEvents victoryEventsToMerge)
     {
-        victoryEvents.addAll(victoryEventsToMerge.getOutOfMissionVictoryEvents());
+        outOfMissionVictoryEvents.addAll(victoryEventsToMerge.getOutOfMissionVictoryEvents());
     }
 }

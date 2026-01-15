@@ -3,21 +3,15 @@ package pwcg.aar.ui.display.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.aar.ui.events.model.CrewMemberStatusEvent;
 
+@Getter
+@Setter
 public class AARCrewMemberLossPanelData
 {
     private Map<Integer, CrewMemberStatusEvent> squadMembersLost = new HashMap<>();
-
-    public Map<Integer, CrewMemberStatusEvent> getSquadMembersLost()
-    {
-        return squadMembersLost;
-    }
-
-    public void setSquadMembersLost(Map<Integer, CrewMemberStatusEvent> squadMembersLost)
-    {
-        this.squadMembersLost = squadMembersLost;
-    }
     
 
     public void merge(AARCrewMemberLossPanelData eventData)

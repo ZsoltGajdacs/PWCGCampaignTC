@@ -2,6 +2,9 @@ package pwcg.aar.ui.events.model;
 
 import java.util.Date;
 
+import lombok.Getter;
+
+@Getter
 public class AAREvent 
 {
 	private Date date = null;
@@ -17,19 +20,4 @@ public class AAREvent
         eventId = eventIdCounter;
 	    ++eventIdCounter;
 	}
-
-	public Date getDate() 
-	{
-		return date;
-	}
-
-    public boolean isNewsWorthy()
-    {
-        return this.isNewsWorthy;
-    }
-
-    public int getEventId()
-    {
-        return eventId;
-    }
 }

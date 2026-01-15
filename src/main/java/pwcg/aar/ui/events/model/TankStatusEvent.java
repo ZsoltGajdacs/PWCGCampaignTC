@@ -1,5 +1,6 @@
 package pwcg.aar.ui.events.model;
 
+import lombok.Getter;
 import pwcg.aar.inmission.phase2.logeval.missionresultentity.LogTank;
 import pwcg.campaign.Campaign;
 import pwcg.campaign.CampaignEquipmentManager;
@@ -12,10 +13,11 @@ import pwcg.campaign.tank.EquippedTank;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.DateUtils;
 
+@Getter
 public class TankStatusEvent extends AARCrewMemberEvent
 {
     private int crewMemberSerialNumber;
-    private int tankSerialNumber;
+    private int planeSerialNumber;
     private String companyName;
 	private int tankStatus;
 	
@@ -23,7 +25,7 @@ public class TankStatusEvent extends AARCrewMemberEvent
     {
         super(campaign, lostPlane.getCompanyId(), lostPlane.getCrewMemberSerialNumber(), campaign.getDate(), isNewsWorthy);
         this.crewMemberSerialNumber = lostPlane.getCrewMemberSerialNumber();
-        this.tankSerialNumber = lostPlane.getTankSerialNumber();
+        this.planeSerialNumber = lostPlane.getTankSerialNumber();
         this.tankStatus = planeStatus;
         
         try
@@ -45,7 +47,7 @@ public class TankStatusEvent extends AARCrewMemberEvent
     public String getTankLostText(Campaign campaign) throws PWCGException
     {
         CampaignEquipmentManager campaignEquipmentManager = campaign.getEquipmentManager();
-        EquippedTank destroyedTank = campaignEquipmentManager.destroyTank(tankSerialNumber, campaign.getDate());
+        EquippedTank destroyedTank = campaignEquipmentManager.destroyTank(planeSerialNumber, campaign.getDate());
 
         CampaignPersonnelManager campaignPersonnelManager = campaign.getPersonnelManager();
         CrewMember lostCrewMember = campaignPersonnelManager.getAnyCampaignMember(super.getCrewMemberSerialNumber());
@@ -53,7 +55,7 @@ public class TankStatusEvent extends AARCrewMemberEvent
         String prettyDate = DateUtils.getDateStringPretty(campaign.getDate());
         String planeEventText = 
                 "A " + destroyedTank.getDisplayName() +
-                ",  serial number " + tankSerialNumber + 
+                ",  serial number " + planeSerialNumber + 
                 ",  operated by " + lostCrewMember.getNameAndRank() + 
                 " has been lost in combat on " + prettyDate + ".\n";    ;                
 
@@ -63,12 +65,12 @@ public class TankStatusEvent extends AARCrewMemberEvent
     public String getTankAddedToDepotText(Campaign campaign) throws PWCGException
     {
         CampaignEquipmentManager campaignEquipmentManager = campaign.getEquipmentManager();
-        EquippedTank destroyedTank = campaignEquipmentManager.destroyTank(tankSerialNumber, campaign.getDate());
+        EquippedTank destroyedTank = campaignEquipmentManager.destroyTank(planeSerialNumber, campaign.getDate());
 
         String prettyDate = DateUtils.getDateStringPretty(campaign.getDate());
         String planeEventText = 
                 "A " + destroyedTank.getDisplayName() +
-                ",  serial number " + tankSerialNumber + 
+                ",  serial number " + planeSerialNumber + 
                 " has been provided to the depot for distribution to front line units on " + prettyDate + ".\n";               
 
         return planeEventText;
@@ -77,34 +79,15 @@ public class TankStatusEvent extends AARCrewMemberEvent
     public String getTankWithdrawnFromServiceText(Campaign campaign) throws PWCGException
     {
         CampaignEquipmentManager campaignEquipmentManager = campaign.getEquipmentManager();
-        EquippedTank destroyedTank = campaignEquipmentManager.destroyTank(tankSerialNumber, campaign.getDate());
+        EquippedTank destroyedTank = campaignEquipmentManager.destroyTank(planeSerialNumber, campaign.getDate());
 
         String prettyDate = DateUtils.getDateStringPretty(campaign.getDate());
         String planeEventText = 
                 "A " + destroyedTank.getDisplayName() +
-                ",  serial number " + tankSerialNumber + 
+                ",  serial number " + planeSerialNumber + 
                 " has been withdrawn from service on " + prettyDate + ".\n";                
 
         return planeEventText;
     }
 
-    public int getTankStatus()
-    {
-        return tankStatus;
-    }
-
-    public int getPlaneSerialNumber()
-    {
-        return tankSerialNumber;
-    }
-    
-    public int getCrewMemberSerialNumber()
-    {
-        return crewMemberSerialNumber;
-    }
-
-    public String getCompanyName()
-    {
-        return companyName;
-    }
 }

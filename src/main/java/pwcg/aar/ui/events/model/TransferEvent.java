@@ -2,8 +2,10 @@ package pwcg.aar.ui.events.model;
 
 import java.util.Date;
 
+import lombok.Getter;
 import pwcg.campaign.Campaign;
 
+@Getter
 public class TransferEvent extends AARCrewMemberEvent
 {
     private int transferFrom;
@@ -16,20 +18,5 @@ public class TransferEvent extends AARCrewMemberEvent
         this.transferFrom = transferFrom;
         this.transferTo = transferTo;
         this.leaveTime = leaveTime;
-    }
-
-	public int getTransferTo()
-    {
-        return transferTo;
-    }
-
-    public int getTransferFrom()
-    {
-        return this.transferFrom;
-    }
-
-    public int getLeaveTime()
-    {
-        return leaveTime;
     }
 }

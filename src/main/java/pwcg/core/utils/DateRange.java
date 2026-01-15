@@ -2,20 +2,17 @@ package pwcg.core.utils;
 
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class DateRange
 {
     private Date startDate;
     private Date endDate;
-    
-    public DateRange(Date startDate, Date endDate)
-    {
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-    
-    public DateRange()
-    {
-    }
     
     public boolean isInDateRange(Date date)
     {
@@ -26,18 +23,8 @@ public class DateRange
        if (date.after(endDate))
        {
            return false;
-       }
-       
-       return true;
-    }
-
-    public Date getStartDate()
-    {
-        return startDate;
-    }
-
-    public Date getEndDate()
-    {
-        return endDate;
+        }
+        
+        return true;
     }
 }

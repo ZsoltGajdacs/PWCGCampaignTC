@@ -2,8 +2,10 @@ package pwcg.aar.ui.events.model;
 
 import java.util.Date;
 
+import lombok.Getter;
 import pwcg.campaign.Campaign;
 
+@Getter
 public class AceLeaveEvent extends AARCrewMemberEvent
 {
 	private String status = "";
@@ -13,8 +15,4 @@ public class AceLeaveEvent extends AARCrewMemberEvent
         super(campaign, companyId, crewMemberSerialNumber, date, isNewsWorthy);
         this.status = status;
     }
-
-    public String getStatus() {
-		return status;
-	}
 }

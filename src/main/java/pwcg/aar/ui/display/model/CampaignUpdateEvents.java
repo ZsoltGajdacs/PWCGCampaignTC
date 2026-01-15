@@ -3,30 +3,17 @@ package pwcg.aar.ui.display.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
 import pwcg.aar.ui.events.model.CrewMemberStatusEvent;
 import pwcg.aar.ui.events.model.TankStatusEvent;
 import pwcg.aar.ui.events.model.VictoryEvent;
 
+@Getter
 public class CampaignUpdateEvents
 {
     private List<CrewMemberStatusEvent> crewMembersLost = new ArrayList<>();
-    private List<TankStatusEvent> planesLost = new ArrayList<>();
+    private List<TankStatusEvent> tanksLost = new ArrayList<>();
     private List<VictoryEvent> victories = new ArrayList<>();
-
-    public List<CrewMemberStatusEvent> getCrewMembersLost()
-    {
-        return crewMembersLost;
-    }
-
-    public List<TankStatusEvent> getTanksLost()
-    {
-        return planesLost;
-    }
-
-    public List<VictoryEvent> getVictories()
-    {
-        return victories;
-    }
 
 
     public void addCrewMemberLost(CrewMemberStatusEvent crewMemberLostEvent)
@@ -41,7 +28,7 @@ public class CampaignUpdateEvents
 
     public void addPlaneLost(TankStatusEvent planeLostEvent)
     {
-        planesLost.add(planeLostEvent);        
+        tanksLost.add(planeLostEvent);        
     }
 
 }

@@ -66,7 +66,7 @@ public class AARCombatReportTabulator
 
     private void extractMissionHeader()
     {
-        combatReportPanelData.setMissionAARHeader(aarContext.getPreliminaryData().getPwcgMissionData().getMissionHeader());
+        combatReportPanelData.setMissionHeader(aarContext.getPreliminaryData().getPwcgMissionData().getMissionHeader());
     }
 
     private void createLossesForCrewMembersInMission() throws PWCGException

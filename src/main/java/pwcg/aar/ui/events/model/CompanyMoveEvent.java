@@ -2,11 +2,13 @@ package pwcg.aar.ui.events.model;
 
 import java.util.Date;
 
+import lombok.Getter;
 import pwcg.campaign.company.Company;
 import pwcg.campaign.company.CompanyManager;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.core.exception.PWCGException;
 
+@Getter
 public class CompanyMoveEvent  extends AAREvent
 {
     private String newAirfield;
@@ -36,25 +38,5 @@ public class CompanyMoveEvent  extends AAREvent
             this.companyName = "";
             e.printStackTrace();
         }
-    }
-
-    public String getNewAirfield()
-    {
-        return newAirfield;
-    }
-
-    public String getLastAirfield()
-    {
-        return lastAirfield;
-    }
-
-    public int getCompanyId()
-    {
-        return companyId;
-    }
-
-    public String getCompanyName()
-    {
-        return companyName;
     }
 }

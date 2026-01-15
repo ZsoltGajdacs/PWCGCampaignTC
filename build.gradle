@@ -30,11 +30,15 @@ dependencies {
     implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.14.12'
     implementation(files("RelativeLayout/RelativeLayout-v1.0.jar"))
     implementation(files("RelativeLayout/Jama-1.0.2.jar"))
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
 
     testImplementation(platform('org.junit:junit-bom:5.10.2'))
 	testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.2.0'
     testImplementation group: 'org.mockito', name: 'mockito-inline', version: '5.2.0'
+    testCompileOnly 'org.projectlombok:lombok:1.18.32'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
         testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
 }
 
@@ -133,4 +137,3 @@ tasks.register('releaseWindows') {
     onlyIf { isWindows }
     dependsOn 'jar', 'copyJar', 'deployTC', 'buildTC', 'zipTC'
 }
-

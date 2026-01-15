@@ -3,16 +3,13 @@ package pwcg.aar.ui.display.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
 import pwcg.aar.ui.events.model.AceLeaveEvent;
 
+@Getter
 public class AARAceLeavePanelData
 {
     private List<AceLeaveEvent> acesOnLeaveDuringElapsedTime = new ArrayList<>();
-
-    public List<AceLeaveEvent> getAcesOnLeaveDuringElapsedTime()
-    {
-        return acesOnLeaveDuringElapsedTime;
-    }
 
     public void addAceOnLeaveDuringElapsedTime(AceLeaveEvent aceOnLeave)
     {

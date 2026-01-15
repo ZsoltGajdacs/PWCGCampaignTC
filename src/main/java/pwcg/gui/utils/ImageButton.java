@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -15,6 +16,7 @@ import javax.swing.SwingConstants;
 
 import pwcg.campaign.context.PWCGContext;
 import pwcg.core.exception.PWCGException;
+import pwcg.core.utils.PWCGPath;
 import pwcg.gui.colors.ColorMap;
 import pwcg.gui.dialogs.PWCGMonitorFonts;
 import pwcg.gui.image.ImageCache;
@@ -58,7 +60,7 @@ public class ImageButton
 
     public static PWCGJButton makeTranslucentButton(String filename) throws PWCGException
     {
-        String imagePath = PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir() + "Menus\\" + filename;
+		String imagePath = PWCGPath.join(PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir(), "Menus") + File.separator + filename;
 
         BufferedImage bufferedImage = ImageCache.getImageFromFile(imagePath);
         BufferedImage modifiedImage = getModifiedImage(bufferedImage);

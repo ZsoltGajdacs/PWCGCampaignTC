@@ -15,7 +15,7 @@ public class PWCGPath
     {
         if (args == null)
         {
-            return;
+            setRootDir(File.separator);
         }
 
         for (int i = 0; i < args.length; ++i)
@@ -76,7 +76,7 @@ public class PWCGPath
     public static String getRootDirNoTrailingSlash()
     {
         String rootDir = getRootDir();
-        if (rootDir.endsWith("/"))
+        if (rootDir.endsWith(File.separator))
         {
             return rootDir.substring(0, rootDir.length() - 1);
         }
@@ -89,8 +89,8 @@ public class PWCGPath
         {
             return null;
         }
-        return path.replace('\\', System.getProperty("file.separator").charAt(0))
-                   .replace('/', System.getProperty("file.separator").charAt(0));
+        return path.replace('\\', File.separatorChar)
+                   .replace('/', File.separatorChar);
     }
 
     public static String ensureTrailingSlash(String path)

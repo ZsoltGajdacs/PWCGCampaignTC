@@ -4,12 +4,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 import pwcg.core.exception.PWCGException;
+import pwcg.core.utils.FileUtils;
 import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.core.utils.PWCGLogger.LogLevel;
@@ -29,7 +32,10 @@ public class JsonObjectReader<T>
 		try
 		{
 		    Gson gson= new GsonBuilder().setPrettyPrinting().setDateFormat("yyyyMMdd").create();
-            String filepath = PWCGPath.normalize(directory + filename);
+
+            Path directoryPath = Paths.get(PWCGPath.normalize(directory));
+            Path resolvedPath = FileUtils.resolvePathCaseInsensitive(directoryPath, filename);
+            String filepath = PWCGPath.normalize(resolvedPath.toString());
 			
 			reader = new JsonReader(new InputStreamReader(new FileInputStream(filepath), StandardCharsets.UTF_8));
 			

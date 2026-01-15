@@ -15,6 +15,7 @@ import pwcg.campaign.medals.Medal;
 import pwcg.campaign.medals.MedalManager;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.DateUtils;
+import pwcg.core.utils.PWCGPath;
 import pwcg.gui.utils.ContextSpecificImages;
 
 public class CampaignReportMedalGUI extends AARDocumentIconPanel
@@ -75,11 +76,11 @@ public class CampaignReportMedalGUI extends AARDocumentIconPanel
         ICountry country = CountryFactory.makeCountryByCountry(crewMember.getCountry());
         if (country.getSide() == Side.ALLIED)
         {
-            medalPath += "Allied\\";
+			medalPath = PWCGPath.join(medalPath, "Allied/");
         }
         else
         {
-            medalPath += "Axis\\";
+			medalPath = PWCGPath.join(medalPath, "Axis/");
         }
 
         medalPath += medal.getMedalImage();

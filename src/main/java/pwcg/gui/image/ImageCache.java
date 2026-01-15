@@ -18,6 +18,7 @@ import pwcg.campaign.Campaign;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.crewmember.CrewMember;
 import pwcg.core.exception.PWCGException;
+import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.core.utils.PWCGLogger.LogLevel;
 
@@ -42,7 +43,7 @@ public class ImageCache
 
 	public BufferedImage getBufferedImage(String imagePath) throws PWCGException 
 	{
-        imagePath = imagePath.toLowerCase();
+        imagePath = PWCGPath.normalize(imagePath);
 	    String themeImagePath = getThemePath(imagePath);
 	    if(themeImagePath != null)
 	    {
@@ -211,7 +212,8 @@ public class ImageCache
         BufferedImage image = null;
         try
         {
-            File file = new File(imagePath);
+			imagePath = PWCGPath.normalize(imagePath);
+			File file = new File(imagePath);
             if (file.exists())
             {
                 image = ImageIO.read(new File(imagePath));

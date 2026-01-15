@@ -1,6 +1,11 @@
 package pwcg.campaign.context;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import pwcg.core.utils.PWCGPath;
+import pwcg.core.utils.PWCGTCDataLocator;
 
 public class PWCGDirectoryProductManager
 {
@@ -15,6 +20,21 @@ public class PWCGDirectoryProductManager
     private void createPwcgDataDir(PWCGProduct product)
     {
         pwcgRootDir = PWCGPath.getRootDir();
+
+        Path tcDataOnDisk = Paths.get(PWCGPath.getRootDirNoTrailingSlash(), "TCData");
+        if (Files.isDirectory(tcDataOnDisk))
+        {
+            pwcgDataDir = PWCGPath.join(pwcgRootDir, "TCData/");
+            return;
+        }
+
+        String bundledTcDataDir = PWCGTCDataLocator.resolveTCDataDir();
+        if (bundledTcDataDir != null)
+        {
+            pwcgDataDir = bundledTcDataDir;
+            return;
+        }
+
         pwcgDataDir = PWCGPath.join(pwcgRootDir, "TCData/");
     }
 

@@ -23,6 +23,7 @@ import pwcg.campaign.medals.IMedalManager;
 import pwcg.campaign.medals.Medal;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.PWCGLogger;
+import pwcg.core.utils.PWCGPath;
 import pwcg.gui.ScreenIdentifier;
 import pwcg.gui.UiImageResolver;
 import pwcg.gui.colors.ColorMap;
@@ -121,7 +122,7 @@ public class CampaignCrewMemberMedalBox extends ImageResizingPanel implements Ac
 					medalSide = "Allied";
 				}
 					
-		        String medalPath = ContextSpecificImages.imagesMedals() + medalSide + "\\" + medal.getMedalImage();
+                    String medalPath = PWCGPath.join(ContextSpecificImages.imagesMedals(), medalSide + "/") + medal.getMedalImage();
 				ImageIcon medalIcon = null;  
 				try 
 				{

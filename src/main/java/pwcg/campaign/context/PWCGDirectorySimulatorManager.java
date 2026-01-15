@@ -1,7 +1,5 @@
 package pwcg.campaign.context;
 
-import java.io.File;
-
 import pwcg.campaign.Campaign;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.FileUtils;
@@ -25,13 +23,7 @@ public class PWCGDirectorySimulatorManager
 
     private void createSimulatorDir()
     {
-        File rootDir = new File(PWCGPath.getRootDirNoTrailingSlash());
-        File simulatorDir = rootDir.getParentFile();
-        if (simulatorDir == null)
-        {
-            simulatorDir = rootDir;
-        }
-        simulatorRootDir = PWCGPath.ensureTrailingSlash(PWCGPath.normalize(simulatorDir.getAbsolutePath()));
+        simulatorRootDir = PWCGPath.getRootDir();
     }
 
     public String getMissionFilePath(Campaign campaign) throws PWCGException

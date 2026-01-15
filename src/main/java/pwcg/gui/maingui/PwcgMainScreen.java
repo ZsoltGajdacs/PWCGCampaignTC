@@ -179,13 +179,14 @@ public class PwcgMainScreen extends ImageResizingPanel implements ActionListener
 
     private void validateInstallDirectory()
     {
-        String missionFilepath = PWCGDirectorySimulatorManager.getInstance().getSimulatorRootDir() + "Data" + File.separator + "Missions";
+        String missionFilepath = PWCGDirectorySimulatorManager.getInstance().getSimulatorRootDir() + "data" + File.separator + "Missions";
         try
         {
             File file = new File(missionFilepath);
             if (!file.exists())
             {
-                ErrorDialog.userError("PWCGCampaign is installed to the wrong directory.  It should be installed to the game root directory");
+                ErrorDialog.userError("PWCGCampaign is installed to the wrong directory.  It should be installed to the game root directory. Current directory: " +
+                        PWCGDirectorySimulatorManager.getInstance().getSimulatorRootDir());
             }
         }
         catch (Exception e)

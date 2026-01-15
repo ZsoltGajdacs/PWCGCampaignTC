@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.crewmember.CrewMember;
 import pwcg.core.exception.PWCGException;
+import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.gui.dialogs.PWCGMonitorFonts;
 import pwcg.gui.dialogs.PWCGMonitorSupport;
@@ -70,7 +71,7 @@ public class NewspaperAceLostUI extends JPanel
 
     private BufferedImage buildNewspaperImage() throws PWCGException, IOException
     {
-        String imagePath = PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir() + "Newspaper\\newspaperAce.png";
+		String imagePath = PWCGPath.join(PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir(), "Newspaper/") + "newspaperAce.png";
         BufferedImage newspaperImage = ImageCache.getImageFromFile(imagePath);
 
         BufferedImage newspaperImageWithPicture = addAcePicture(newspaperImage);

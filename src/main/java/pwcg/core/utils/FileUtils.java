@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
@@ -81,6 +82,81 @@ public class FileUtils
         }
 
         return false;
+    }
+
+    public static Path resolvePathCaseInsensitive(Path baseDir, String relativePath)
+    {
+        if (baseDir == null)
+        {
+            return null;
+        }
+
+        if (relativePath == null || relativePath.trim().isEmpty())
+        {
+            return baseDir;
+        }
+
+        Path relative = Paths.get(PWCGPath.normalize(relativePath));
+        return resolvePathCaseInsensitive(baseDir, relative);
+    }
+
+    public static Path resolvePathCaseInsensitive(Path baseDir, Path relativePath)
+    {
+        if (baseDir == null)
+        {
+            return null;
+        }
+
+        if (relativePath == null)
+        {
+            return baseDir;
+        }
+
+        Path direct = baseDir.resolve(relativePath);
+        if (Files.exists(direct))
+        {
+            return direct;
+        }
+
+        Path current = baseDir;
+        for (Path nameElement : relativePath)
+        {
+            String expectedName = nameElement.toString();
+            Path next = current.resolve(expectedName);
+            if (Files.exists(next))
+            {
+                current = next;
+                continue;
+            }
+
+            if (!Files.isDirectory(current))
+            {
+                return baseDir.resolve(relativePath);
+            }
+
+            Path matched = null;
+            try (var stream = Files.list(current))
+            {
+                matched = stream
+                    .filter(p -> p.getFileName() != null)
+                    .filter(p -> p.getFileName().toString().equalsIgnoreCase(expectedName))
+                    .findFirst()
+                    .orElse(null);
+            }
+            catch (Exception e)
+            {
+                return baseDir.resolve(relativePath);
+            }
+
+            if (matched == null)
+            {
+                return baseDir.resolve(relativePath);
+            }
+
+            current = matched;
+        }
+
+        return current;
     }
 
     public static void deleteFile(String sFilePath)

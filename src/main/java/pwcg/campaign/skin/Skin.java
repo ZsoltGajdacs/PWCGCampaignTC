@@ -36,7 +36,36 @@ public class Skin implements Cloneable
 	{
 	}
 	
-	public Skin copy ()
+	public Skin copy () 
+	{
+		Skin skin = null;
+		
+		try
+		{
+			skin = new Skin();
+			
+			skin.skinName = this.skinName;
+			skin.planeType = this.planeType;
+			skin.archTypes = this.archTypes;
+			skin.startDate = this.startDate;
+			skin.endDate = this.endDate;
+			skin.squadId = this.squadId;
+			skin.country = this.country;
+			skin.category = this.category;
+            skin.definedInGame = this.definedInGame;
+            skin.winter = this.winter;
+            skin.useTacticalCodes = this.useTacticalCodes;
+            skin.tacticalCodeColor = this.tacticalCodeColor;
+		}
+		catch (Exception e)
+		{
+            PWCGLogger.logException(e);
+		}
+		
+		return skin;
+	}
+
+    public boolean skinExists(String directory)
     {
         boolean exists = false;
 

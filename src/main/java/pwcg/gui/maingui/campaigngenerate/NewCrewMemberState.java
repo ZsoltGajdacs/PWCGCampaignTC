@@ -66,9 +66,24 @@ public class NewCrewMemberState
         currentStep = stateStack.get(stateIndex);        
     }
 
+    public void setCurrentStep(CrewMemberGeneratorWorkflow step)
+    {
+        int index = stateStack.indexOf(step);
+        if (index >= 0)
+        {
+            stateIndex = index;
+            currentStep = step;
+        }
+    }
+
     public CrewMemberGeneratorWorkflow getCurrentStep()
     {
         return currentStep;
+    }
+
+    public List<CrewMemberGeneratorWorkflow> getStateStack()
+    {
+        return new ArrayList<>(stateStack);
     }
 
     public boolean isComplete()
@@ -91,4 +106,3 @@ public class NewCrewMemberState
         return true;
     }
 }
-

@@ -45,7 +45,6 @@ import pwcg.gui.colors.ColorMap;
 import pwcg.gui.dialogs.ErrorDialog;
 import pwcg.gui.dialogs.PWCGMonitorFonts;
 import pwcg.gui.maingui.campaigngenerate.CampaignGeneratorState.CampaignGeneratorWorkflow;
-import pwcg.gui.utils.PWCGJButton;
 import pwcg.gui.utils.PWCGLabelFactory;
 
 public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListener
@@ -64,10 +63,13 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
     
     private JComboBox<String> cbCoopUser;
 	private JComboBox<String> cbMap;
-	private JComboBox<String> cbDate;
-	private JComboBox<String> cbRole;
-	private JComboBox<String> cbRank;
-	private JComboBox<String> cbCompany;
+    private JComboBox<String> cbDate;
+    private JComboBox<String> cbRole;
+    private JComboBox<String> cbRank;
+    private JComboBox<String> cbCompany;
+    private JComboBox<String> cbStep;
+
+    private List<CampaignGeneratorWorkflow> stepOrder = new ArrayList<>();
     
     private JLabel lPlayerName;
     private JLabel lCoopUser;
@@ -219,39 +221,65 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
     private int createNextStepWidget(GridBagConstraints labelConstraints, GridBagConstraints dataConstraints,
                     JPanel campaignGeneratePanel, int rowCount) throws PWCGException
     {
-        JLabel lNextStep = createCampaignGenMenuLabel("Next/Previous Step", labelConstraints, campaignGeneratePanel, rowCount);
+        JLabel lNextStep = createCampaignGenMenuLabel("Data Entry Step", labelConstraints, campaignGeneratePanel, rowCount);
         campaignGeneratePanel.add(lNextStep, labelConstraints);
 
-        Color fgColor = ColorMap.CHALK_FOREGROUND;
+        cbStep = new JComboBox<String>();
+        cbStep.setOpaque(false);
+        cbStep.setBackground(jComboBoxBackgroundColor);
+        cbStep.setActionCommand("StepChanged");
+        cbStep.addActionListener(this);
+        cbStep.setFont(font);
 
-        PWCGJButton nextStepButton = makeButton("Next Step", "NextStep", fgColor);        
+        stepOrder.clear();
+        for (CampaignGeneratorWorkflow step : parent.getCampaignGeneratorState().getStateStack())
+        {
+            stepOrder.add(step);
+            cbStep.addItem(getStepDisplayText(step));
+        }
+
         dataConstraints.gridx = 2;
         dataConstraints.gridy = rowCount;
-        campaignGeneratePanel.add(nextStepButton, dataConstraints);
-        ++rowCount;
-
-        PWCGJButton previousStepButton = makeButton("Previous Step", "PreviousStep", fgColor);
-        dataConstraints.gridx = 2;
-        dataConstraints.gridy = rowCount;
-        campaignGeneratePanel.add(previousStepButton, dataConstraints);
+        campaignGeneratePanel.add(cbStep, dataConstraints);
         ++rowCount;
 
         return rowCount;
     }
 
-    private PWCGJButton makeButton(String displayText, String commandText, Color fgColor) throws PWCGException
+    private String getStepDisplayText(CampaignGeneratorWorkflow step) throws PWCGException
     {
-        displayText = InternationalizationManager.getTranslation(displayText);
-        PWCGJButton nextStepButton = new PWCGJButton(displayText);      
-        nextStepButton.setActionCommand(commandText);
-        nextStepButton.setOpaque(false);
-        nextStepButton.setHorizontalAlignment(SwingConstants.LEFT);
-        nextStepButton.addActionListener(this);
-        nextStepButton.setBorderPainted(false);
-        nextStepButton.setFocusPainted(false);
-        nextStepButton.setForeground(fgColor);
-        nextStepButton.setFont(font);
-        return nextStepButton;
+        String labelText = step.name();
+        switch (step)
+        {
+            case CHOOSE_PLAYER_NAME:
+                labelText = "Player Name";
+                break;
+            case CHOOSE_COOP_USER:
+                labelText = "Coop User";
+                break;
+            case CHOOSE_MAP:
+                labelText = "Campaign Map";
+                break;
+            case CHOOSE_DATE:
+                labelText = "Campaign Start Date";
+                break;
+            case CHOOSE_ROLE:
+                labelText = "Role";
+                break;
+            case CHOOSE_RANK:
+                labelText = "CrewMember Rank";
+                break;
+            case CHOOSE_Company:
+                labelText = "Company";
+                break;
+            case COMPLETE:
+                labelText = "Complete";
+                break;
+            default:
+                break;
+        }
+
+        return InternationalizationManager.getTranslation(labelText);
     }
 
     private int createCampaignRoleWidget(GridBagConstraints labelConstraints, GridBagConstraints dataConstraints,
@@ -549,12 +577,27 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
 		constraints.gridx = column;
 		constraints.gridy = row;
 
-		panel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
-	}
+        panel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
+    }
+
+    private void updateStepSelection()
+    {
+        if (cbStep == null || stepOrder.isEmpty())
+        {
+            return;
+        }
+
+        int index = stepOrder.indexOf(parent.getCampaignGeneratorState().getCurrentStep());
+        if (index >= 0 && cbStep.getSelectedIndex() != index)
+        {
+            cbStep.setSelectedIndex(index);
+        }
+    }
 
 	public void evaluateUI() throws PWCGException 
 	{
 	    initializeWidgets();
+        updateStepSelection();
 
         if (parent.getCampaignGeneratorState().getCurrentStep() == CampaignGeneratorWorkflow.CHOOSE_PLAYER_NAME)
         {
@@ -814,17 +857,15 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
                     this.companyTextBox.setText(companyInfo);
                 }
             }
-            else if (ae.getActionCommand().equalsIgnoreCase("NextStep"))
+            else if (ae.getActionCommand().equalsIgnoreCase("StepChanged"))
             {
-                parent.getCampaignGeneratorState().goToNextStep();
-                evaluateUI();
-                parent.evaluateCompletionState();
-            }
-            else if (ae.getActionCommand().equalsIgnoreCase("PreviousStep"))
-            {
-                parent.getCampaignGeneratorState().goToPreviousStep();
-                evaluateUI();
-                parent.evaluateCompletionState();
+                int stepIndex = cbStep.getSelectedIndex();
+                if (stepIndex >= 0 && stepIndex < stepOrder.size())
+                {
+                    parent.getCampaignGeneratorState().setCurrentStep(stepOrder.get(stepIndex));
+                    evaluateUI();
+                    parent.evaluateCompletionState();
+                }
             }
             
             revalidate();

@@ -45,7 +45,6 @@ import pwcg.gui.colors.ColorMap;
 import pwcg.gui.dialogs.ErrorDialog;
 import pwcg.gui.dialogs.PWCGMonitorFonts;
 import pwcg.gui.maingui.campaigngenerate.NewCrewMemberState.CrewMemberGeneratorWorkflow;
-import pwcg.gui.utils.PWCGJButton;
 import pwcg.gui.utils.PWCGLabelFactory;
 
 public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
@@ -67,6 +66,9 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
 	private JComboBox<String> cbRank;
 	private JComboBox<String> cbCompany;
 	private JComboBox<String> cbCoopUser;
+    private JComboBox<String> cbStep;
+
+    private List<CrewMemberGeneratorWorkflow> stepOrder = new ArrayList<>();
     
     private JLabel lSquad;
     private JLabel lRank;
@@ -276,43 +278,62 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
 	private int createNextStepWidget(GridBagConstraints labelConstraints, GridBagConstraints dataConstraints,
                     JPanel campaignGeneratePanel, int rowCount) throws PWCGException
     {
-        JLabel lNextStep = createCampaignGenMenuLabel("Next/Previous Step", labelConstraints, campaignGeneratePanel, rowCount);
+        JLabel lNextStep = createCampaignGenMenuLabel("Data Entry Step", labelConstraints, campaignGeneratePanel, rowCount);
         campaignGeneratePanel.add(lNextStep, labelConstraints);
 
-        Color fgColor = ColorMap.CHALK_FOREGROUND;
+        cbStep = new JComboBox<String>();
+        cbStep.setOpaque(false);
+        cbStep.setBackground(jComboBoxBackgroundColor);
+        cbStep.setActionCommand("StepChanged");
+        cbStep.addActionListener(this);
+        cbStep.setFont(font);
 
-        String nextDisplayText = InternationalizationManager.getTranslation("Next Step");
-        PWCGJButton nextStepButton = new PWCGJButton(nextDisplayText);      
-        nextStepButton.setActionCommand("NextStep");
-        nextStepButton.setOpaque(false);
-        nextStepButton.setHorizontalAlignment(SwingConstants.LEFT);
-        nextStepButton.addActionListener(this);
-        nextStepButton.setBorderPainted(false);
-        nextStepButton.setFocusPainted(false);
-        nextStepButton.setForeground(fgColor);
-        nextStepButton.setFont(font);
+        stepOrder.clear();
+        for (CrewMemberGeneratorWorkflow step : parent.getNewCrewMemberState().getStateStack())
+        {
+            stepOrder.add(step);
+            cbStep.addItem(getStepDisplayText(step));
+        }
+
         dataConstraints.gridx = 2;
         dataConstraints.gridy = rowCount;
-        campaignGeneratePanel.add(nextStepButton, dataConstraints);
-
+        campaignGeneratePanel.add(cbStep, dataConstraints);
         ++rowCount;
 
-        String previousDisplayText = InternationalizationManager.getTranslation("Previous Step");
-        PWCGJButton previousStepButton = new PWCGJButton(previousDisplayText);      
-        previousStepButton.setActionCommand("PreviousStep");
-        previousStepButton.setOpaque(false);
-        previousStepButton.setHorizontalAlignment(SwingConstants.LEFT);
-        previousStepButton.addActionListener(this);
-        previousStepButton.setBorderPainted(false);
-        previousStepButton.setFocusPainted(false);
-        previousStepButton.setForeground(fgColor);
-        previousStepButton.setFont(font);
-        dataConstraints.gridx = 2;
-        dataConstraints.gridy = rowCount;
-        campaignGeneratePanel.add(previousStepButton, dataConstraints);
-        
-        ++rowCount;
         return rowCount;
+    }
+
+    private String getStepDisplayText(CrewMemberGeneratorWorkflow step) throws PWCGException
+    {
+        String labelText = step.name();
+        switch (step)
+        {
+            case CHOOSE_PLAYER_NAME:
+                labelText = "CrewMember Name";
+                break;
+            case CHOOSE_COOP_USER:
+                labelText = "Coop User";
+                break;
+            case CHOOSE_REGION:
+                labelText = "Region";
+                break;
+            case CHOOSE_ROLE:
+                labelText = "Role";
+                break;
+            case CHOOSE_RANK:
+                labelText = "CrewMember Rank";
+                break;
+            case CHOOSE_Company:
+                labelText = "Company";
+                break;
+            case COMPLETE:
+                labelText = "Complete";
+                break;
+            default:
+                break;
+        }
+
+        return InternationalizationManager.getTranslation(labelText);
     }
 
     private int createCampaignRoleWidget(GridBagConstraints labelConstraints, GridBagConstraints dataConstraints,
@@ -476,12 +497,27 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
 		constraints.gridx = column;
 		constraints.gridy = row;
 
-		panel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
-	}
+        panel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
+    }
+
+    private void updateStepSelection()
+    {
+        if (cbStep == null || stepOrder.isEmpty())
+        {
+            return;
+        }
+
+        int index = stepOrder.indexOf(parent.getNewCrewMemberState().getCurrentStep());
+        if (index >= 0 && cbStep.getSelectedIndex() != index)
+        {
+            cbStep.setSelectedIndex(index);
+        }
+    }
 
 	public void evaluateUI() throws PWCGException 
 	{
 	    initializeWidgets();
+	    updateStepSelection();
 
         if (parent.getNewCrewMemberState().getCurrentStep() == CrewMemberGeneratorWorkflow.CHOOSE_PLAYER_NAME)
         {
@@ -645,15 +681,14 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
                     this.companyTextBox.setText(companyInfo);
                 }
             }
-            else if (ae.getActionCommand().equalsIgnoreCase("NextStep"))
+            else if (ae.getActionCommand().equalsIgnoreCase("StepChanged"))
             {
-                parent.getNewCrewMemberState().goToNextStep();
-                evaluateUI() ;
-            }
-            else if (ae.getActionCommand().equalsIgnoreCase("PreviousStep"))
-            {
-                parent.getNewCrewMemberState().goToPreviousStep();
-                evaluateUI() ;
+                int stepIndex = cbStep.getSelectedIndex();
+                if (stepIndex >= 0 && stepIndex < stepOrder.size())
+                {
+                    parent.getNewCrewMemberState().setCurrentStep(stepOrder.get(stepIndex));
+                    evaluateUI();
+                }
             }
             
             revalidate();

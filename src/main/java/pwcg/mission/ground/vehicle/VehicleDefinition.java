@@ -3,6 +3,7 @@ package pwcg.mission.ground.vehicle;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
 import pwcg.campaign.context.Country;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.tank.TankTypeInformation;
@@ -10,6 +11,7 @@ import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.DateUtils;
 import pwcg.core.utils.IWeight;
 
+@Getter
 public class VehicleDefinition implements IWeight
 {
     public final static String UNKNOWN_VEHICLE_NAME = "Unknown Vehicle";
@@ -28,75 +30,10 @@ public class VehicleDefinition implements IWeight
     private int vehicleLength;
     private String archType = "";
 
-    public String getScriptDir()
-    {
-        return scriptDir;
-    }
-
-    public String getModelDir()
-    {
-        return modelDir;
-    }
-
-    public String getVehicleType()
-    {
-        return vehicleType;
-    }
-
-    public String getVehicleName()
-    {
-        return vehicleName;
-    }
-
-    public String getDisplayName()
-    {
-        return displayName;
-    }
-
-    public int getRarityWeight()
-    {
-        return rarityWeight;
-    }
-
     @Override
     public int getWeight()
     {
         return rarityWeight;
-    }
-
-    public String getAssociatedBlock()
-    {
-        return associatedBlock;
-    }
-
-    public int getVehicleLength()
-    {
-        return vehicleLength;
-    }
-
-    public VehicleClass getVehicleClass()
-    {
-        return vehicleClass;
-    }
-
-    public List<Country> getCountries()
-    {
-        return countries;
-    }
-
-    public Date getStartDate()
-    {
-        return startDate;
-    }
-
-    public Date getEndDate()
-    {
-        return endDate;
-    }
-
-    public String getArchType()
-    {
-        return archType;
     }
 
     public boolean shouldUse(VehicleRequestDefinition requestDefinition) throws PWCGException

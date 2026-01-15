@@ -3,9 +3,13 @@ package pwcg.aar.inmission.phase2.logeval.missionresultentity;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.campaign.crewmember.CrewMemberStatus;
 import pwcg.campaign.crewmember.SerialNumber;
 
+@Getter
+@Setter
 public class LogCrewMember
 {
     private int serialNumber = SerialNumber.NO_SERIAL_NUMBER;
@@ -24,45 +28,5 @@ public class LogCrewMember
         writer.write("        Status: " + getStatus());
         writer.newLine();
         writer.newLine();
-    }
-
-    public String getBotId()
-    {
-        return botId;
-    }
-
-    public void setBotId(String botId)
-    {
-        this.botId = botId;
-    }
-
-    public double getDamageLevel()
-    {
-        return damageLevel;
-    }
-
-    public void setDamageLevel(double damageLevel)
-    {
-        this.damageLevel = damageLevel;
-    }
-
-    public int getStatus()
-    {
-        return status;
-    }
-
-    public void setStatus(int status)
-    {
-        this.status = status;
-    }
-
-    public int getSerialNumber()
-    {
-        return serialNumber;
-    }
-
-    public void setSerialNumber(int serialNumber)
-    {
-        this.serialNumber = serialNumber;
     }
 }

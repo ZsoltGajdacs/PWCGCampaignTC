@@ -1,7 +1,9 @@
 package pwcg.campaign.resupply.equipment;
 
+import lombok.Getter;
 import pwcg.campaign.tank.EquippedTank;
 
+@Getter
 public class EquipmentResupplyRecord
 {
     private EquippedTank equippedTank;
@@ -16,10 +18,5 @@ public class EquipmentResupplyRecord
     public EquippedTank getEquippedPlane()
     {
         return equippedTank;
-    }
-
-    public int getTransferTo()
-    {
-        return transferTo;
     }
 }

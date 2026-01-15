@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.campaign.api.ICountry;
 import pwcg.campaign.context.Country;
 import pwcg.campaign.factory.CountryFactory;
@@ -11,6 +13,8 @@ import pwcg.core.location.Coordinate;
 import pwcg.core.location.Orientation;
 import pwcg.mission.target.TargetType;
 
+@Getter
+@Setter
 public class GroundUnitInformation
 {
     private ICountry country = CountryFactory.makeCountryByCountry(Country.NEUTRAL);
@@ -21,36 +25,6 @@ public class GroundUnitInformation
 	private Orientation orientation = new Orientation();
     private TargetType targetType = TargetType.TARGET_NONE;
     private String requestedUnitType = "";
-
-    public ICountry getCountry()
-    {
-        return country;
-    }
-
-    public void setCountry(ICountry country)
-    {
-        this.country = country;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public Coordinate getPosition()
-    {
-        return position;
-    }
-
-    public void setPosition(Coordinate position)
-    {
-        this.position = position;
-    }
 
     public Coordinate getDestination()
     {
@@ -64,45 +38,5 @@ public class GroundUnitInformation
     public void addDestination(Coordinate destination)
     {
         this.destinations.add(destination);
-    }
-
-    public Orientation getOrientation()
-    {
-        return orientation;
-    }
-
-    public void setOrientation(Orientation orientation)
-    {
-        this.orientation = orientation;
-    }
-
-    public TargetType getTargetType()
-    {
-        return targetType;
-    }
-
-    public void setTargetType(TargetType targetType)
-    {
-        this.targetType = targetType;
-    }
-
-    public Date getDate()
-    {
-        return date;
-    }
-
-    public void setDate(Date date)
-    {
-        this.date = date;
-    }
-
-    public String getRequestedUnitType()
-    {
-        return requestedUnitType;
-    }
-
-    public void setRequestedUnitType(String requestedUnitType)
-    {
-        this.requestedUnitType = requestedUnitType;
     }
 }

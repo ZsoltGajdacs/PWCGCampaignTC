@@ -2,12 +2,14 @@ package pwcg.mission.platoon;
 
 import java.util.List;
 
+import lombok.Getter;
 import pwcg.campaign.Campaign;
 import pwcg.campaign.api.ICountry;
 import pwcg.campaign.crewmember.CrewMember;
 import pwcg.mission.ICompanyMission;
 import pwcg.mission.Mission;
 
+@Getter
 public class PlatoonInformation
 {
     
@@ -29,32 +31,12 @@ public class PlatoonInformation
         return company.getCountry();
     }
 
-    public Mission getMission()
-    {
-        return mission;
-    }
-
-    public ICompanyMission getCompany()
-    {
-        return company;
-    }
-
     public String getBase()
     {
         return company.determineBaseName(campaign.getDate());
     }
 
-    public Campaign getCampaign()
-    {
-        return campaign;
-    }
-
     public List<CrewMember> getParticipatingPlayersForCompany()
-    {
-        return crewMembers;
-    }
-
-    public List<CrewMember> getCrewMembers()
     {
         return crewMembers;
     }

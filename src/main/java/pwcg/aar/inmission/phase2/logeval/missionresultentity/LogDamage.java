@@ -1,7 +1,11 @@
 package pwcg.aar.inmission.phase2.logeval.missionresultentity;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.core.location.Coordinate;
 
+@Getter
+@Setter
 public class LogDamage extends LogBase
 {
     private LogAIEntity victor = new LogUnknown();
@@ -12,45 +16,5 @@ public class LogDamage extends LogBase
     public LogDamage(int sequenceNumber)
     {
         super(sequenceNumber);
-    }
-
-    public LogAIEntity getVictor()
-    {
-        return victor;
-    }
-
-    public void setVictor(LogAIEntity victor)
-    {
-        this.victor = victor;
-    }
-
-    public LogAIEntity getVictim()
-    {
-        return victim;
-    }
-
-    public void setVictim(LogAIEntity victim)
-    {
-        this.victim = victim;
-    }
-
-    public Coordinate getLocation()
-    {
-        return location;
-    }
-
-    public void setLocation(Coordinate location)
-    {
-        this.location = location;
-    }
-
-    public double getDamageLevel()
-    {
-        return damageLevel;
-    }
-
-    public void setDamageLevel(double damageLevel)
-    {
-        this.damageLevel = damageLevel;
     }
 }

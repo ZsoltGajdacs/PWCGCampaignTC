@@ -1,10 +1,12 @@
 package pwcg.mission.flight;
 
+import lombok.Getter;
 import pwcg.campaign.api.ICountry;
 import pwcg.campaign.plane.PlaneType;
 import pwcg.core.location.Coordinate;
 import pwcg.mission.Mission;
 
+@Getter
 public class FlightBuildInformation
 {
     private static int FLIGHT_COUNT = 1;
@@ -24,35 +26,5 @@ public class FlightBuildInformation
         this.planeType = planeType;
         this.flightName = planeType.getType() + "_" + FLIGHT_COUNT;
         this.homePosition = homePosition;
-    }
-
-    public Mission getMission()
-    {
-        return mission;
-    }
-
-    public ICountry getCountry()
-    {
-        return country;
-    }
-
-    public FlightTypes getFlightType()
-    {
-        return flightType;
-    }
-
-    public PlaneType getPlaneType()
-    {
-        return planeType;
-    }
-
-    public String getFlightName()
-    {
-        return flightName;
-    }
-
-    public Coordinate getHomePosition()
-    {
-        return homePosition;
     }
 }

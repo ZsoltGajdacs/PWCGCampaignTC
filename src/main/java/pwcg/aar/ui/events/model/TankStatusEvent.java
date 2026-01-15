@@ -11,13 +11,17 @@ import pwcg.campaign.crewmember.CrewMember;
 import pwcg.campaign.tank.EquippedTank;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.DateUtils;
+import lombok.Getter;
 
 public class TankStatusEvent extends AARCrewMemberEvent
 {
+    @Getter
     private int crewMemberSerialNumber;
     private int tankSerialNumber;
-    private String companyName;
+    @Getter
 	private int tankStatus;
+    @Getter
+    private String companyName;
 	
     public TankStatusEvent(Campaign campaign, LogTank lostPlane, int planeStatus, boolean isNewsWorthy)
     {
@@ -88,23 +92,8 @@ public class TankStatusEvent extends AARCrewMemberEvent
         return planeEventText;
     }
 
-    public int getTankStatus()
-    {
-        return tankStatus;
-    }
-
     public int getPlaneSerialNumber()
     {
         return tankSerialNumber;
-    }
-    
-    public int getCrewMemberSerialNumber()
-    {
-        return crewMemberSerialNumber;
-    }
-
-    public String getCompanyName()
-    {
-        return companyName;
     }
 }

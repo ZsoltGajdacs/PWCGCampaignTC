@@ -2,8 +2,10 @@ package pwcg.aar.ui.events.model;
 
 import java.util.Date;
 
+import lombok.Getter;
 import pwcg.campaign.Campaign;
 
+@Getter
 public class MedalEvent extends AARCrewMemberEvent
 {
     private String medal = "";
@@ -12,10 +14,5 @@ public class MedalEvent extends AARCrewMemberEvent
     {
         super(campaign, companyId, crewMemberSerialNumber, date, isNewsWorthy);
         this.medal = medal;
-    }
-
-    public String getMedal()
-    {
-        return medal;
     }
 }

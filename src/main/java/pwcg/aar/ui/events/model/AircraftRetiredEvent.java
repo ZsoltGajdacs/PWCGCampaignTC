@@ -2,18 +2,16 @@ package pwcg.aar.ui.events.model;
 
 import java.util.Date;
 
+import lombok.Getter;
+
+@Getter
 public class AircraftRetiredEvent  extends AAREvent
 {
-    private String aircraftType = "";
+    private String aircraft = "";
 
     public AircraftRetiredEvent(String aircraftType, Date date, boolean isNewsWorthy)
     {
         super(date, isNewsWorthy);
-        this.aircraftType = aircraftType;
-    }
-
-    public String getAircraft()
-    {
-        return aircraftType;
+        this.aircraft = aircraftType;
     }
 }

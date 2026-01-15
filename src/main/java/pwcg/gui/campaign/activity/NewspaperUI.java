@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.newspapers.Newspaper;
 import pwcg.core.exception.PWCGException;
+import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.gui.dialogs.PWCGMonitorFonts;
 import pwcg.gui.image.ImageCache;
@@ -63,7 +64,7 @@ public class NewspaperUI extends JPanel
 
     private BufferedImage buildNewspaperImage() throws PWCGException, IOException
     {
-        String imagePath = PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir() + "Newspaper\\newspaper.png";
+		String imagePath = PWCGPath.join(PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir(), "Newspaper/") + "newspaper.png";
         BufferedImage newspaperImage = ImageCache.getImageFromFile(imagePath);
 
         BufferedImage newspaperImageWithPicture = addNewpaperPicture(newspaperImage);
@@ -74,7 +75,7 @@ public class NewspaperUI extends JPanel
   
     private BufferedImage addNewpaperPicture(BufferedImage newspaperImage) throws PWCGException
     {
-        String imagePicturePath = PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir() + "Newspaper\\" + newspaper.formNewspaperPictureName();
+		String imagePicturePath = PWCGPath.join(PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir(), "Newspaper/") + newspaper.formNewspaperPictureName();
         BufferedImage newspaperPictureImage = ImageCache.getImageFromFile(imagePicturePath);
         if (newspaperPictureImage != null)
         {

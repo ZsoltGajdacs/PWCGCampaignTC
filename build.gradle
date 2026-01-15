@@ -46,6 +46,10 @@ jar {
  	manifest {
         attributes 'Main-Class': 'pwcg.gui.maingui.PwcgMain'
     }
+
+    from('TCData') {
+        into 'TCData'
+    }
     
 	from {
     	configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
@@ -54,10 +58,31 @@ jar {
 
 def isWindows = System.getProperty('os.name').toLowerCase().contains('windows')
 
+def defaultIl2Dir = "${System.getProperty('user.home')}/.steam/steam/steamapps/common/IL-2 Sturmovik Battle of Stalingrad"
+def il2Dir = (findProperty('il2Dir') ?: System.getenv('IL2_DIR') ?: defaultIl2Dir) as String
+
 tasks.register('copyJar', Copy) {
     onlyIf { isWindows }
     from("$buildDir/libs/PWCGTC.jar")
     into("D:/PWCG/Deploy")
+}
+
+tasks.register('deployIL2', Copy) {
+    dependsOn 'jar'
+
+    def il2DirFile = file(il2Dir)
+    onlyIf { il2DirFile.exists() }
+
+    from("$buildDir/libs/PWCGTC.jar")
+    into(il2DirFile)
+
+    doFirst {
+        logger.lifecycle("Deploying PWCGTC.jar to IL-2 dir: ${il2DirFile}")
+    }
+}
+
+tasks.register('buildAndDeployIL2') {
+    dependsOn 'deployIL2'
 }
 
 test {

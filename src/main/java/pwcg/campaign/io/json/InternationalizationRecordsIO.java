@@ -14,7 +14,7 @@ public class InternationalizationRecordsIO
 	    }
 	    catch (Exception e)
 	    {
-	        return readJsonFromFile("International.En.json");
+	        return readJsonFromFile("International.EN.json");
 	    }
 	}
 

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import pwcg.campaign.context.PWCGContext;
 import pwcg.core.exception.PWCGException;
+import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.gui.dialogs.PWCGMonitorSupport;
 import pwcg.gui.image.ImageCache;
@@ -61,7 +62,7 @@ public class NewspaperEndOfWarUI extends JPanel
 
     private BufferedImage buildNewspaperImage() throws PWCGException, IOException
     {
-        String imagePath = PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir() + "Newspaper\\newspaperEndOfWar.png";
+		String imagePath = PWCGPath.join(PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir(), "Newspaper/") + "newspaperEndOfWar.png";
         BufferedImage newspaperImage = ImageCache.getImageFromFile(imagePath);
         BufferedImage resizedImage = resizeImage(newspaperImage);
         return resizedImage;

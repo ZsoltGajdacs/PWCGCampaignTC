@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -19,6 +18,7 @@ import pwcg.campaign.context.PWCGContext;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.location.Coordinate;
 import pwcg.core.utils.MathUtils;
+import pwcg.core.utils.PWCGPath;
 import pwcg.core.utils.PWCGLogger;
 import pwcg.gui.colors.ColorMap;
 import pwcg.gui.image.ImageCache;
@@ -34,7 +34,7 @@ import pwcg.mission.ground.org.IGroundUnit;
 import pwcg.mission.platoon.ITankPlatoon;
 import pwcg.mission.target.FrontSegmentDefinition;
 
-public class BriefingMapPanel extends MapPanelZoomedBase implements ActionListener
+public class BriefingMapPanel extends MapPanelZoomedBase
 {
     private static final long serialVersionUID = 1L;
     public static int NO_MAP_POINT_SELECTED = -1;
@@ -174,7 +174,7 @@ public class BriefingMapPanel extends MapPanelZoomedBase implements ActionListen
         for (FrontSegmentDefinition assaultDefinition : mission.getBattleManager().getMissionAssaultDefinitions())
         {
             BufferedImage arrowImage = null;
-            String imagePath = PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir() + "Overlay\\";
+            String imagePath = PWCGPath.join(PWCGContext.getInstance().getDirectoryManager().getPwcgImagesDir(), "Overlay/");
             if (assaultDefinition.getAssaultingCountry().getSide() == Side.ALLIED)
             {
                 imagePath += "RedArrow.png";

@@ -1,3 +1,5 @@
+Documentation: Documentation/UI-Modernization-Plan.md (UI modernization options).
+
 PWCG is a career mode.  It has been under development since 2009, starting with RoF and then moving to BoS and FC.  PWCG offers unrivaled variation in missions for Great Battles series of flight simulators.  When you create a PWCG campaign you create a small world where things happen with and without you.
 
 

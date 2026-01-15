@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
+
 public class CoopUser
 {
     public static final String COOP_FORMAT_VERSION = "V2";
     
+    @Getter
     private String formatVersion;
+    @Getter
     private String username;
     private Map<String, CoopCampaignPersonas> campaignPersonas = new HashMap<>();
     
@@ -17,11 +21,6 @@ public class CoopUser
     {
         this.username = username;
         this.formatVersion = formatVersion;
-    }
-
-    public String getUsername()
-    {
-        return username;
     }
 
     public void addPersona(String campaignName, int serialNumber, String crewMemberName)
@@ -79,11 +78,6 @@ public class CoopUser
     public void addCoopCampaignPersonas(String campaignName, CoopCampaignPersonas coopCampaignPersona)
     {
         campaignPersonas.put(campaignName, coopCampaignPersona);
-    }
-
-    public String getFormatVersion()
-    {
-        return formatVersion;
     }
 
     public void validate()

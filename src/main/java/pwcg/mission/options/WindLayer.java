@@ -5,6 +5,9 @@ import pwcg.core.config.ConfigItemKeys;
 import pwcg.core.config.ConfigManagerCampaign;
 import pwcg.core.exception.PWCGException;
 
+import lombok.Getter;
+
+@Getter
 public class WindLayer
 {
     private int layer;
@@ -23,20 +26,5 @@ public class WindLayer
         {
             this.speed = maxWind;
         }
-    }
-
-    public int getLayer()
-    {
-        return layer;
-    }
-
-    public int getDirection()
-    {
-        return direction;
-    }
-
-    public int getSpeed()
-    {
-        return speed;
     }
 }

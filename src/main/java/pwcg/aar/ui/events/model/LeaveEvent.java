@@ -2,8 +2,10 @@ package pwcg.aar.ui.events.model;
 
 import java.util.Date;
 
+import lombok.Getter;
 import pwcg.campaign.Campaign;
 
+@Getter
 public class LeaveEvent extends AARCrewMemberEvent
 {
     private int leaveTime = 0;
@@ -12,10 +14,5 @@ public class LeaveEvent extends AARCrewMemberEvent
     {
         super(campaign, companyId, crewMemberSerialNumber, date, isNewsWorthy);
         this.leaveTime = leaveTime;
-    }
-
-    public int getLeaveTime()
-    {
-        return leaveTime;
     }
 }

@@ -2,6 +2,7 @@ package pwcg.aar.ui.events.model;
 
 import java.util.Date;
 
+import lombok.Getter;
 import pwcg.campaign.Campaign;
 import pwcg.campaign.company.Company;
 import pwcg.campaign.company.CompanyManager;
@@ -9,6 +10,7 @@ import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.crewmember.CrewMember;
 import pwcg.campaign.crewmember.SerialNumber;
 
+@Getter
 public class AARCrewMemberEvent extends AAREvent
 {
     public static final int ALL_CompanyS = -1;
@@ -47,25 +49,5 @@ public class AARCrewMemberEvent extends AAREvent
             this.companyName = "";
             e.printStackTrace();
         }
-    }
-
-    public Integer getCompanyId()
-    {
-        return companyId;
-    }
-
-    public int getCrewMemberSerialNumber()
-    {
-        return crewMemberSerialNumber;
-    }
-
-    public String getCompanyName()
-    {
-        return companyName;
-    }
-
-    public String getCrewMemberName()
-    {
-        return crewMemberName;
     }
 }

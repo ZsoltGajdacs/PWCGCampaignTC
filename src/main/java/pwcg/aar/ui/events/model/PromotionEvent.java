@@ -2,8 +2,10 @@ package pwcg.aar.ui.events.model;
 
 import java.util.Date;
 
+import lombok.Getter;
 import pwcg.campaign.Campaign;
 
+@Getter
 public class PromotionEvent extends AARCrewMemberEvent
 {
     private String oldRank = "";
@@ -16,20 +18,5 @@ public class PromotionEvent extends AARCrewMemberEvent
         this.oldRank = oldRank;
         this.newRank = newRank;
         this.promotingGeneral = promotingGeneral;
-    }
-
-    public String getNewRank()
-    {
-        return newRank;
-    }
-
-    public String getOldRank()
-    {
-        return oldRank;
-    }
-
-    public String getPromotingGeneral()
-    {
-        return promotingGeneral;
     }
 }

@@ -5,21 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class CoopUserOlde
 {
+    @Getter
+    @Setter
     private String username;
     private Map<Integer, CoopPersonaOlde> userPersonas = new HashMap<>();
-    
-
-    public String getUsername()
-    {
-        return username;
-    }
-
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
     
     public void addPersona(CoopPersonaOlde persona)
     {

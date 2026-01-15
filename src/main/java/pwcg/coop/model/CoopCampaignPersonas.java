@@ -5,23 +5,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class CoopCampaignPersonas
 {
+    @Getter
     private String campaignName;
     private Map<Integer, String> campaignCrewMembers = new TreeMap<>();
-
-    public CoopCampaignPersonas()
-    {
-    }
     
     public CoopCampaignPersonas(String campaignName)
     {
         this.campaignName = campaignName;
-    }
-    
-    public String getCampaignName()
-    {
-        return campaignName;
     }
 
     public List<Integer> getSerialNumbers()

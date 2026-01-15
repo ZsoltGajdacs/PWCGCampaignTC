@@ -43,8 +43,8 @@ public enum ScreenIdentifier
     MissingSkinScreen("MissingSkinScreen", "Missing Skin Screen", "TableTop.jpg"),    
     BriefingEditorEditorScreen("BriefingEditorEditorScreen", "Briefing Waypoint Editor Screen", "TableTop.jpg"),
         
-    CampaignCrewMemberChalkboard("CampaignCrewMemberChalkboard", "Campaign CrewMember Chalkboard", "chalkboard.png"),
-    CampaignEquipmentChalkboard("CampaignEquipmentChalkboard", "Campaign Equipment Chalkboard", "chalkboard.png"),
+    CampaignCrewMemberChalkboard("CampaignCrewMemberChalkboard", "Campaign CrewMember Chalkboard", "Chalkboard.png"),
+    CampaignEquipmentChalkboard("CampaignEquipmentChalkboard", "Campaign Equipment Chalkboard", "Chalkboard.png"),
     PlaqueBronzeBackground("PlaqueBronzeBackground", "Campaign Home CrewMember List Plaque", "PlaqueBronzeBackground.png"),
     CampaignHomeCompanyPlaque("CampaignHomeCompanyPlaque", "Campaign Home Company Plaque", "PlaqueBronze.png"),
     Document("Document", "Document", "document.png"),

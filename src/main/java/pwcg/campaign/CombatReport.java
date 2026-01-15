@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class CombatReport 
 {
     private List<String> flightCrewMembers = new ArrayList<>();
@@ -25,110 +30,5 @@ public class CombatReport
 	public void addFlightCrewMember(String crewMemberName)
 	{
 	    flightCrewMembers.add(crewMemberName);
-	}
-
-	public Integer getCrewMemberSerialNumber()
-    {
-        return crewMemberSerialNumber;
-    }
-
-    public void setCrewMemberSerialNumber(Integer crewMemberSerialNumber)
-    {
-        this.crewMemberSerialNumber = crewMemberSerialNumber;
-    }
-
-    public List<String> getFlightCrewMembers() 
-	{
-		return flightCrewMembers;
-	}
-
-	public String getCompany()
-	{
-		return company;
-	}
-
-	public void setCompany(String company)
-	{
-		this.company = company;
-	}
-
-	public String getReportCrewMemberName() 
-	{
-		return reportCrewMemberName;
-	}
-
-	public void setReportCrewMemberName(String reportCrewMemberName) 
-	{
-		this.reportCrewMemberName = reportCrewMemberName;
-	}
-
-	public Date getDate()
-	{
-		return date;
-	}
-
-	public void setDate(Date date)
-	{
-		this.date = date;
-	}
-
-	public String getTime()
-	{
-		return time;
-	}
-
-	public void setTime(String time)
-	{
-		this.time = time;
-	}
-
-	public String getType()
-	{
-		return type;
-	}
-
-	public void setType(String type)
-	{
-		this.type = type;
-	}
-
-	public String getLocality()
-	{
-		return locality;
-	}
-
-	public void setLocality(String locality)
-	{
-		this.locality = locality;
-	}
-
-	public String getDuty()
-	{
-		return duty;
-	}
-
-	public void setDuty(String duty)
-	{
-		this.duty = duty;
-	}
-
-	public String getHaReport()
-	{
-		return haReport;
-	}
-
-	public void setHaReport(String haReport)
-	{
-		this.haReport = haReport;
-	}
-
-	public String getNarrative()
-	{
-		return narrative;
-	}
-
-	public void setNarrative(String narrative)
-	{
-		this.narrative = narrative;
 	}
 }

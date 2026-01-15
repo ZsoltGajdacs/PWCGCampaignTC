@@ -6,9 +6,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.PWCGLogger;
 
+@Getter
+@Setter
 public class McuMedia extends BaseFlightMcu
 {
 	public static final int MEDIA_TYPE_UNKNOWN = -1;
@@ -104,90 +108,6 @@ public class McuMedia extends BaseFlightMcu
             PWCGLogger.logException(e);
             throw new PWCGException(e.getMessage());
         }
-	}
-
-	public int getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
-	}
-
-	public String getConfig() {
-		return config;
-	}
-
-	public void setConfig(String config) {
-		this.config = config;
-	}
-
-	public int getTotalTime() {
-		return totalTime;
-	}
-
-	public void setTotalTime(int totalTime) {
-		this.totalTime = totalTime;
-	}
-
-	public int getExpandTime() {
-		return expandTime;
-	}
-
-	public void setExpandTime(int expandTime) {
-		this.expandTime = expandTime;
-	}
-
-	public int getFadeTime() {
-		return fadeTime;
-	}
-
-	public void setFadeTime(int fadeTime) {
-		this.fadeTime = fadeTime;
-	}
-
-	public int getOpacity() {
-		return opacity;
-	}
-
-	public void setOpacity(int opacity) {
-		this.opacity = opacity;
-	}
-
-	public int getrColor() {
-		return rColor;
-	}
-
-	public void setrColor(int rColor) {
-		this.rColor = rColor;
-	}
-
-	public int getgColor() {
-		return gColor;
-	}
-
-	public void setgColor(int gColor) {
-		this.gColor = gColor;
-	}
-
-	public int getbColor() {
-		return bColor;
-	}
-
-	public void setbColor(int bColor) {
-		this.bColor = bColor;
-	}
-
-	public int getMediaType() {
-		return mediaType;
-	}
-
-	public void setMediaType(int mediaType) {
-		this.mediaType = mediaType;
-	}
-
-	public List<McuEvent> getEventList() {
-		return eventList;
 	}
 
 	public void addEvent(McuEvent event) {

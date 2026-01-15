@@ -2,6 +2,8 @@ package pwcg.campaign.crewmember;
 
 import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.aar.inmission.phase2.logeval.missionresultentity.LogAIEntity;
 import pwcg.aar.inmission.phase2.logeval.missionresultentity.LogCrewMember;
 import pwcg.aar.inmission.phase2.logeval.missionresultentity.LogNonPlayerVehicle;
@@ -12,6 +14,8 @@ import pwcg.campaign.company.Company;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.core.exception.PWCGException;
 
+@Getter
+@Setter
 public class VictoryEntity
 {
     private int airOrGround = Victory.UNSPECIFIED_VICTORY;
@@ -106,21 +110,6 @@ public class VictoryEntity
         isGunner = true;
     }
 
-    public int getAirOrGround()
-    {
-        return airOrGround;
-    }
-
-    public void setAirOrGround(int airOrGround)
-    {
-        this.airOrGround = airOrGround;
-    }
-
-    public String getType()
-    {
-        return type;
-    }
-
     public void setType(String vehicleType)
     {
         if (vehicleType.contains("["))
@@ -130,63 +119,5 @@ public class VictoryEntity
         }
 
         this.type = vehicleType;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public String getCompanyName()
-    {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName)
-    {
-        this.companyName = companyName;
-    }
-
-    public Integer getCrewMemberSerialNumber()
-    {
-        return crewMemberSerialNumber;
-    }
-
-    public void setCrewMemberSerialNumber(Integer crewMemberSerialNumber)
-    {
-        this.crewMemberSerialNumber = crewMemberSerialNumber;
-    }
-
-    public int getCrewMemberStatus()
-    {
-        return crewMemberStatus;
-    }
-
-    public void setCrewMemberStatus(int crewMemberStatus)
-    {
-        this.crewMemberStatus = crewMemberStatus;
-    }
-
-    public String getCrewMemberName()
-    {
-        return crewMemberName;
-    }
-
-    public void setCrewMemberName(String crewMemberName)
-    {
-        this.crewMemberName = crewMemberName;
-    }
-
-    public boolean isGunner() {
-        return isGunner;
-    }
-
-    public void setGunner(boolean isGunner) {
-        this.isGunner = isGunner;
     }
 }

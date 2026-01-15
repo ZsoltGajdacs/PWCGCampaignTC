@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.campaign.Campaign;
 import pwcg.campaign.api.ICountry;
 import pwcg.campaign.api.IFixedPosition;
@@ -23,6 +25,8 @@ import pwcg.mission.ground.building.PwcgBuildingIdentifier;
 import pwcg.mission.ground.building.PwcgStructure;
 import pwcg.mission.mcu.McuTREntity;
 
+@Getter
+@Setter
 public class FixedPosition extends PWCGLocation implements Cloneable, IFixedPosition
 {
     protected int index;
@@ -166,26 +170,6 @@ public class FixedPosition extends PWCGLocation implements Cloneable, IFixedPosi
         return icountry;
     }
 
-    public int getIndex()
-    {
-        return index;
-    }
-
-    public void setIndex(int index)
-    {
-        this.index = index;
-    }
-
-    public int getLinkTrId()
-    {
-        return linkTrId;
-    }
-
-    public void setLinkTrId(int linkTrId)
-    {
-        this.linkTrId = linkTrId;
-    }
-
     public Orientation getOrientation()
     {
         return orientation.copy();
@@ -194,85 +178,5 @@ public class FixedPosition extends PWCGLocation implements Cloneable, IFixedPosi
     public void setOrientation(Orientation orientation)
     {
         this.orientation = orientation;
-    }
-
-    public String getDesc()
-    {
-        return desc;
-    }
-
-    public void setDesc(String desc)
-    {
-        this.desc = desc;
-    }
-
-    public String getModel()
-    {
-        return model;
-    }
-
-    public void setModel(String model)
-    {
-        this.model = model;
-    }
-
-    public String getScript()
-    {
-        return script;
-    }
-
-    public void setScript(String script)
-    {
-        this.script = script;
-    }
-
-    public int getDurability()
-    {
-        return durability;
-    }
-
-    public void setDurability(int durability)
-    {
-        this.durability = durability;
-    }
-
-    public int getDamageReport()
-    {
-        return damageReport;
-    }
-
-    public void setDamageReport(int damageReport)
-    {
-        this.damageReport = damageReport;
-    }
-
-    public int getDamageThreshold()
-    {
-        return damageThreshold;
-    }
-
-    public void setDamageThreshold(int damageThreshold)
-    {
-        this.damageThreshold = damageThreshold;
-    }
-
-    public int getDeleteAfterDeath()
-    {
-        return deleteAfterDeath;
-    }
-
-    public void setDeleteAfterDeath(int deleteAfterDeath)
-    {
-        this.deleteAfterDeath = deleteAfterDeath;
-    }
-
-    public Map<Integer, Double> getDamaged()
-    {
-        return damaged;
-    }
-
-    public void setDamaged(Map<Integer, Double> damaged)
-    {
-        this.damaged = damaged;
     }
 }

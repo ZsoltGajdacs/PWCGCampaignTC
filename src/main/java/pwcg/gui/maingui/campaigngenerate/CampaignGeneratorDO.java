@@ -3,6 +3,8 @@ package pwcg.gui.maingui.campaigngenerate;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.campaign.ArmedService;
 import pwcg.campaign.Campaign;
 import pwcg.campaign.CampaignMode;
@@ -15,6 +17,8 @@ import pwcg.coop.CoopUserManager;
 import pwcg.coop.model.CoopUser;
 import pwcg.core.exception.PWCGException;
 
+@Getter
+@Setter
 public class CampaignGeneratorDO
 {
     private ArmedService service = null;
@@ -116,36 +120,6 @@ public class CampaignGeneratorDO
         initializeForService();
     }
 
-    public String getCampaignName()
-    {
-        return campaignName;
-    }
-
-    public void setCampaignName(String campaignName)
-    {
-        this.campaignName = campaignName;
-    }
-    
-   public String getPlayerCrewMemberName()
-    {
-        return playerCrewMemberName;
-    }
-
-    public void setPlayerCrewMemberName(String playerCrewMemberName)
-    {
-        this.playerCrewMemberName = playerCrewMemberName;
-    }
-
-    public String getRegion()
-    {
-        return region;
-    }
-
-    public void setRegion(String region)
-    {
-        this.region = region;
-    }
-
     public String getRank()
     {
         return rankName;
@@ -155,64 +129,4 @@ public class CampaignGeneratorDO
     {
         this.rankName = rank;
     }
-
-    public String getSquadName()
-    {
-        return squadName;
-    }
-
-    public void setSquadName(String squadName)
-    {
-        this.squadName = squadName;
-    }
-
-    public Date getStartDate()
-    {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate)
-    {
-        this.startDate = startDate;
-    }
-
-    public PwcgRole getRole()
-    {
-        return role;
-    }
-
-    public void setRole(PwcgRole role)
-    {
-        this.role = role;
-    }
-
-	public FrontMapIdentifier getFrontMap()
-	{
-		return frontMap;
-	}
-
-	public void setFrontMap(FrontMapIdentifier frontMap)
-	{
-		this.frontMap = frontMap;
-	}
-
-	public String getCoopUser() 
-	{
-		return coopUser;
-	}
-
-	public void setCoopUser(String coopUser) 
-	{
-		this.coopUser = coopUser;
-	}
-
-    public CampaignMode getCampaignMode()
-    {
-        return campaignMode;
-    }
-
-    public void setCampaignMode(CampaignMode campaignMode)
-    {
-        this.campaignMode = campaignMode;
-    }        
 }

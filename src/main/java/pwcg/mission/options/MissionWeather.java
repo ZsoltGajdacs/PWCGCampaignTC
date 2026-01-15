@@ -3,6 +3,7 @@ package pwcg.mission.options;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import pwcg.campaign.Campaign;
@@ -26,6 +27,8 @@ public class MissionWeather
     private int cloudLevel = 2100;
     private int cloudDensity = 600;
     private int precLevel = 0;
+    @Getter(AccessLevel.NONE) 
+    @Setter(AccessLevel.NONE)
     private PrecipitationType precType = PrecipitationType.CLEAR;
     private double turbulence = 1.0;
     private int tempPressLevel = 0;
@@ -334,5 +337,10 @@ public class MissionWeather
     public int getPrecType()
     {
         return precType.getPrecipitationValue();
+    }
+
+    public void setPrecType(PrecipitationType precType)
+    {
+        this.precType = precType;
     }
 }

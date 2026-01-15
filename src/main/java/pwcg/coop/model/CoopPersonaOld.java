@@ -1,5 +1,10 @@
 package pwcg.coop.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class CoopPersonaOld
 {
     private String username;
@@ -10,84 +15,4 @@ public class CoopPersonaOld
     private int companyId;
     private boolean approved;
     private String note;
-
-    public String getUsername()
-    {
-        return username;
-    }
-
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-
-    public String getCampaignName()
-    {
-        return campaignName;
-    }
-
-    public void setCampaignName(String campaignName)
-    {
-        this.campaignName = campaignName;
-    }
-
-    public String getCrewMemberName()
-    {
-        return crewMemberName;
-    }
-
-    public void setCrewMemberName(String crewMemberName)
-    {
-        this.crewMemberName = crewMemberName;
-    }
-    
-    public String getCrewMemberRank()
-    {
-        return crewMemberRank;
-    }
-
-    public void setCrewMemberRank(String crewMemberRank)
-    {
-        this.crewMemberRank = crewMemberRank;
-    }
-
-    public int getSerialNumber()
-    {
-        return serialNumber;
-    }
-
-    public void setSerialNumber(int serialNumber)
-    {
-        this.serialNumber = serialNumber;
-    }
-
-    public int getCompanyId()
-    {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId)
-    {
-        this.companyId = companyId;
-    }
-
-    public boolean isApproved()
-    {
-        return approved;
-    }
-
-    public void setApproved(boolean approved)
-    {
-        this.approved = approved;
-    }
-
-    public String getNote()
-    {
-        return note;
-    }
-
-    public void setNote(String note)
-    {
-        this.note = note;
-    }
 }

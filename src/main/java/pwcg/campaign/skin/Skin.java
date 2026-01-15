@@ -3,11 +3,15 @@ package pwcg.campaign.skin;
 import java.io.File;
 import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
 import pwcg.campaign.context.PWCGDirectorySimulatorManager;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.DateUtils;
 import pwcg.core.utils.PWCGLogger;
 
+@Getter
+@Setter
 public class Skin implements Cloneable
 {
     public static final String PRODUCT_SKIN_DIR = PWCGDirectorySimulatorManager.getInstance().getSkinsDir();
@@ -32,36 +36,7 @@ public class Skin implements Cloneable
 	{
 	}
 	
-	public Skin copy () 
-	{
-		Skin skin = null;
-		
-		try
-		{
-			skin = new Skin();
-			
-			skin.skinName = this.skinName;
-			skin.planeType = this.planeType;
-			skin.archTypes = this.archTypes;
-			skin.startDate = this.startDate;
-			skin.endDate = this.endDate;
-			skin.squadId = this.squadId;
-			skin.country = this.country;
-			skin.category = this.category;
-            skin.definedInGame = this.definedInGame;
-            skin.winter = this.winter;
-            skin.useTacticalCodes = this.useTacticalCodes;
-            skin.tacticalCodeColor = this.tacticalCodeColor;
-		}
-		catch (Exception e)
-		{
-            PWCGLogger.logException(e);
-		}
-		
-		return skin;
-	}
-
-    public boolean skinExists(String directory)
+	public Skin copy ()
     {
         boolean exists = false;
 
@@ -85,15 +60,6 @@ public class Skin implements Cloneable
         return exists;
     }
 
-
-	public String getSkinName() {
-		return skinName;
-	}
-
-	public void setSkinName(String skinName) {
-		this.skinName = skinName;
-	}
-
 	public String getPlane() {
 		return planeType;
 	}
@@ -101,88 +67,4 @@ public class Skin implements Cloneable
 	public void setPlane(String plane) {
 		this.planeType = plane;
 	}
-
-	public String[] getArchTypes() {
-        return archTypes;
-    }
-
-    public void setArchTypes(String[] archTypes) {
-        this.archTypes = archTypes;
-    }
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date date) {
-		this.startDate = date;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-    public int getSquadId()
-    {
-        return this.squadId;
-    }
-
-    public void setSquadId(int squadId)
-    {
-        this.squadId = squadId;
-    }
-
-    public String getCountry()
-    {
-        return this.country;
-    }
-
-    public void setCountry(String country)
-    {
-        this.country = country;
-    }
-
-    public boolean isDefinedInGame()
-    {
-        return definedInGame;
-    }
-
-    public void setDefinedInGame(boolean definedInGame)
-    {
-        this.definedInGame = definedInGame;
-    }
-
-    public String getCategory()
-    {
-        return category;
-    }
-
-    public void setCategory(String category)
-    {
-        this.category = category;
-    }
-
-    public boolean isWinter()
-    {
-        return winter;
-    }
-
-    public void setWinter(boolean winter)
-    {
-        this.winter = winter;
-    }
-
-    public boolean isUseTacticalCodes()
-    {
-        return useTacticalCodes;
-    }
-
-    public TacticalCodeColor getTacticalCodeColor()
-    {
-        return tacticalCodeColor;
-    }
 }

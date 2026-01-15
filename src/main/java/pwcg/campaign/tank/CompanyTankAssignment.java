@@ -2,6 +2,11 @@ package pwcg.campaign.tank;
 
 import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class CompanyTankAssignment implements Cloneable
 {
     protected String archType = "";
@@ -21,16 +26,6 @@ public class CompanyTankAssignment implements Cloneable
         planeAssignment.withdrawal = this.withdrawal;
 
         return planeAssignment;
-    }
-
-    public String getArchType()
-    {
-        return archType;
-    }
-
-    public void setArchType(String archType)
-    {
-        this.archType = archType;
     }
 
     public Date getCompanyIntroduction()

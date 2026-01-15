@@ -1,9 +1,16 @@
 package pwcg.core.utils;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class MissingSkin
 {
     private String planeType = "";
+    @Getter
+    @Setter
     private String category = "";
+    @Getter
+    @Setter
     private String skinName = "";
 
     public String getTankType()
@@ -14,26 +21,6 @@ public class MissingSkin
     public void setTankType(String planeType)
     {
         this.planeType = planeType;
-    }
-
-    public String getCategory()
-    {
-        return category;
-    }
-
-    public void setCategory(String category)
-    {
-        this.category = category;
-    }
-
-    public String getSkinName()
-    {
-        return skinName;
-    }
-
-    public void setSkinName(String skinName)
-    {
-        this.skinName = skinName;
     }
 
 }

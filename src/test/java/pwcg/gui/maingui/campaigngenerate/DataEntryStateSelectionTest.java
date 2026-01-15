@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.Assertions;
 
 import pwcg.campaign.Campaign;
 import pwcg.campaign.CampaignData;
@@ -25,8 +26,8 @@ public class DataEntryStateSelectionTest
         state.buildStateStack();
         state.setCurrentStep(CampaignGeneratorWorkflow.CHOOSE_ROLE);
 
-        assert(state.getCurrentStep() == CampaignGeneratorWorkflow.CHOOSE_ROLE);
-        assert(state.getStateStack().contains(CampaignGeneratorWorkflow.CHOOSE_ROLE));
+        Assertions.assertEquals(CampaignGeneratorWorkflow.CHOOSE_ROLE, state.getCurrentStep());
+        Assertions.assertTrue(state.getStateStack().contains(CampaignGeneratorWorkflow.CHOOSE_ROLE));
     }
 
     @Test
@@ -42,7 +43,7 @@ public class DataEntryStateSelectionTest
         state.buildStateStack();
         state.setCurrentStep(CrewMemberGeneratorWorkflow.CHOOSE_RANK);
 
-        assert(state.getCurrentStep() == CrewMemberGeneratorWorkflow.CHOOSE_RANK);
-        assert(state.getStateStack().contains(CrewMemberGeneratorWorkflow.CHOOSE_RANK));
+        Assertions.assertEquals(CrewMemberGeneratorWorkflow.CHOOSE_RANK, state.getCurrentStep());
+        Assertions.assertTrue(state.getStateStack().contains(CrewMemberGeneratorWorkflow.CHOOSE_RANK));
     }
 }

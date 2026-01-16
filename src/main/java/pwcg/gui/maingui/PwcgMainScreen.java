@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import pwcg.campaign.Campaign;
 import pwcg.campaign.CampaignMode;
@@ -68,6 +69,7 @@ public class PwcgMainScreen extends ImageResizingPanel implements ActionListener
         super("");
         setLayout(new BorderLayout());
         this.setBackground(Color.DARK_GRAY);
+        setBorder(new EmptyBorder(12, 12, 12, 12));
 
         this.pwcgThreePanel = new PwcgThreePanelUI(this);
     }

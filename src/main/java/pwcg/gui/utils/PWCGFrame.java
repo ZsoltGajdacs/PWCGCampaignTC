@@ -3,15 +3,18 @@ package pwcg.gui.utils;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import pwcg.gui.dialogs.PWCGMonitorSupport;
+import pwcg.gui.utils.PWCGScrollPane;
 
 public class PWCGFrame
 {	
+    private static final Dimension LOCKED_UI_SIZE = new Dimension(1920, 1080);
     private static PWCGFrame pwcgFrame = null;
     
     private JFrame frame = new JFrame();
@@ -37,12 +40,25 @@ public class PWCGFrame
 		frame.setSize(screenSize);
 		frame.setState(JFrame.MAXIMIZED_BOTH);		
 		
-		base.setLayout(new BorderLayout());
+        base.setLayout(new BorderLayout());
         base.setBackground(Color.DARK_GRAY);
-		
+        base.setPreferredSize(LOCKED_UI_SIZE);
+
+        JPanel centeredPanel = new JPanel(new GridBagLayout());
+        centeredPanel.setBackground(Color.DARK_GRAY);
+
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.fill = GridBagConstraints.NONE;
+        constraints.anchor = GridBagConstraints.CENTER;
+        centeredPanel.add(base, constraints);
+
+        PWCGScrollPane scrollPane = new PWCGScrollPane(centeredPanel);
+        
+        frame.add(scrollPane, BorderLayout.CENTER);
         frame.setVisible(false);
-        frame.add(base);
- 	}
+	}
 
 	public void setPanel(JPanel newPanel)
 	{
@@ -50,6 +66,8 @@ public class PWCGFrame
 	    base.add(newPanel, BorderLayout.CENTER);
 	    base.revalidate();
 	    base.repaint();
+        frame.revalidate();
+        frame.repaint();
 	    
 	    if (!frame.isVisible())
 	    {

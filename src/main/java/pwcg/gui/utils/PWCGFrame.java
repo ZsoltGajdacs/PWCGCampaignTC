@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import pwcg.gui.dialogs.PWCGMonitorSupport;
+import pwcg.gui.utils.PWCGScrollPane;
 
 public class PWCGFrame
 {	
@@ -82,10 +83,10 @@ public class PWCGFrame
         private static final long serialVersionUID = 1L;
         private final Dimension lockedSize;
 
-        public FixedCenteringPanel(JPanel contentPanel, Dimension lockedSize)
+        public FixedCenteringPanel(JPanel contentPanel, Dimension targetSize)
         {
             super(new GridBagLayout());
-            this.lockedSize = new Dimension(lockedSize);
+            this.lockedSize = new Dimension(targetSize);
 
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.gridx = 0;

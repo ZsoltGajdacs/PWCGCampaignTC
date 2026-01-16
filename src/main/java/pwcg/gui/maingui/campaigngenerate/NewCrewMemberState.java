@@ -91,4 +91,3 @@ public class NewCrewMemberState
         return true;
     }
 }
-

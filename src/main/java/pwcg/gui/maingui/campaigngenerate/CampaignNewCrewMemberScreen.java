@@ -153,6 +153,7 @@ public class CampaignNewCrewMemberScreen extends ImageResizingPanel implements A
         this.add(dataEntry, BorderLayout.CENTER);
         
         CampaignGuiContextManager.getInstance().refreshCurrentContext(this);
+        evaluateCompletionState();
     }
 
     public NewCrewMemberGeneratorDO getNewCrewMemberGeneratorDO()
@@ -168,8 +169,7 @@ public class CampaignNewCrewMemberScreen extends ImageResizingPanel implements A
     public void evaluateCompletionState() throws PWCGException
     {
         newCrewMemberCreateButton.setEnabled(false);
-        createNewCrewMemberState();
-        if (newCrewMemberState.isComplete())
+        if (dataEntry != null)
         {
             newCrewMemberCreateButton.setEnabled(true);
         }

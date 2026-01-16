@@ -44,8 +44,6 @@ import pwcg.core.utils.PWCGLogger.LogLevel;
 import pwcg.gui.colors.ColorMap;
 import pwcg.gui.dialogs.ErrorDialog;
 import pwcg.gui.dialogs.PWCGMonitorFonts;
-import pwcg.gui.maingui.campaigngenerate.CampaignGeneratorState.CampaignGeneratorWorkflow;
-import pwcg.gui.utils.PWCGJButton;
 import pwcg.gui.utils.PWCGLabelFactory;
 
 public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListener
@@ -63,11 +61,11 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
     private JTextField coopUserNameTextBox;
     
     private JComboBox<String> cbCoopUser;
-	private JComboBox<String> cbMap;
-	private JComboBox<String> cbDate;
-	private JComboBox<String> cbRole;
-	private JComboBox<String> cbRank;
-	private JComboBox<String> cbCompany;
+    private JComboBox<String> cbMap;
+    private JComboBox<String> cbDate;
+    private JComboBox<String> cbRole;
+    private JComboBox<String> cbRank;
+    private JComboBox<String> cbCompany;
     
     private JLabel lPlayerName;
     private JLabel lCoopUser;
@@ -142,7 +140,6 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
             rowCount =  spacerFullRow(labelConstraints, dataConstraints, campaignGeneratePanel, rowCount);
             rowCount =  spacerFullRow(labelConstraints, dataConstraints, campaignGeneratePanel, rowCount);
             rowCount =  spacerFullRow(labelConstraints, dataConstraints, campaignGeneratePanel, rowCount);
-			createNextStepWidget(labelConstraints, dataConstraints, campaignGeneratePanel, rowCount);
 
 			rowCount = spacerFullRow(labelConstraints, dataConstraints, campaignGeneratePanel, rowCount);
 			
@@ -214,44 +211,6 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
 
         ++rowCount;
         return rowCount;
-    }
-
-    private int createNextStepWidget(GridBagConstraints labelConstraints, GridBagConstraints dataConstraints,
-                    JPanel campaignGeneratePanel, int rowCount) throws PWCGException
-    {
-        JLabel lNextStep = createCampaignGenMenuLabel("Next/Previous Step", labelConstraints, campaignGeneratePanel, rowCount);
-        campaignGeneratePanel.add(lNextStep, labelConstraints);
-
-        Color fgColor = ColorMap.CHALK_FOREGROUND;
-
-        PWCGJButton nextStepButton = makeButton("Next Step", "NextStep", fgColor);        
-        dataConstraints.gridx = 2;
-        dataConstraints.gridy = rowCount;
-        campaignGeneratePanel.add(nextStepButton, dataConstraints);
-        ++rowCount;
-
-        PWCGJButton previousStepButton = makeButton("Previous Step", "PreviousStep", fgColor);
-        dataConstraints.gridx = 2;
-        dataConstraints.gridy = rowCount;
-        campaignGeneratePanel.add(previousStepButton, dataConstraints);
-        ++rowCount;
-
-        return rowCount;
-    }
-
-    private PWCGJButton makeButton(String displayText, String commandText, Color fgColor) throws PWCGException
-    {
-        displayText = InternationalizationManager.getTranslation(displayText);
-        PWCGJButton nextStepButton = new PWCGJButton(displayText);      
-        nextStepButton.setActionCommand(commandText);
-        nextStepButton.setOpaque(false);
-        nextStepButton.setHorizontalAlignment(SwingConstants.LEFT);
-        nextStepButton.addActionListener(this);
-        nextStepButton.setBorderPainted(false);
-        nextStepButton.setFocusPainted(false);
-        nextStepButton.setForeground(fgColor);
-        nextStepButton.setFont(font);
-        return nextStepButton;
     }
 
     private int createCampaignRoleWidget(GridBagConstraints labelConstraints, GridBagConstraints dataConstraints,
@@ -342,6 +301,8 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
         playerNameTextBox.setFont(font);
         playerNameTextBox.setBackground(textBoxBackgroundColor);
         
+        makePlayerNameTextDocumentListener();
+        
         dataConstraints.gridx = 2;
         dataConstraints.gridy = rowCount;
         campaignGeneratePanel.add(playerNameTextBox, dataConstraints);
@@ -362,6 +323,33 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
         labelConstraints.gridy = rowCount;
         
         return menuLabel;
+    }
+
+    private void makePlayerNameTextDocumentListener()
+    {
+        DocumentListener playerNameTextBoxListener = new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateFieldState();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateFieldState();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateFieldState();
+            }
+
+            protected void updateFieldState() {
+                String playerNameFromTextBox = playerNameTextBox.getText();
+                parent.getCampaignGeneratorDO().setPlayerCrewMemberName(playerNameFromTextBox);
+            }
+        };
+        playerNameTextBox.getDocument().addDocumentListener(playerNameTextBoxListener);
     }
 
     private int creatCoopUserWidget(GridBagConstraints labelConstraints, GridBagConstraints dataConstraints,
@@ -445,15 +433,19 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
         campaignGeneratePanel.add(lMap, labelConstraints);
         
         cbMap = new JComboBox<String>();
-        cbMap.addItem("All Maps");
-        for (PWCGMap map : PWCGContext.getInstance().getAllMaps())
-        {
-            cbMap.addItem(map.getMapName());
-        }
+        makeMapChoices();
         
         cbMap.setOpaque(false);
         cbMap.setBackground(jComboBoxBackgroundColor);
         cbMap.setSelectedIndex(0);
+        if (parent.getCampaignGeneratorDO().getFrontMap() != null)
+        {
+            PWCGMap map = PWCGContext.getInstance().getMapByMapId(parent.getCampaignGeneratorDO().getFrontMap());
+            if (map != null)
+            {
+                cbMap.setSelectedItem(map.getMapName());
+            }
+        }
         cbMap.setActionCommand("MapChanged");
         cbMap.addActionListener(this);
         cbMap.setFont(font);
@@ -549,92 +541,43 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
 		constraints.gridx = column;
 		constraints.gridy = row;
 
-		panel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
-	}
+        panel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
+    }
 
 	public void evaluateUI() throws PWCGException 
 	{
 	    initializeWidgets();
 
-        if (parent.getCampaignGeneratorState().getCurrentStep() == CampaignGeneratorWorkflow.CHOOSE_PLAYER_NAME)
+        if (parent.getCampaignGeneratorDO().getRole() != null)
         {
-            lPlayerName.setForeground(labelColorSelected);
-            playerNameTextBox.setEnabled(true);
+            cbRole.setSelectedItem(parent.getCampaignGeneratorDO().getRole().getRoleDescription());
         }
 
-        else if (parent.getCampaignGeneratorState().getCurrentStep() == CampaignGeneratorWorkflow.CHOOSE_COOP_USER)
+        if (parent.getCampaignGeneratorDO().getRank() != null)
         {
-            lCoopUser.setForeground(labelColorSelected);
-            cbCoopUser.setEnabled(true);
-            coopUserNameTextBox.setEnabled(true);
+            cbRank.setSelectedItem(parent.getCampaignGeneratorDO().getRank());
         }
 
-        else if (parent.getCampaignGeneratorState().getCurrentStep() == CampaignGeneratorWorkflow.CHOOSE_ROLE)
-	    {
-	        setRolesInUI();
-	        
-	        String selectedRole = parent.getCampaignGeneratorDO().getRole().getRoleDescription();
-	        
-	        cbRole.setSelectedItem(selectedRole);
-            
-	        lRole.setForeground(labelColorSelected);
-            cbRole.setEnabled(true);
-	    }
-
-        else if (parent.getCampaignGeneratorState().getCurrentStep() == CampaignGeneratorWorkflow.CHOOSE_MAP)
-	    {
-            makeMapChoices();
-	        lMap.setForeground(labelColorSelected);
-            cbMap.setEnabled(true);
-	    }
-
-        else if (parent.getCampaignGeneratorState().getCurrentStep() == CampaignGeneratorWorkflow.CHOOSE_DATE)
-	    {
-	    	makeStartDateChoices();
-	    	lDate.setForeground(labelColorSelected);
-            cbDate.setEnabled(true);
-	    }
-
-        else if (parent.getCampaignGeneratorState().getCurrentStep() == CampaignGeneratorWorkflow.CHOOSE_RANK)
-	    {
-	        cbRank.setSelectedItem(parent.getCampaignGeneratorDO().getRank());
-	        lRank.setForeground(labelColorSelected);
-            cbRank.setEnabled(true);
-	    }
-
-        else if (parent.getCampaignGeneratorState().getCurrentStep() == CampaignGeneratorWorkflow.CHOOSE_Company)
-	    {
-	        lCompany.setForeground(labelColorSelected);
-	        
-            int serviceId = parent.getCampaignGeneratorDO().getService().getServiceId();
-            ArmedService dateCorrectedService = ArmedServiceFactory.createServiceManager().getArmedServiceById(serviceId);
-            
-            Date campaignDate = parent.getCampaignGeneratorDO().getStartDate();
-	        makeCompanyChoices(campaignDate, dateCorrectedService);
-
-	        String companyName = (String)cbCompany.getSelectedItem();
-	        String companyInfo = getCompanyInfo(campaignDate, companyName);
-	        this.companyTextBox.setText(companyInfo);
-
-            cbCompany.setEnabled(true);
-	    }
+        refreshStartDateChoices();
+        refreshCompanyChoices();
+        updateCompanyInfo(parent.getCampaignGeneratorDO().getStartDate());
 	}
 
     private void initializeWidgets()
-    {	    
+    {
         if (lCoopUser != null)
         {
             lCoopUser.setForeground(labelColorNotSelected);
-            cbCoopUser.setEnabled(false);
-            coopUserNameTextBox.setEnabled(false);
+            cbCoopUser.setEnabled(true);
+            coopUserNameTextBox.setEnabled(true);
         }
         
-	    playerNameTextBox.setEnabled(false);
-        cbRole.setEnabled(false);
-        cbMap.setEnabled(false);
-        cbDate.setEnabled(false);
-        cbRank.setEnabled(false);
-        cbCompany.setEnabled(false);
+	    playerNameTextBox.setEnabled(true);
+        cbRole.setEnabled(true);
+        cbMap.setEnabled(true);
+        cbDate.setEnabled(true);
+        cbRank.setEnabled(true);
+        cbCompany.setEnabled(true);
 
         lPlayerName.setForeground(labelColorNotSelected);
         lRole.setForeground(labelColorNotSelected);
@@ -642,6 +585,66 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
         lDate.setForeground(labelColorNotSelected);
         lRank.setForeground(labelColorNotSelected);
         lCompany.setForeground(labelColorNotSelected);
+    }
+
+    private void refreshStartDateChoices() throws PWCGException
+    {
+        String selectedDate = (String)cbDate.getSelectedItem();
+        makeStartDateChoices();
+        if (selectedDate != null)
+        {
+            cbDate.setSelectedItem(selectedDate);
+        }
+        if (cbDate.getSelectedItem() != null)
+        {
+            parent.getCampaignGeneratorDO().setStartDate(getDateFromComboBox());
+        }
+    }
+
+    private void refreshCompanyChoices() throws PWCGException
+    {
+        if (parent.getCampaignGeneratorDO().getService() == null)
+        {
+            return;
+        }
+
+        Date campaignDate = parent.getCampaignGeneratorDO().getStartDate();
+        if (campaignDate == null)
+        {
+            campaignDate = getDateFromComboBox();
+        }
+        if (campaignDate == null)
+        {
+            return;
+        }
+
+        String selectedCompany = (String)cbCompany.getSelectedItem();
+        int serviceId = parent.getCampaignGeneratorDO().getService().getServiceId();
+        ArmedService dateCorrectedService = ArmedServiceFactory.createServiceManager().getArmedServiceById(serviceId);
+
+        makeCompanyChoices(campaignDate, dateCorrectedService);
+        if (selectedCompany != null)
+        {
+            cbCompany.setSelectedItem(selectedCompany);
+        }
+
+        String companyName = (String)cbCompany.getSelectedItem();
+        if (companyName != null)
+        {
+            parent.getCampaignGeneratorDO().setSquadName(companyName);
+        }
+    }
+
+    private void updateCompanyInfo(Date campaignDate) throws PWCGException
+    {
+        if (campaignDate == null)
+        {
+            return;
+        }
+
+        String companyName = (String)cbCompany.getSelectedItem();
+        String companyInfo = getCompanyInfo(campaignDate, companyName);
+        this.companyTextBox.setText(companyInfo);
     }
 
     private String getCompanyInfo(Date campaignDate, String companyName) throws PWCGException 
@@ -780,6 +783,8 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
                 String roleDesc = (String)cbRole.getSelectedItem();
                 PwcgRole role = PwcgRole.getRoleFromDescription(roleDesc);
                 parent.getCampaignGeneratorDO().setRole(role);
+                refreshCompanyChoices();
+                updateCompanyInfo(parent.getCampaignGeneratorDO().getStartDate());
             }
             else if (ae.getActionCommand().equalsIgnoreCase("MapChanged"))
 			{
@@ -793,16 +798,23 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
 		        {
 				    parent.getCampaignGeneratorDO().setFrontMap(map.getMapIdentifier());
 		        }
+                refreshStartDateChoices();
+                refreshCompanyChoices();
+                updateCompanyInfo(parent.getCampaignGeneratorDO().getStartDate());
 			}
             else if (ae.getActionCommand().equalsIgnoreCase("DateChanged"))
 			{
                 Date campaignDate =  getDateFromComboBox();
 			    parent.getCampaignGeneratorDO().setStartDate(campaignDate);
+                refreshCompanyChoices();
+                updateCompanyInfo(campaignDate);
 			}
 			else if (ae.getActionCommand().equalsIgnoreCase("RankChanged"))
 			{
 		        String rank = (String)cbRank.getSelectedItem();
 		        parent.getCampaignGeneratorDO().setRank(rank);
+                refreshCompanyChoices();
+                updateCompanyInfo(parent.getCampaignGeneratorDO().getStartDate());
 			}
             else if (ae.getActionCommand().equalsIgnoreCase("CompanyChanged"))
             {
@@ -810,21 +822,8 @@ public class CampaignGeneratorDataEntryGUI extends JPanel implements ActionListe
                 if (companyName != null)
                 {
                     parent.getCampaignGeneratorDO().setSquadName(companyName);
-                    String companyInfo = getCompanyInfo(parent.getCampaignGeneratorDO().getStartDate(), companyName);
-                    this.companyTextBox.setText(companyInfo);
+                    updateCompanyInfo(parent.getCampaignGeneratorDO().getStartDate());
                 }
-            }
-            else if (ae.getActionCommand().equalsIgnoreCase("NextStep"))
-            {
-                parent.getCampaignGeneratorState().goToNextStep();
-                evaluateUI();
-                parent.evaluateCompletionState();
-            }
-            else if (ae.getActionCommand().equalsIgnoreCase("PreviousStep"))
-            {
-                parent.getCampaignGeneratorState().goToPreviousStep();
-                evaluateUI();
-                parent.evaluateCompletionState();
             }
             
             revalidate();

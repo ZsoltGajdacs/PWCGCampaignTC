@@ -44,8 +44,6 @@ import pwcg.core.utils.PWCGLogger.LogLevel;
 import pwcg.gui.colors.ColorMap;
 import pwcg.gui.dialogs.ErrorDialog;
 import pwcg.gui.dialogs.PWCGMonitorFonts;
-import pwcg.gui.maingui.campaigngenerate.NewCrewMemberState.CrewMemberGeneratorWorkflow;
-import pwcg.gui.utils.PWCGJButton;
 import pwcg.gui.utils.PWCGLabelFactory;
 
 public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
@@ -133,7 +131,6 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
             rowCount =  spacerFullRow(labelConstraints, dataConstraints, campaignGeneratePanel, rowCount);
             rowCount =  spacerFullRow(labelConstraints, dataConstraints, campaignGeneratePanel, rowCount);
             rowCount =  spacerFullRow(labelConstraints, dataConstraints, campaignGeneratePanel, rowCount);
-			createNextStepWidget(labelConstraints, dataConstraints, campaignGeneratePanel, rowCount);
 
 			rowCount = spacerFullRow(labelConstraints, dataConstraints, campaignGeneratePanel, rowCount);
 			
@@ -273,48 +270,6 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
         return rowCount;
     }
 
-	private int createNextStepWidget(GridBagConstraints labelConstraints, GridBagConstraints dataConstraints,
-                    JPanel campaignGeneratePanel, int rowCount) throws PWCGException
-    {
-        JLabel lNextStep = createCampaignGenMenuLabel("Next/Previous Step", labelConstraints, campaignGeneratePanel, rowCount);
-        campaignGeneratePanel.add(lNextStep, labelConstraints);
-
-        Color fgColor = ColorMap.CHALK_FOREGROUND;
-
-        String nextDisplayText = InternationalizationManager.getTranslation("Next Step");
-        PWCGJButton nextStepButton = new PWCGJButton(nextDisplayText);      
-        nextStepButton.setActionCommand("NextStep");
-        nextStepButton.setOpaque(false);
-        nextStepButton.setHorizontalAlignment(SwingConstants.LEFT);
-        nextStepButton.addActionListener(this);
-        nextStepButton.setBorderPainted(false);
-        nextStepButton.setFocusPainted(false);
-        nextStepButton.setForeground(fgColor);
-        nextStepButton.setFont(font);
-        dataConstraints.gridx = 2;
-        dataConstraints.gridy = rowCount;
-        campaignGeneratePanel.add(nextStepButton, dataConstraints);
-
-        ++rowCount;
-
-        String previousDisplayText = InternationalizationManager.getTranslation("Previous Step");
-        PWCGJButton previousStepButton = new PWCGJButton(previousDisplayText);      
-        previousStepButton.setActionCommand("PreviousStep");
-        previousStepButton.setOpaque(false);
-        previousStepButton.setHorizontalAlignment(SwingConstants.LEFT);
-        previousStepButton.addActionListener(this);
-        previousStepButton.setBorderPainted(false);
-        previousStepButton.setFocusPainted(false);
-        previousStepButton.setForeground(fgColor);
-        previousStepButton.setFont(font);
-        dataConstraints.gridx = 2;
-        dataConstraints.gridy = rowCount;
-        campaignGeneratePanel.add(previousStepButton, dataConstraints);
-        
-        ++rowCount;
-        return rowCount;
-    }
-
     private int createCampaignRoleWidget(GridBagConstraints labelConstraints, GridBagConstraints dataConstraints,
                     JPanel campaignGeneratePanel, int rowCount) throws PWCGException
     {
@@ -403,6 +358,8 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
         playerCrewMemberNameTextBox.setFont(font);
         playerCrewMemberNameTextBox.setBackground(textBoxBackgroundColor);
         
+        makePlayerNameTextDocumentListener();
+        
         dataConstraints.gridx = 2;
         dataConstraints.gridy = rowCount;
         campaignGeneratePanel.add(playerCrewMemberNameTextBox, dataConstraints);
@@ -411,6 +368,33 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
 
         ++rowCount;
         return rowCount;
+    }
+
+    private void makePlayerNameTextDocumentListener()
+    {
+        DocumentListener playerNameTextBoxListener = new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateFieldState();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateFieldState();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateFieldState();
+            }
+
+            protected void updateFieldState() {
+                String playerNameFromTextBox = playerCrewMemberNameTextBox.getText();
+                parent.getNewCrewMemberGeneratorDO().setPlayerCrewMemberName(playerNameFromTextBox);
+            }
+        };
+        playerCrewMemberNameTextBox.getDocument().addDocumentListener(playerNameTextBoxListener);
     }
 
     private JLabel createCampaignGenMenuLabel(String labelText, GridBagConstraints labelConstraints, JPanel campaignGeneratePanel, int rowCount) throws PWCGException
@@ -476,89 +460,77 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
 		constraints.gridx = column;
 		constraints.gridy = row;
 
-		panel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
-	}
+        panel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
+    }
 
 	public void evaluateUI() throws PWCGException 
 	{
 	    initializeWidgets();
 
-        if (parent.getNewCrewMemberState().getCurrentStep() == CrewMemberGeneratorWorkflow.CHOOSE_PLAYER_NAME)
+        if (parent.getNewCrewMemberGeneratorDO().getRole() != null)
         {
-            lPlayerName.setForeground(labelColorSelected);
-    	    playerCrewMemberNameTextBox.setEnabled(true);
-
+            cbRole.setSelectedItem(parent.getNewCrewMemberGeneratorDO().getRole().getRoleDescription());
         }
 
-        if (parent.getNewCrewMemberState().getCurrentStep() == CrewMemberGeneratorWorkflow.CHOOSE_COOP_USER)
+        if (parent.getNewCrewMemberGeneratorDO().getRank() != null)
         {
-            this.lCoopUser.setForeground(labelColorSelected);
-            cbCoopUser.setEnabled(true);
-            coopUserNameTextBox.setEnabled(true);
+            cbRank.setSelectedItem(parent.getNewCrewMemberGeneratorDO().getRank());
         }
 
-	    if (parent.getNewCrewMemberState().getCurrentStep() == CrewMemberGeneratorWorkflow.CHOOSE_ROLE)
-	    {
-	        setRolesInUI();
-	        
-	        String selectedRole = parent.getNewCrewMemberGeneratorDO().getRole().getRoleDescription();
-	        
-	        cbRole.setSelectedItem(selectedRole);
-            
-	        lRole.setForeground(labelColorSelected);
-            cbRole.setEnabled(true);
-	    }
-
-	    if (parent.getNewCrewMemberState().getCurrentStep() == CrewMemberGeneratorWorkflow.CHOOSE_RANK)
-	    {
-	        cbRank.setSelectedItem(parent.getNewCrewMemberGeneratorDO().getRank());
-	        lRank.setForeground(labelColorSelected);
-            cbRank.setEnabled(true);
-	    }
-
-	    if (parent.getNewCrewMemberState().getCurrentStep() == CrewMemberGeneratorWorkflow.CHOOSE_Company)
-	    {
-	        lSquad.setForeground(labelColorSelected);
-	        
-            int serviceId = parent.getNewCrewMemberGeneratorDO().getService().getServiceId();
-            ArmedService dateCorrectedService = ArmedServiceFactory.createServiceManager().getArmedServiceById(serviceId);
-            
-	        makeCompanyChoices(dateCorrectedService);
-
-	        String companyName = (String)cbCompany.getSelectedItem();
-	        String companyInfo = getCompanyInfo(campaign.getDate(), companyName);
-	        this.companyTextBox.setText(companyInfo);
-
-            cbCompany.setEnabled(true);
-	    }
-	    
-	    if (parent.getNewCrewMemberState().isComplete())
-	    {
-	        parent.evaluateCompletionState();
-	    }
+        refreshCompanyChoices();
+        updateCompanyInfo();
 	}
 
     private void initializeWidgets() throws PWCGException
     {
-        parent.evaluateCompletionState();
-
         if (lCoopUser != null)
         {
             lCoopUser.setForeground(labelColorNotSelected);
-            cbCoopUser.setEnabled(false);
-            coopUserNameTextBox.setEnabled(false);
+            cbCoopUser.setEnabled(true);
+            coopUserNameTextBox.setEnabled(true);
         }
 
-	    playerCrewMemberNameTextBox.setEnabled(false);
-	    cbRole.setEnabled(false);
-        cbRank.setEnabled(false);
-        cbCompany.setEnabled(false);
+	    playerCrewMemberNameTextBox.setEnabled(true);
+	    cbRole.setEnabled(true);
+        cbRank.setEnabled(true);
+        cbCompany.setEnabled(true);
         
         lPlayerName.setForeground(labelColorNotSelected);
 
         lRole.setForeground(labelColorNotSelected);
         lRank.setForeground(labelColorNotSelected);
         lSquad.setForeground(labelColorNotSelected);
+    }
+
+    private void refreshCompanyChoices() throws PWCGException
+    {
+        if (parent.getNewCrewMemberGeneratorDO().getService() == null)
+        {
+            return;
+        }
+
+        String selectedCompany = (String)cbCompany.getSelectedItem();
+        int serviceId = parent.getNewCrewMemberGeneratorDO().getService().getServiceId();
+        ArmedService dateCorrectedService = ArmedServiceFactory.createServiceManager().getArmedServiceById(serviceId);
+
+        makeCompanyChoices(dateCorrectedService);
+        if (selectedCompany != null)
+        {
+            cbCompany.setSelectedItem(selectedCompany);
+        }
+
+        String companyName = (String)cbCompany.getSelectedItem();
+        if (companyName != null)
+        {
+            parent.getNewCrewMemberGeneratorDO().setSquadName(companyName);
+        }
+    }
+
+    private void updateCompanyInfo() throws PWCGException
+    {
+        String companyName = (String)cbCompany.getSelectedItem();
+        String companyInfo = getCompanyInfo(campaign.getDate(), companyName);
+        this.companyTextBox.setText(companyInfo);
     }
 
     private String getCompanyInfo(Date campaignDate, String companyName) throws PWCGException 
@@ -623,11 +595,15 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
                 String roleDesc = (String)cbRole.getSelectedItem();
                 PwcgRole role = PwcgRole.getRoleFromDescription(roleDesc);
                 parent.getNewCrewMemberGeneratorDO().setRole(role);
+                refreshCompanyChoices();
+                updateCompanyInfo();
             }
 			else if (ae.getActionCommand().equalsIgnoreCase("RankChanged"))
 			{
 		        String rank = (String)cbRank.getSelectedItem();
 		        parent.getNewCrewMemberGeneratorDO().setRank(rank);
+                refreshCompanyChoices();
+                updateCompanyInfo();
 			}
 			else if (ae.getActionCommand().equalsIgnoreCase("CoopUserChanged"))
 			{
@@ -644,16 +620,6 @@ public class NewCrewMemberDataEntryGUI extends JPanel implements ActionListener
                     String companyInfo = getCompanyInfo(campaign.getDate(), companyName);
                     this.companyTextBox.setText(companyInfo);
                 }
-            }
-            else if (ae.getActionCommand().equalsIgnoreCase("NextStep"))
-            {
-                parent.getNewCrewMemberState().goToNextStep();
-                evaluateUI() ;
-            }
-            else if (ae.getActionCommand().equalsIgnoreCase("PreviousStep"))
-            {
-                parent.getNewCrewMemberState().goToPreviousStep();
-                evaluateUI() ;
             }
             
             revalidate();

@@ -45,6 +45,7 @@ public class CampaignGeneratorScreen extends ImageResizingPanel implements Actio
     private CampaignGeneratorProfileGUI campaignProfileUI = null;
     private CampaignGeneratorDataEntryGUI campaignGeneratorDataEntryGUI = null;
     private CampaignGeneratorState campaignGeneratorState;
+    private boolean dataEntryActive = false;
 
     private CampaignGeneratorDO campaignGeneratorDO = new CampaignGeneratorDO();
 
@@ -173,8 +174,10 @@ public class CampaignGeneratorScreen extends ImageResizingPanel implements Actio
 
         pwcgThreePanel.setCenterPanel(makeCampaignDataEntryPanel());
         pwcgThreePanel.setRightPanel (makeProfileInfoPanel());
+        dataEntryActive = true;
 
         CampaignGuiContextManager.getInstance().refreshCurrentContext(this);
+        evaluateCompletionState();
     }
 
     private void buildNewCampaign() throws PWCGException, PWCGUserException, Exception
@@ -262,13 +265,14 @@ public class CampaignGeneratorScreen extends ImageResizingPanel implements Actio
         profileFinishedButton.setEnabled(false);
         createCampaignButton.setEnabled(false);
         
-        if (campaignGeneratorState.isComplete())
-        {
-            createCampaignButton.setEnabled(true);
-        }
-        else if (campaignGeneratorState.isProfileComplete())
+        if (campaignGeneratorState.isProfileComplete())
         {
             profileFinishedButton.setEnabled(true);
+        }
+
+        if (dataEntryActive)
+        {
+            createCampaignButton.setEnabled(true);
         }
     }
 }

@@ -9,7 +9,6 @@ import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import pwcg.gui.dialogs.PWCGMonitorSupport;
 import pwcg.gui.utils.PWCGScrollPane;
 
@@ -55,7 +54,7 @@ public class PWCGFrame
         constraints.anchor = GridBagConstraints.CENTER;
         centeredPanel.add(base, constraints);
 
-        JScrollPane scrollPane = new PWCGScrollPane(centeredPanel);
+        PWCGScrollPane scrollPane = new PWCGScrollPane(centeredPanel);
         scrollPane.getViewport().setBackground(Color.DARK_GRAY);
 		
         frame.add(scrollPane, BorderLayout.CENTER);

@@ -41,22 +41,17 @@ public class PWCGFrame
 		frame.setSize(screenSize);
 		frame.setState(JFrame.MAXIMIZED_BOTH);		
 		
-		base.setLayout(new BorderLayout());
+        base.setLayout(new BorderLayout());
         base.setBackground(Color.DARK_GRAY);
         base.setPreferredSize(LOCKED_UI_SIZE);
-        base.setMinimumSize(LOCKED_UI_SIZE);
-        base.setMaximumSize(LOCKED_UI_SIZE);
 
         JPanel centeredPanel = new JPanel(new GridBagLayout());
         centeredPanel.setBackground(Color.DARK_GRAY);
-        centeredPanel.setPreferredSize(LOCKED_UI_SIZE);
-        centeredPanel.setMinimumSize(LOCKED_UI_SIZE);
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 0;
-        constraints.weightx = 1.0;
-        constraints.weighty = 1.0;
+        constraints.fill = GridBagConstraints.NONE;
         constraints.anchor = GridBagConstraints.CENTER;
         centeredPanel.add(base, constraints);
 

@@ -55,8 +55,7 @@ public class PWCGFrame
         centeredPanel.add(base, constraints);
 
         PWCGScrollPane scrollPane = new PWCGScrollPane(centeredPanel);
-        scrollPane.getViewport().setBackground(Color.DARK_GRAY);
-		
+        
         frame.add(scrollPane, BorderLayout.CENTER);
         frame.setVisible(false);
 	}

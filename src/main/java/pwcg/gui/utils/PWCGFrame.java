@@ -58,8 +58,8 @@ public class PWCGFrame
         JScrollPane scrollPane = new PWCGScrollPane(centeredPanel);
         scrollPane.getViewport().setBackground(Color.DARK_GRAY);
 		
-        frame.setVisible(false);
         frame.add(scrollPane, BorderLayout.CENTER);
+        frame.setVisible(false);
 	}
 
 	public void setPanel(JPanel newPanel)
@@ -68,6 +68,8 @@ public class PWCGFrame
 	    base.add(newPanel, BorderLayout.CENTER);
 	    base.revalidate();
 	    base.repaint();
+        frame.revalidate();
+        frame.repaint();
 	    
 	    if (!frame.isVisible())
 	    {

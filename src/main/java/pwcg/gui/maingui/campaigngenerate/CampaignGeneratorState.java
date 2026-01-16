@@ -66,16 +66,6 @@ public class CampaignGeneratorState
         currentStep = stateStack.get(stateIndex);        
     }
 
-    public void setCurrentStep(CampaignGeneratorWorkflow step)
-    {
-        int index = stateStack.indexOf(step);
-        if (index >= 0)
-        {
-            stateIndex = index;
-            currentStep = step;
-        }
-    }
-
     public boolean isComplete()
     {
         if ((currentStep != CampaignGeneratorWorkflow.COMPLETE))
@@ -103,11 +93,6 @@ public class CampaignGeneratorState
     public CampaignGeneratorWorkflow getCurrentStep()
     {
         return currentStep;
-    }
-
-    public List<CampaignGeneratorWorkflow> getStateStack()
-    {
-        return new ArrayList<>(stateStack);
     }
 
     public boolean isProfileComplete()

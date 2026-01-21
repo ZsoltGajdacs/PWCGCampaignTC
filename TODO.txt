@@ -15,3 +15,9 @@ Rearrange chalk board
 
 Dead times to skip
 
+Maintainability & performance recommendations
+- Update outdated dependencies in build.gradle
+- Fix MissionWeatherTemperatature typo
+- Move TestDriver utilities out of main
+- Replace hardcoded Windows paths in Gradle with configurable properties
+- Review/remove legacy *Old/*Olde classes if unused

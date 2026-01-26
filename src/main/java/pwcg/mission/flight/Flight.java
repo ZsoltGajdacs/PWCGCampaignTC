@@ -137,7 +137,7 @@ public abstract class Flight implements IFlight
     }
     
     @Override
-    public int getFlightCruisingSpeed()
+    public int getFlightCruisingSpeed() throws PWCGException
     {
         if (flightInformation.getFlightCruisingSpeed() > 0)
         {

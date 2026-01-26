@@ -51,7 +51,7 @@ public class FirePotSeries extends Effect
         }
     }
 
-    private McuTimer getSourceTimer()
+    private McuTimer getSourceTimer() throws PWCGException
     {
         McuTimer pairTriggerSource = null;
         if (firePotPairs.size() == 0)

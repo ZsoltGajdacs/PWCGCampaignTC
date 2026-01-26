@@ -56,6 +56,10 @@ public class FlightPlanes implements IFlightPlanes
     @Override
     public PlaneMcu getFlightLeader()
     {
+        if (planes.isEmpty())
+        {
+            return null;
+        }
         return planes.get(0);
     }
 
@@ -74,8 +78,13 @@ public class FlightPlanes implements IFlightPlanes
         }
     }
 
-    public int getFlightCruisingSpeed()
+    public int getFlightCruisingSpeed() throws PWCGException
     {
+        if (planes.isEmpty())
+        {
+            throw new PWCGException("No planes in flight for cruising speed calculation");
+        }
+
         int cruisingSpeed = planes.get(0).getCruisingSpeed();
         for (PlaneMcu plane : planes)
         {
@@ -84,7 +93,7 @@ public class FlightPlanes implements IFlightPlanes
                 cruisingSpeed = plane.getCruisingSpeed();
             }
         }
-        
+
         return cruisingSpeed;
     }
 

@@ -3,6 +3,7 @@ package pwcg.mission.ground;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -109,16 +110,18 @@ public class MissionGroundUnitBuilder
     
     private boolean eliminateDuplicateGroundUnitFromCollection(List<GroundUnitCollection> groundUnitCollections) throws PWCGException
     {
-        GroundUnitPositionDuplicateDetector groundUnitPositionVerifier = new GroundUnitPositionDuplicateDetector();        
-        for (GroundUnitCollection groundUnitCollection : groundUnitCollections)
+        GroundUnitPositionDuplicateDetector groundUnitPositionVerifier = new GroundUnitPositionDuplicateDetector();
+        Iterator<GroundUnitCollection> iterator = groundUnitCollections.iterator();
+        while (iterator.hasNext())
         {
+            GroundUnitCollection groundUnitCollection = iterator.next();
             if (!groundUnitPositionVerifier.verifyGroundCollectionUnitPositionsNotDuplicated(getAllMissionGroundUnits(), groundUnitCollection))
             {
-                groundUnitCollections.remove(groundUnitCollection);
+                iterator.remove();
                 return true;
             }
         }
-                        
+
         return false;
     }
 

@@ -1,6 +1,7 @@
 package pwcg.mission;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import pwcg.campaign.Campaign;
@@ -75,12 +76,17 @@ public class MissionGenerator
     }
 
     private Mission buildMission(
-            MissionHumanParticipants participatingPlayers, 
-            MissionWeather weather, 
+            MissionHumanParticipants participatingPlayers,
+            MissionWeather weather,
             Skirmish skirmish,
             MissionOptions missionOptions) throws PWCGException
     {
-        Company playerCompany = participatingPlayers.getMissionPlayerCompanys().get(0);
+        List<Company> playerCompanies = participatingPlayers.getMissionPlayerCompanys();
+        if (playerCompanies.isEmpty())
+        {
+            throw new PWCGException("No player companies available for mission generation");
+        }
+        Company playerCompany = playerCompanies.get(0);
         
         MissionObjectiveBuilder objectiveLocator = new MissionObjectiveBuilder(campaign, playerCompany, skirmish);
         MissionObjective objective = objectiveLocator.buildMissionObjective();

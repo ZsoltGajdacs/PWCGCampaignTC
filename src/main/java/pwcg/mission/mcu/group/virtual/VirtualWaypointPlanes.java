@@ -31,9 +31,14 @@ public class VirtualWaypointPlanes
     {
         int altitudeOffset = 0;
         VirtualWaypointPlaneBuilder vwpPlaneBuilder = new VirtualWaypointPlaneBuilder(vwpCoordinate, altitudeOffset);
-        
-        
+
         planesAtActivate = vwpPlaneBuilder.buildVwpPlanes(flight.getFlightPlanes().getPlanes(), flight.getFlightInformation().getFormationType());
+
+        if (planesAtActivate.isEmpty())
+        {
+            throw new PWCGException("No planes created for virtual waypoint activation");
+        }
+
         flight.getWaypointPackage().addObjectToAllMissionPoints(planesAtActivate.get(0));
     }
 
@@ -47,6 +52,10 @@ public class VirtualWaypointPlanes
     
     public PlaneMcu getLeadActivatePlane()
     {
+        if (planesAtActivate.isEmpty())
+        {
+            return null;
+        }
         return planesAtActivate.get(0);
     }
     

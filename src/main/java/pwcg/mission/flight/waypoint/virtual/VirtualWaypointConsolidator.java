@@ -92,8 +92,13 @@ public class VirtualWaypointConsolidator
         return afterConsolidation;
     }
 
-    private List<VirtualWayPointCoordinate> consolidateVirtualWaypoints(int firstVwpToKeep, int lastVwpToKeep, int timeUntilFirst)
+    private List<VirtualWayPointCoordinate> consolidateVirtualWaypoints(int firstVwpToKeep, int lastVwpToKeep, int timeUntilFirst) throws PWCGException
     {
+        if (beforeConsolidation.isEmpty() || firstVwpToKeep > lastVwpToKeep)
+        {
+            throw new PWCGException("Invalid consolidation parameters or empty waypoint list");
+        }
+
         List<VirtualWayPointCoordinate> afterConsolidation = new ArrayList<>();
         for (int i = firstVwpToKeep; i <= lastVwpToKeep; ++i)
         {
@@ -135,7 +140,7 @@ public class VirtualWaypointConsolidator
 
     private int findLastVwpToKeep(int lastVwpNearBox, int lastVwpNearFront, int firstVwpToKeep)
     {
-        int lastVwpToKeep = beforeConsolidation.size();
+        int lastVwpToKeep = beforeConsolidation.size() - 1;
         if (lastVwpNearBox == VirtualWaypointStartFinder.IS_NOT_NEAR_AREA && lastVwpNearFront == VirtualWaypointStartFinder.IS_NOT_NEAR_AREA)
         {
             // If last VWP to keep is not in the box or the front then this flight isn't close to anything.

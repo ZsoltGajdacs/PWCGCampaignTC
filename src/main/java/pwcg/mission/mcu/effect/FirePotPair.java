@@ -19,18 +19,23 @@ public class FirePotPair
 	    this.sourceTimer = sourceTimer;
 	}
 	
-	public void createSeries(Coordinate firstFirePotPosition, double orientation, double distanceBetween) throws PWCGException 
+	public void createSeries(Coordinate firstFirePotPosition, double orientation, double distanceBetween) throws PWCGException
 	{
 		for (int i = 0; i < 2; ++i)
 		{
 		    Coordinate firePotPosition = calculateFirePotPosition(firstFirePotPosition, orientation, distanceBetween, i);
 		    int time = calculateFirePotStartTime(i);
-		    
+
 			FirePot firePot = new FirePot();
 			firePot.createFirePot(firePotPosition, orientation, time);
 			firePots.add(firePot);
 		}
-		
+
+		if (firePots.size() < 2)
+		{
+		    throw new PWCGException("Insufficient fire pots created for series");
+		}
+
         sourceTimer.setTarget(firePots.get(0).getFirePotTimer().getIndex());
         firePots.get(0).getFirePotTimer().setTarget(firePots.get(1).getFirePotTimer().getIndex());
 	}
@@ -72,8 +77,12 @@ public class FirePotPair
         }
 	}
 	
-    public McuTimer getFirePotTriggerTimer()
+    public McuTimer getFirePotTriggerTimer() throws PWCGException
     {
+        if (firePots.isEmpty())
+        {
+            throw new PWCGException("No fire pots available for trigger timer");
+        }
         return firePots.get(0).getFirePotTimer();
     }
 }

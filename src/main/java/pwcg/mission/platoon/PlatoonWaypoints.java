@@ -34,6 +34,11 @@ public class PlatoonWaypoints
 
     public void setWaypoints(Campaign campaign, Coordinate basePosition, int leadTankIndex, List<McuWaypoint> waypoints) throws PWCGException
     {
+        if (waypoints.isEmpty())
+        {
+            throw new PWCGException("No waypoints provided for platoon");
+        }
+
         this.missionBeginUnit = new MissionBeginUnit(basePosition);
         missionBeginUnit.linkToMissionBegin(waypoints.get(0).getIndex());
 

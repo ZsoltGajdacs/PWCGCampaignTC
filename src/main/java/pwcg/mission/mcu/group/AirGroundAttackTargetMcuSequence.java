@@ -114,9 +114,18 @@ public class AirGroundAttackTargetMcuSequence
         }
     }
 
-    private void setProximityTrigger() throws PWCGException 
+    private void setProximityTrigger() throws PWCGException
     {
         List<PlaneMcu> planes = flight.getFlightPlanes().getPlanes();
+        if (planes.isEmpty())
+        {
+            throw new PWCGException("No planes available for proximity trigger");
+        }
+        if (vehicles.isEmpty())
+        {
+            throw new PWCGException("No vehicles available for proximity trigger");
+        }
+
         mcuProximity.setObject(planes.get(0).getLinkTrId());
         mcuProximity.setObject(vehicles.get(0).getLinkTrId());
     }

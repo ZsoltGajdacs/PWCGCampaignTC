@@ -70,6 +70,12 @@ public class VirtualWaypointPlotter
         List<VirtualWayPointCoordinate> flightPathForLeg = new ArrayList<VirtualWayPointCoordinate>();
 
         List<Coordinate> vwpCoordinatesForLeg = calculateVwpCoordinatesForLeg(legStartPosition, legEndPosition);
+
+        if (vwpCoordinatesForLeg.isEmpty())
+        {
+            throw new PWCGException("No VWP coordinates generated for leg");
+        }
+
         double altitudeDeltaPerSegment = (legStartPosition.getYPos() - legEndPosition.getYPos()) / vwpCoordinatesForLeg.size();
         double legOrientationAngle = MathUtils.calcAngle(legStartPosition, legEndPosition);
 
@@ -100,7 +106,7 @@ public class VirtualWaypointPlotter
         vwpPosition.setYPos(altitude);
     }
 
-    private int calculateWaitTimeForVwp(Coordinate previousVwpPosition, Coordinate vwpPosition)
+    private int calculateWaitTimeForVwp(Coordinate previousVwpPosition, Coordinate vwpPosition) throws PWCGException
     {
         double distanceBetweenVWP = MathUtils.calcDist(previousVwpPosition, vwpPosition);
         int waitInSecondsForVWP = calculateWaitTimeInSecondsForVwp(distanceBetweenVWP);
@@ -138,7 +144,7 @@ public class VirtualWaypointPlotter
         return numberOfLegs.intValue();
     }
     
-    private int calculateWaitTimeInSecondsForVwp(double distanceBetweenVWP)
+    private int calculateWaitTimeInSecondsForVwp(double distanceBetweenVWP) throws PWCGException
     {
         double cruiseSpeedKPH = flight.getFlightCruisingSpeed();
         double kphToMetersToSecond = 1000.0 / 3600.0;

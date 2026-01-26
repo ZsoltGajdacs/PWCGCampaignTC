@@ -32,8 +32,12 @@ public class FrontLinesForMap
         this.mapName = mapName;
     }
 
-    public Date getEarliestDateForMap()
+    public Date getEarliestDateForMap() throws PWCGException
     {
+        if (frontDates.isEmpty())
+        {
+            throw new PWCGException("No front dates available for map");
+        }
         return frontDates.get(0);
     }
 
@@ -95,15 +99,24 @@ public class FrontLinesForMap
         return frontLines.indexOf(closestPosition);
     }
 
-    public double findClosestFriendlyPositionAngle(Coordinate source, Side side) throws PWCGException 
+    public double findClosestFriendlyPositionAngle(Coordinate source, Side side) throws PWCGException
     {
         List<FrontLinePoint>frontLines = findAllFrontLinesForSide(side);
 
         int closestPositionIndex = findIndexForClosestPosition(source, side);
         int nextPositionIndex = closestPositionIndex + 1;
-        
+
+        if (nextPositionIndex >= frontLines.size())
+        {
+            nextPositionIndex = closestPositionIndex - 1;
+            if (nextPositionIndex < 0)
+            {
+                throw new PWCGException("Insufficient front line points for angle calculation");
+            }
+        }
+
         double angle = MathUtils.calcAngle(
-                        frontLines.get(closestPositionIndex).getPosition(), 
+                        frontLines.get(closestPositionIndex).getPosition(),
                         frontLines.get(nextPositionIndex).getPosition());
 
         return angle;
@@ -221,25 +234,41 @@ public class FrontLinesForMap
     }
     
     public FrontLinePoint getFirstPositionForSide(Side side) throws PWCGException
-    {        
+    {
         if (side == Side.ALLIED)
         {
+            if (frontLinesAllied.isEmpty())
+            {
+                throw new PWCGException("No Allied front lines available");
+            }
             return frontLinesAllied.get(0);
         }
         else
         {
+            if (frontLinesAxis.isEmpty())
+            {
+                throw new PWCGException("No Axis front lines available");
+            }
             return frontLinesAxis.get(0);
         }
     }
-    
+
     public FrontLinePoint getLastPositionForSide(Side side) throws PWCGException
-    {        
+    {
         if (side == Side.ALLIED)
         {
+            if (frontLinesAllied.isEmpty())
+            {
+                throw new PWCGException("No Allied front lines available");
+            }
             return frontLinesAllied.get(frontLinesAllied.size()-1);
         }
         else
         {
+            if (frontLinesAxis.isEmpty())
+            {
+                throw new PWCGException("No Axis front lines available");
+            }
             return frontLinesAxis.get(frontLinesAxis.size()-1);
         }
     }

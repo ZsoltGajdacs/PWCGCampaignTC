@@ -16,6 +16,11 @@ public class FormationGenerator
     
     public static void generatePositionForPlaneInFormation(List<PlaneMcu> planes, int formationType) throws PWCGException
     {
+        if (planes.isEmpty())
+        {
+            throw new PWCGException("No planes available for formation generation");
+        }
+
         Coordinate leadPlaneCoords = planes.get(0).getPosition().copy();
         for (PlaneMcu plane : planes)
         {

@@ -32,6 +32,11 @@ public class AveragePlayerLocationFinder
             playerLocations.add(companyLocation);
         }
         
+        if (playerLocations.isEmpty())
+        {
+            throw new PWCGException("No player locations available for average calculation");
+        }
+
         double xSum = 0.0;
         double zSum = 0.0;
         for (Coordinate playerLocation : playerLocations)

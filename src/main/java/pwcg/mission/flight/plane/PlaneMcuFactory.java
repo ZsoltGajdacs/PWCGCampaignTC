@@ -25,29 +25,29 @@ public class PlaneMcuFactory
     }
 
     private List<PlaneMcu> createPlanes(int numPlanes) throws PWCGException
-    {        
+    {
         List<PlaneMcu> planesForFlight = new ArrayList<>();
         for (int index = 0; index < numPlanes; ++index)
         {
-        	try
-        	{
-	            PlaneMcu plane = createPlaneMcuByPlaneType();
-	            if (index > 0)
-	            {
-	                PlaneMcu leadPlane = planesForFlight.get(0);
-	                plane.setTarget(leadPlane.getLinkTrId());
-	            }
-	            planesForFlight.add(plane);
-        	}
-        	catch (Exception e)
-        	{
-        		e.printStackTrace();
-        		PWCGLogger.log(LogLevel.ERROR, e.getMessage());
-        	}
+            try
+            {
+                PlaneMcu plane = createPlaneMcuByPlaneType();
+                if (index > 0 && !planesForFlight.isEmpty())
+                {
+                    PlaneMcu leadPlane = planesForFlight.get(0);
+                    plane.setTarget(leadPlane.getLinkTrId());
+                }
+                planesForFlight.add(plane);
+            }
+            catch (Exception e)
+            {
+                PWCGLogger.log(LogLevel.ERROR, "Failed to create plane: " + e.getMessage());
+                throw new PWCGException("Failed to create plane for flight: " + e.getMessage());
+            }
         }
-        
+
         initializePlaneParameters(planesForFlight);
-		return planesForFlight;
+        return planesForFlight;
     }
     
     private PlaneMcu createPlaneMcuByPlaneType () throws PWCGException

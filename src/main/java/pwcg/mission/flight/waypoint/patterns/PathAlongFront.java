@@ -62,6 +62,11 @@ public class PathAlongFront
 
     private double determineAngleTowardsOtherSidesLines() throws PWCGException
     {
+        if (coordinatesForPath.isEmpty())
+        {
+            throw new PWCGException("No coordinates available for path angle calculation");
+        }
+
         double cumulativeAngle = 0.0;
         for (Coordinate pathCoordinate : coordinatesForPath)
         {
@@ -71,7 +76,7 @@ public class PathAlongFront
             double angleTowardsOtherSidesLines = MathUtils.calcAngle(closestFriendlyPoint.getPosition(), pathCoordinate);
             cumulativeAngle += angleTowardsOtherSidesLines;
         }
-        
+
         double offsetAngle = cumulativeAngle / coordinatesForPath.size();
         return offsetAngle;
     }

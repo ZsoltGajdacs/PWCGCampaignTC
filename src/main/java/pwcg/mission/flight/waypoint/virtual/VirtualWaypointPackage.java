@@ -39,6 +39,11 @@ public class VirtualWaypointPackage implements IVirtualWaypointPackage
     @Override
     public void addDelayForPlayerDelay(Mission mission) throws PWCGException
     {
+        if (virtualWaypoints.isEmpty())
+        {
+            throw new PWCGException("No virtual waypoints available for delay adjustment");
+        }
+
         VirtualAdditionalTimeCalculator additionalTimeCalculator = new VirtualAdditionalTimeCalculator();
         int additionalTime = additionalTimeCalculator.addDelayForPlayerDelay(mission, flight);
         if (additionalTime > 30)
@@ -68,9 +73,14 @@ public class VirtualWaypointPackage implements IVirtualWaypointPackage
         virtualWaypoints = virtualWaypointGenerator.createVirtualWaypoints();
     }
 
-    private void linkVirtualWaypointToMissionBegin() throws PWCGException   
-    {   
-        VirtualWaypoint firstVirtualWayPoint = virtualWaypoints.get(0);        
+    private void linkVirtualWaypointToMissionBegin() throws PWCGException
+    {
+        if (virtualWaypoints.isEmpty())
+        {
+            throw new PWCGException("No virtual waypoints available for mission begin linkage");
+        }
+
+        VirtualWaypoint firstVirtualWayPoint = virtualWaypoints.get(0);
         IVirtualActivate activateMissionPointSet = (IVirtualActivate)flight.getWaypointPackage().getMissionPointSet(MissionPointSetType.MISSION_POINT_SET_ACTIVATE);
         activateMissionPointSet.linkMissionBeginToFirstVirtualWaypoint(firstVirtualWayPoint.getEntryPoint());
     }

@@ -219,6 +219,11 @@ public class PlaneType implements Cloneable
 
     public PwcgRoleCategory determinePrimaryRoleCategory()
     {
+        if (getRoleCategories().isEmpty())
+        {
+            PWCGLogger.log(LogLevel.ERROR, "No role categories defined for plane type: " + getType());
+            return PwcgRoleCategory.MAIN_BATTLE_TANK;
+        }
         return getRoleCategories().get(0);
     }
 

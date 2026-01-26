@@ -89,8 +89,14 @@ public class TargetLocationFinder
     
     public Coordinate findLocationAtFront() throws PWCGException
     {
-        FrontLinesForMap frontLinesForMap = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaign.getDate());        
+        FrontLinesForMap frontLinesForMap = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaign.getDate());
         FrontLinePoint targetCountryFrontPoint = frontLinesForMap.findCloseFrontPositionForSide(targetGeneralLocation, radius, side);
+
+        if (targetCountryFrontPoint == null)
+        {
+            throw new PWCGException("No front position found for target location");
+        }
+
         return targetCountryFrontPoint.getPosition();
     }
 

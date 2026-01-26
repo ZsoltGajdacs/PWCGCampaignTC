@@ -36,7 +36,7 @@ public interface IFlight
             
     FlightTypes getFlightType();
     
-    int getFlightCruisingSpeed();
+    int getFlightCruisingSpeed() throws PWCGException;
     
     TargetDefinition getTargetDefinition();
 

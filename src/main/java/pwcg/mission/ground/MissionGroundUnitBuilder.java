@@ -100,9 +100,10 @@ public class MissionGroundUnitBuilder
     
     private void eliminateDuplicateGroundUnitsFromCollection(List<GroundUnitCollection> groundUnitCollections) throws PWCGException
     {
-        while (eliminateDuplicateGroundUnitFromCollection(groundUnitCollections))
+        boolean duplicateFound = true;
+        while (duplicateFound)
         {
-            
+            duplicateFound = eliminateDuplicateGroundUnitFromCollection(groundUnitCollections);
         }
     }
     

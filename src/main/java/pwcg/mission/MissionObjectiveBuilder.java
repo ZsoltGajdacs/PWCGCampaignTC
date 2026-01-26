@@ -107,7 +107,8 @@ public class MissionObjectiveBuilder
     {
         Coordinate referenceCoordinate = findfrontPositionNearCompany();
         int radius = 50000;
-        while (objective == null)
+        int maxRadius = 150000;  // Prevent infinite loop
+        while (objective == null && radius < maxRadius)
         {
             findMissionObjectiveForGenericBattle(defendingSide, referenceCoordinate, radius);
             radius += 10000;
@@ -119,10 +120,21 @@ public class MissionObjectiveBuilder
         FrontLinesForMap frontLinesForMap = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaign.getDate());
         Coordinate companyCoordinate = company.determineCurrentPosition(campaign.getDate());
         Coordinate closestFront = frontLinesForMap.findClosestFrontCoordinateForSide(companyCoordinate, company.getCountry().getSide());
+
+        if (closestFront == null)
+        {
+            throw new PWCGException("No front line position found for company " + company.determineDisplayName(campaign.getDate()));
+        }
+
         List<FrontLinePoint> nearbyFrontPositions = frontLinesForMap.findClosestFrontPositionsForSide(closestFront, 20000, company.getCountry().getSide());
+
+        if (nearbyFrontPositions.isEmpty())
+        {
+            throw new PWCGException("No nearby front positions found within 20km of company " + company.determineDisplayName(campaign.getDate()));
+        }
+
         Collections.shuffle(nearbyFrontPositions);
-        Coordinate referenceCoordinate = nearbyFrontPositions.get(0).getPosition();
-        return referenceCoordinate;
+        return nearbyFrontPositions.get(0).getPosition();
     }
 
     private void findMissionObjectiveForGenericBattle(Side defendingSide, Coordinate referenceCoordinate, int radius) throws PWCGException
@@ -173,29 +185,29 @@ public class MissionObjectiveBuilder
 
     private MissionObjective findTrainStationObjective()
     {
-        if(!townObjectives.isEmpty())
+        if(!trainStationObjectives.isEmpty())
         {
-           return new MissionObjective(townObjectives.get(0));
+           return new MissionObjective(trainStationObjectives.get(0));
         }
-        return null; 
+        return null;
     }
-    
+
     private MissionObjective findAirfieldObjective()
     {
         if(!airfieldObjectives.isEmpty())
         {
            return new MissionObjective(airfieldObjectives.get(0));
         }
-        return null; 
+        return null;
     }
-    
+
     private MissionObjective findTownObjective()
     {
-        if(!trainStationObjectives.isEmpty())
+        if(!townObjectives.isEmpty())
         {
-           return new MissionObjective(trainStationObjectives.get(0));
+           return new MissionObjective(townObjectives.get(0));
         }
-        return null; 
+        return null;
     }
     
     private MissionObjective findBridgeObjective()

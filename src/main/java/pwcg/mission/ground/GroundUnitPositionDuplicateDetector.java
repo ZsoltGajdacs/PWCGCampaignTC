@@ -11,8 +11,11 @@ import pwcg.mission.mcu.McuSpawn;
 
 public class GroundUnitPositionDuplicateDetector
 {
+    // Minimum distance in meters between spawn points to consider them distinct
+    private static final double DUPLICATE_DISTANCE_THRESHOLD_METERS = 9.0;
+
     Map <Integer, Integer> duplicateGroundUnitCollections = new HashMap<>();
-    
+
     public boolean verifyMissionGroundUnitPositionsNotDuplicated (List<GroundUnitCollection> testGroundUnitCollections, List<GroundUnitCollection> groundUnitCollections) throws PWCGException
     {
         boolean noDuplicates = true;
@@ -42,23 +45,41 @@ public class GroundUnitPositionDuplicateDetector
     
     public boolean verifyGroundUnitCollectionPositionsNotDuplicated (GroundUnitCollection groundUnitCollection, GroundUnitCollection testGroundUnitCollection) throws PWCGException
     {
-        boolean noDuplicates = true;
-        for (McuSpawn groundUnitSpawns : groundUnitCollection.getSpawns())
+        List<McuSpawn> spawns = groundUnitCollection.getSpawns();
+        List<McuSpawn> testSpawns = testGroundUnitCollection.getSpawns();
+
+        if (spawns == null || testSpawns == null)
         {
-            for (McuSpawn testGroundUnitSpawns : testGroundUnitCollection.getSpawns())
+            return true;
+        }
+
+        boolean noDuplicates = true;
+        for (McuSpawn groundUnitSpawns : spawns)
+        {
+            if (groundUnitSpawns.getPosition() == null)
             {
+                continue;
+            }
+
+            for (McuSpawn testGroundUnitSpawns : testSpawns)
+            {
+                if (testGroundUnitSpawns.getPosition() == null)
+                {
+                    continue;
+                }
+
                 if (groundUnitSpawns.getIndex() != testGroundUnitSpawns.getIndex())
                 {
                     double distance = MathUtils.calcDist(groundUnitSpawns.getPosition(), testGroundUnitSpawns.getPosition());
-                    if (distance < 9.0)
+                    if (distance < DUPLICATE_DISTANCE_THRESHOLD_METERS)
                     {
-                        noDuplicates = false;                        
+                        noDuplicates = false;
                         duplicateGroundUnitCollections.put(testGroundUnitCollection.getIndex(), groundUnitCollection.getIndex());
                     }
                 }
             }
         }
-        
+
         return noDuplicates;
     }
 

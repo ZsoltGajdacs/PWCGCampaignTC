@@ -41,17 +41,17 @@ public class CAPWaypointFactory
         return missionPointSet;
     }
 
-    private List<McuWaypoint> createInterceptWaypoints(McuWaypoint ingressWaypoint) throws PWCGException  
+    private List<McuWaypoint> createInterceptWaypoints(McuWaypoint ingressWaypoint) throws PWCGException
     {
         List<McuWaypoint> targetWaypoints = new ArrayList<>();
-        
+
         McuWaypoint startWP = createInterceptFirstWP(ingressWaypoint);
-        targetWaypoints.add(startWP);       
-        
+        targetWaypoints.add(startWP);
+
         List<McuWaypoint> interceptWPs = this.createSearchPatternWaypoints(startWP);
         targetWaypoints.addAll(interceptWPs);
-        
-        return interceptWPs;        
+
+        return targetWaypoints;
     }
 
     private McuWaypoint createInterceptFirstWP(McuWaypoint ingressWaypoint) throws PWCGException

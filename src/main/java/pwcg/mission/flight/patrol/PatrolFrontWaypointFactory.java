@@ -22,6 +22,7 @@ public class PatrolFrontWaypointFactory
 {
     private IFlight flight;
     private MissionPointRouteSet missionPointSet = new MissionPointRouteSet();
+    private final TCProductSpecificConfiguration productSpecificConfiguration = new TCProductSpecificConfiguration();
 
     public PatrolFrontWaypointFactory(IFlight flight) throws PWCGException
     {
@@ -68,8 +69,7 @@ public class PatrolFrontWaypointFactory
 
     private int calculateDepthOfPenetration()
     {
-        TCProductSpecificConfiguration productSpecific =new TCProductSpecificConfiguration();
-        int depthOfPenetrationMax = productSpecific.getMaxDepthOfPenetrationPatrol();
+        int depthOfPenetrationMax = productSpecificConfiguration.getMaxDepthOfPenetrationPatrol();
         int depthOfPenetration = RandomNumberGenerator.getRandom(depthOfPenetrationMax);
         depthOfPenetration -= 1000;
         return depthOfPenetration;

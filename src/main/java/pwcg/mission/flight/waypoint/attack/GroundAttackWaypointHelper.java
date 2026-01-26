@@ -19,6 +19,7 @@ public class GroundAttackWaypointHelper
 	private int attackAltitude;
     private List<McuWaypoint>waypointsBefore = new ArrayList<>();
     private List<McuWaypoint>waypointsAfter = new ArrayList<>();
+    private final TCProductSpecificConfiguration productSpecificConfiguration = new TCProductSpecificConfiguration();
 	
 	
 	public GroundAttackWaypointHelper(IFlight flight, Coordinate ingressPosition, int attackAltitude)
@@ -50,9 +51,8 @@ public class GroundAttackWaypointHelper
 	}
 
 	private Coordinate calculateTargetIngressCoords(Coordinate ingressPosition)
-	        throws PWCGException, PWCGException
+	        throws PWCGException
 	{
-        TCProductSpecificConfiguration productSpecificConfiguration =new TCProductSpecificConfiguration();
         int bombApproachDistance = productSpecificConfiguration.getBombApproachDistance();
 
         double ingressAngle = MathUtils.calcAngle(ingressPosition.copy(), flight.getTargetDefinition().getPosition().copy());
@@ -81,7 +81,6 @@ public class GroundAttackWaypointHelper
 
 	private Coordinate calculateTargetFinalCoords(McuWaypoint approachWP) throws PWCGException
 	{
-        TCProductSpecificConfiguration productSpecificConfiguration =new TCProductSpecificConfiguration();
         int bombFinalApproachDistance = productSpecificConfiguration.getBombFinalApproachDistance() - 1000;
 
         double angleFromTarget = MathUtils.calcAngle(flight.getTargetDefinition().getPosition(), approachWP.getPosition());
@@ -105,7 +104,6 @@ public class GroundAttackWaypointHelper
 	
 	private Coordinate calculateTargetEgressCoords(McuWaypoint targetIngressWP, McuWaypoint targetFinalWP) throws PWCGException
 	{
-        TCProductSpecificConfiguration productSpecificConfiguration =new TCProductSpecificConfiguration();
         int bombTargetEgressDistance = productSpecificConfiguration.getBombFinalApproachDistance() / 2;
 
         double angleFromTarget = MathUtils.calcAngle(targetFinalWP.getPosition(), flight.getTargetDefinition().getPosition());

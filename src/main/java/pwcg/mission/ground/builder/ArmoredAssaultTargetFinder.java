@@ -54,9 +54,15 @@ public class ArmoredAssaultTargetFinder
 
     private IGroundUnit findUnitCloseToPosition(List<IGroundUnit> targetUnitsForSide, Coordinate objectivePosition) throws PWCGException
     {
+        if (targetUnitsForSide == null || targetUnitsForSide.isEmpty())
+        {
+            throw new PWCGException("No target units available for assault");
+        }
+
         List<IGroundUnit> viableTargetUnits = new ArrayList<>();
         double closeUnitDistance = 4000.0;
-        while (viableTargetUnits.isEmpty())
+        double maxDistance = 50000.0;
+        while (viableTargetUnits.isEmpty() && closeUnitDistance < maxDistance)
         {
             for (IGroundUnit targetUnit : targetUnitsForSide)
             {
@@ -68,6 +74,11 @@ public class ArmoredAssaultTargetFinder
             }
 
             closeUnitDistance += 1000;
+        }
+
+        if (viableTargetUnits.isEmpty())
+        {
+            throw new PWCGException("No viable target units found within maximum distance");
         }
 
         Collections.shuffle(viableTargetUnits);

@@ -86,25 +86,25 @@ public class GroundUnitCollectionTargetFinder
     {
         if (groundUnitsForSideByUnitType.containsKey(GroundUnitType.TANK_UNIT))
         {
-            return groundUnitsForSideByUnitType.get(GroundUnitType.TANK_UNIT).get(0);
+            return getFirstUnitOfType(GroundUnitType.TANK_UNIT);
         }
         else if (groundUnitsForSideByUnitType.containsKey(GroundUnitType.INFANTRY_UNIT))
         {
-            return groundUnitsForSideByUnitType.get(GroundUnitType.INFANTRY_UNIT).get(0);
+            return getFirstUnitOfType(GroundUnitType.INFANTRY_UNIT);
         }
         else if (groundUnitsForSideByUnitType.containsKey(GroundUnitType.ARTILLERY_UNIT))
         {
-            return groundUnitsForSideByUnitType.get(GroundUnitType.ARTILLERY_UNIT).get(0);
+            return getFirstUnitOfType(GroundUnitType.ARTILLERY_UNIT);
         }
         else if (groundUnitsForSideByUnitType.containsKey(GroundUnitType.AAA_UNIT))
         {
-            return groundUnitsForSideByUnitType.get(GroundUnitType.AAA_UNIT).get(0);
+            return getFirstUnitOfType(GroundUnitType.AAA_UNIT);
         }
         else if (groundUnitsForSideByUnitType.containsKey(GroundUnitType.TRANSPORT_UNIT))
         {
-            return groundUnitsForSideByUnitType.get(GroundUnitType.TRANSPORT_UNIT).get(0);
+            return getFirstUnitOfType(GroundUnitType.TRANSPORT_UNIT);
         }
-        else 
+        else
         {
             throw new PWCGException("No target unit found for infantry ground collection");
         }
@@ -114,9 +114,9 @@ public class GroundUnitCollectionTargetFinder
     {
         if (groundUnitsForSideByUnitType.containsKey(GroundUnitType.BALLOON_UNIT))
         {
-            return groundUnitsForSideByUnitType.get(GroundUnitType.BALLOON_UNIT).get(0);
+            return getFirstUnitOfType(GroundUnitType.BALLOON_UNIT);
         }
-        else 
+        else
         {
             throw new PWCGException("No target unit found for balloon ground collection");
         }
@@ -126,9 +126,9 @@ public class GroundUnitCollectionTargetFinder
     {
         if (groundUnitsForSideByUnitType.containsKey(GroundUnitType.TRANSPORT_UNIT))
         {
-            return groundUnitsForSideByUnitType.get(GroundUnitType.TRANSPORT_UNIT).get(0);
+            return getFirstUnitOfType(GroundUnitType.TRANSPORT_UNIT);
         }
-        else 
+        else
         {
             throw new PWCGException("No target unit found for transport ground collection");
         }
@@ -138,11 +138,22 @@ public class GroundUnitCollectionTargetFinder
     {
         if (groundUnitsForSideByUnitType.containsKey(GroundUnitType.STATIC_UNIT))
         {
-            return groundUnitsForSideByUnitType.get(GroundUnitType.STATIC_UNIT).get(0);
+            return getFirstUnitOfType(GroundUnitType.STATIC_UNIT);
         }
-        else 
+        else
         {
-            throw new PWCGException("No target unit found for transport ground collection");
+            throw new PWCGException("No target unit found for static ground collection");
         }
     }
+
+    private IGroundUnit getFirstUnitOfType(GroundUnitType unitType) throws PWCGException
+    {
+        List<IGroundUnit> units = groundUnitsForSideByUnitType.get(unitType);
+        if (units == null || units.isEmpty())
+        {
+            throw new PWCGException("No units available for type: " + unitType);
+        }
+        return units.get(0);
+    }
 }
+

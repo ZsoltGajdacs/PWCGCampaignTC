@@ -48,7 +48,7 @@ public class MissionPlatoonBuilder extends PlatoonBuilderBase implements IPlatoo
 
             createStartPosition(waypointCoordinates, platoon);
 
-            List<McuWaypoint> assaultWaypoints = createWaypoints(waypointCoordinates, platoon.getLeadVehicle().getCruisingSpeed());
+            List<McuWaypoint> assaultWaypoints = createWaypoints(waypointCoordinates, getPlatoonSpeed(platoon));
             platoon.setWaypoints(assaultWaypoints);
         }
     }
@@ -64,7 +64,7 @@ public class MissionPlatoonBuilder extends PlatoonBuilderBase implements IPlatoo
 
             createStartPosition(waypointCoordinates, platoon);
 
-            List<McuWaypoint> defenseWaypoints = createWaypoints(waypointCoordinates, platoon.getLeadVehicle().getCruisingSpeed());
+            List<McuWaypoint> defenseWaypoints = createWaypoints(waypointCoordinates, getPlatoonSpeed(platoon));
             platoon.setWaypoints(defenseWaypoints);
         }
     }
@@ -84,9 +84,22 @@ public class MissionPlatoonBuilder extends PlatoonBuilderBase implements IPlatoo
 
     private void createStartPosition(List<Coordinate> waypointCoordinates, ITankPlatoon platoon) throws PWCGException
     {
+        if (waypointCoordinates == null || waypointCoordinates.size() < 2)
+        {
+            throw new PWCGException("Insufficient waypoint coordinates for platoon start position");
+        }
         Coordinate startPosition = waypointCoordinates.get(0);
         Coordinate towardsPosition = waypointCoordinates.get(1);
         platoon.setStartPosition(startPosition, towardsPosition);
+    }
+
+    private int getPlatoonSpeed(ITankPlatoon platoon) throws PWCGException
+    {
+        if (platoon.getLeadVehicle() == null)
+        {
+            throw new PWCGException("Lead vehicle is null for platoon");
+        }
+        return platoon.getLeadVehicle().getCruisingSpeed();
     }
 
     private List<McuWaypoint> createWaypoints(List<Coordinate> assaultWaypointCoordinates, int platoonSpeed) throws PWCGException

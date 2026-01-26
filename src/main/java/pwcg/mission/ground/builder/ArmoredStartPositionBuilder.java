@@ -33,7 +33,18 @@ public class ArmoredStartPositionBuilder
 
     private void buildStartPositions(List<ITankPlatoon> platoons, GroundUnitType groundUnitType) throws PWCGException
     {
+        if (platoons == null || platoons.isEmpty())
+        {
+            throw new PWCGException("No platoons provided for start position building");
+        }
+
         List<IGroundUnit> positionsFriendly = assaultFixedUnitCollection.getGroundUnitsByTypeAndSide(groundUnitType, platoons.get(0).getPlatoonInformation().getCountry().getSide());
+
+        if (positionsFriendly == null || positionsFriendly.isEmpty())
+        {
+            throw new PWCGException("No friendly positions available for armor start positions");
+        }
+
         Collections.shuffle(positionsFriendly);
         for (int i = 0; i < platoons.size(); ++i)
         {

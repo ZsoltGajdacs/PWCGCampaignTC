@@ -1,27 +1,13 @@
 package pwcg.campaign.skirmish;
 
+import lombok.Getter;
 import pwcg.campaign.api.Side;
 import pwcg.campaign.tank.PwcgRole;
 
+@Getter
 public class SkirmishForceRoleConversion
 {
     Side side;
     PwcgRole fromRole;
     PwcgRole toRole;
-
-    public Side getSide()
-    {
-        return side;
-    }
-
-    public PwcgRole getFromRole()
-    {
-        return fromRole;
-    }
-
-    public PwcgRole getToRole()
-    {
-        return toRole;
-    }
-
 }

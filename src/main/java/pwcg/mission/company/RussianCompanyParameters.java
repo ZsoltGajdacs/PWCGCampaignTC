@@ -3,6 +3,7 @@ package pwcg.mission.company;
 import java.util.Arrays;
 import java.util.List;
 
+import lombok.Getter;
 import pwcg.campaign.Campaign;
 import pwcg.campaign.api.Side;
 import pwcg.campaign.context.PWCGContext;
@@ -10,6 +11,7 @@ import pwcg.core.exception.PWCGException;
 import pwcg.core.location.Coordinate;
 import pwcg.product.bos.country.TCServiceManager;
 
+@Getter
 public class RussianCompanyParameters implements IAiCompanyParameters
 {
     private List<String> armoredDivisionNames = Arrays.asList("143rd Tank", "167th Tank", "322nd Tank", "46th Tank");
@@ -35,59 +37,5 @@ public class RussianCompanyParameters implements IAiCompanyParameters
         {
             companyPosition = new Coordinate(75000, 0, 75000);
         }
-    }
-
-    @Override
-    public List<String> getInfantryDivisionNames()
-    {
-        return infantryDivisionNames;
-    }
-
-    @Override
-    public List<String> getArmoredDivisionNames()
-    {
-        return armoredDivisionNames;
-    }
-
-    @Override
-    public List<String> getTankDestroyerDivisionNames()
-    {
-        return tankDestroyerDivisionNames;
-    }
-
-    @Override
-    public List<String> getCompanyNames()
-    {
-        return companyNames;
-    }
-
-    @Override
-    public int getStartingCompanyId()
-    {
-        return startingCompanyId;
-    }
-
-    @Override
-    public Coordinate getCompanyPosition()
-    {
-        return companyPosition;
-    }
-
-    @Override
-    public int getNumberOfTank()
-    {
-        return numberOfTank;
-    }
-
-    @Override
-    public int getNumberOfInfantry()
-    {
-        return numberOfInfantry;
-    }
-
-    @Override
-    public int getNumberOfTankDestroyer()
-    {
-        return numberOfTankDestroyer;
     }
 }

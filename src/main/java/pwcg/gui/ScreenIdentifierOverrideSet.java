@@ -3,17 +3,12 @@ package pwcg.gui;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ScreenIdentifierOverrideSet
 {
     private Map<ScreenIdentifier, String> configuredOverrides = new HashMap<>();
-
-    public Map<ScreenIdentifier, String> getConfiguredOverrides()
-    {
-        return configuredOverrides;
-    }
-
-    public void setConfiguredOverrides(Map<ScreenIdentifier, String> configuredOverrides)
-    {
-        this.configuredOverrides = configuredOverrides;
-    }
 }

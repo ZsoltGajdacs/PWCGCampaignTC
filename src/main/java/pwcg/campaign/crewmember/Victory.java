@@ -2,14 +2,19 @@ package pwcg.campaign.crewmember;
 
 import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Victory is was is stored in the campaign file.
  * A victory object can be created from a MissionResultVictory (from the logs)
  * or from straight forward IO of a victory object (See VictoryIO)
- * 
+ *
  * @author Patrick Wilson
  *
  */
+@Getter
+@Setter
 public class Victory implements Comparable<Victory>
 {
     public static final int AIRCRAFT = 1;
@@ -22,10 +27,6 @@ public class Victory implements Comparable<Victory>
     private VictoryEntity victim = new VictoryEntity();
     private VictoryEntity victor = new VictoryEntity();
 
-    public Victory()
-    {
-    }
- 
     @Override
     public int compareTo(Victory otherVictory)
     {
@@ -38,45 +39,5 @@ public class Victory implements Comparable<Victory>
             return 1;
         }
         return 0;
-    }
-
-    public Date getDate()
-    {
-        return date;
-    }
-
-    public void setDate(Date date)
-    {
-        this.date = date;
-    }
-
-    public String getLocation()
-    {
-        return location;
-    }
-
-    public void setLocation(String location)
-    {
-        this.location = location;
-    }
-
-    public VictoryEntity getVictim()
-    {
-        return victim;
-    }
-
-    public void setVictim(VictoryEntity victim)
-    {
-        this.victim = victim;
-    }
-
-    public VictoryEntity getVictor()
-    {
-        return victor;
-    }
-
-    public void setVictor(VictoryEntity victor)
-    {
-        this.victor = victor;
     }
 }

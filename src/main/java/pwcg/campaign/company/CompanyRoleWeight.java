@@ -1,29 +1,14 @@
 package pwcg.campaign.company;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import pwcg.campaign.tank.PwcgRole;
 
+@Getter
+@Setter
 public class CompanyRoleWeight
 {
     private PwcgRole role;
     private int weight;
-
-    public PwcgRole getRole()
-    {
-        return role;
-    }
-
-    public void setRole(PwcgRole role)
-    {
-        this.role = role;
-    }
-
-    public int getWeight()
-    {
-        return weight;
-    }
-
-    public void setWeight(int weight)
-    {
-        this.weight = weight;
-    }
 }

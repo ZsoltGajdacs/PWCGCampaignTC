@@ -2,10 +2,15 @@ package pwcg.mission.flight.waypoint.patterns;
 
 import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import pwcg.campaign.api.Side;
 import pwcg.core.location.Coordinate;
 import pwcg.mission.Mission;
 
+@Getter
+@Setter
 public class PathAlongFrontData
 {
     private Mission mission;
@@ -15,75 +20,4 @@ public class PathAlongFrontData
     private int pathDistance = 15000;
     private int offsetTowardsEnemy = 0;
     private boolean returnAlongRoute = false;
-    
-    public Mission getMission()
-    {
-        return mission;
-    }
-
-    public void setMission(Mission mission)
-    {
-        this.mission = mission;
-    }
-
-    public Coordinate getTargetGeneralLocation()
-    {
-        return targetGeneralLocation;
-    }
-
-    public void setTargetGeneralLocation(Coordinate targetGeneralLocation)
-    {
-        this.targetGeneralLocation = targetGeneralLocation;
-    }
-
-    public Date getDate()
-    {
-        return date;
-    }
-
-    public void setDate(Date date)
-    {
-        this.date = date;
-    }
-
-    public Side getSide()
-    {
-        return side;
-    }
-
-    public void setSide(Side side)
-    {
-        this.side = side;
-    }
-
-    public int getPathDistance()
-    {
-        return pathDistance;
-    }
-
-    public void setPathDistance(int pathDistance)
-    {
-        this.pathDistance = pathDistance;
-    }
-
-    public int getOffsetTowardsEnemy()
-    {
-        return offsetTowardsEnemy;
-    }
-
-    public void setOffsetTowardsEnemy(int offsetTowardsEnemy)
-    {
-        this.offsetTowardsEnemy = offsetTowardsEnemy;
-    }
-
-    public boolean isReturnAlongRoute()
-    {
-        return returnAlongRoute;
-    }
-
-    public void setReturnAlongRoute(boolean returnAlongRoute)
-    {
-        this.returnAlongRoute = returnAlongRoute;
-    }
-
 }

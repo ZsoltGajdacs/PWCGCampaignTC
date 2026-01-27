@@ -1,8 +1,12 @@
 package pwcg.gui;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ScreenIdentifierOverride
 {
-    
     private ScreenIdentifier screenIdentifier;
     private String configuredImageName;
 
@@ -10,25 +14,5 @@ public class ScreenIdentifierOverride
     {
         this.screenIdentifier = screenIdentifier;
         this.configuredImageName = "";
-    }
-
-    public ScreenIdentifier getScreenIdentifier()
-    {
-        return screenIdentifier;
-    }
-
-    public void setScreenIdentifier(ScreenIdentifier screenIdentifier)
-    {
-        this.screenIdentifier = screenIdentifier;
-    }
-
-    public String getConfiguredImageName()
-    {
-        return configuredImageName;
-    }
-
-    public void setConfiguredImageName(String configuredImageName)
-    {
-        this.configuredImageName = configuredImageName;
     }
 }

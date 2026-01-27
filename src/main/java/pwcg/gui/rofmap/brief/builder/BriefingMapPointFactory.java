@@ -14,9 +14,9 @@ public class BriefingMapPointFactory
         briefingMapPoint.setPosition(start.copy());
         briefingMapPoint.setCruisingSpeed(0);
         briefingMapPoint.setDistanceToNextPoint(0);
-        briefingMapPoint.setIsEditable(true);
-        briefingMapPoint.setIsTarget(false);
-        briefingMapPoint.setIsWaypoint(false);
+        briefingMapPoint.setEditable(true);
+        briefingMapPoint.setTarget(false);
+        briefingMapPoint.setWaypoint(false);
 
         return briefingMapPoint;
     }
@@ -29,9 +29,9 @@ public class BriefingMapPointFactory
         briefingMapPoint.setPosition(waypoint.getPosition());
         briefingMapPoint.setCruisingSpeed(waypoint.getSpeed());
         briefingMapPoint.setDistanceToNextPoint(0);
-        briefingMapPoint.setIsEditable(true);
-        briefingMapPoint.setIsTarget(waypoint.isTargetWaypoint());
-        briefingMapPoint.setIsWaypoint(true);
+        briefingMapPoint.setEditable(true);
+        briefingMapPoint.setTarget(waypoint.isTargetWaypoint());
+        briefingMapPoint.setWaypoint(true);
 
         return briefingMapPoint;
     }

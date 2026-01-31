@@ -1,25 +1,17 @@
 package pwcg.gui.utils;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Rectangle;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import pwcg.gui.dialogs.PWCGMonitorSupport;
-import pwcg.gui.utils.PWCGScrollPane;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class PWCGFrame
 {	
-    private static final Dimension LOCKED_UI_SIZE = new Dimension(1920, 1080);
     private static PWCGFrame pwcgFrame = null;
     
     private JFrame frame = new JFrame();
     private JPanel base = new JPanel();
-	
+
 	public static PWCGFrame getInstance()
 	{
 		if (pwcgFrame == null)
@@ -30,11 +22,10 @@ public class PWCGFrame
 		return pwcgFrame;
 	}
 	
-	private PWCGFrame()
-	{
+	private PWCGFrame() {
 		super();
-		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Dimension screenSize = PWCGMonitorSupport.getPWCGMonitorSize();
 		frame.setSize(screenSize);
@@ -42,22 +33,9 @@ public class PWCGFrame
 		
         base.setLayout(new BorderLayout());
         base.setBackground(Color.DARK_GRAY);
-        base.setPreferredSize(LOCKED_UI_SIZE);
 
-        JPanel centeredPanel = new JPanel(new GridBagLayout());
-        centeredPanel.setBackground(Color.DARK_GRAY);
-
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.fill = GridBagConstraints.NONE;
-        constraints.anchor = GridBagConstraints.CENTER;
-        centeredPanel.add(base, constraints);
-
-        PWCGScrollPane scrollPane = new PWCGScrollPane(centeredPanel);
-        
-        frame.add(scrollPane, BorderLayout.CENTER);
         frame.setVisible(false);
+		frame.add(base);
 	}
 
 	public void setPanel(JPanel newPanel)
@@ -68,7 +46,7 @@ public class PWCGFrame
 	    base.repaint();
         frame.revalidate();
         frame.repaint();
-	    
+
 	    if (!frame.isVisible())
 	    {
 	        frame.setVisible(true);

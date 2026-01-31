@@ -69,7 +69,7 @@ public class PwcgMainScreen extends ImageResizingPanel implements ActionListener
         super("");
         setLayout(new BorderLayout());
         this.setBackground(Color.DARK_GRAY);
-        setBorder(new EmptyBorder(12, 12, 12, 12));
+        setBorder(new EmptyBorder(50, 50, 50, 50));
 
         this.pwcgThreePanel = new PwcgThreePanelUI(this);
     }

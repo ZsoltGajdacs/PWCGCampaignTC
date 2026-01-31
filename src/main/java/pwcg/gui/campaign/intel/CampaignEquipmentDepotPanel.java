@@ -77,18 +77,27 @@ public class CampaignEquipmentDepotPanel extends JPanel
         depoHeaderPanel.setOpaque(false);
 
         StringBuffer depoStatusBuffer = new StringBuffer("");
-        String titleText = InternationalizationManager.getTranslation("Aircraft Depot Status Report");
+        String titleText = InternationalizationManager.getTranslation("Equipment Depot Status Report");
         depoStatusBuffer.append(titleText);
         depoStatusBuffer.append("\n");
-        
+
         String dateText = InternationalizationManager.getTranslation("Date");
         depoStatusBuffer.append(dateText + ": " + DateUtils.getDateString(campaign.getDate()) + "\n");
-        
-        EquipmentDepot aircraftOnInventory = campaign.getEquipmentManager().getEquipmentDepotForService(service.getServiceId());
-        String replacementDateText = InternationalizationManager.getTranslation("Last Replacement Date");
-        depoStatusBuffer.append(replacementDateText + ": " + DateUtils.getDateString(aircraftOnInventory.getLastReplacementDate()) + "\n");
 
-        depoStatusBuffer.append(service.getName());          
+        EquipmentDepot equipmentDepot = campaign.getEquipmentManager().getEquipmentDepotForService(service.getServiceId());
+        String replacementDateText = InternationalizationManager.getTranslation("Last Replacement Date");
+        depoStatusBuffer.append(replacementDateText + ": " + DateUtils.getDateString(equipmentDepot.getLastReplacementDate()) + "\n");
+
+        depoStatusBuffer.append("\n");
+        String noteText = InternationalizationManager.getTranslation("Note");
+        depoStatusBuffer.append(noteText + ": ");
+        String depotExplanation = InternationalizationManager.getTranslation("This is the service depot - reserve equipment for replacement after losses");
+        depoStatusBuffer.append(depotExplanation + ".\n");
+        String companyNote = InternationalizationManager.getTranslation("Your company's current equipment is shown on the main campaign screen");
+        depoStatusBuffer.append(companyNote + ".\n");
+
+        depoStatusBuffer.append("\n");
+        depoStatusBuffer.append(service.getName());
         String inventoryText = InternationalizationManager.getTranslation("Inventory");
         depoStatusBuffer.append(" " + inventoryText + "\n");
 

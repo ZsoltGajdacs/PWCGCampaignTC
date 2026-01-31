@@ -271,11 +271,11 @@ public class BriefingCrewMemberChalkboard extends ImageResizingPanel
             }
         }
 
-        JLabel unassignedLabel = PWCGLabelFactory.makeBriefingChalkBoardLabel("Unassigned CrewMembers");
+        JLabel unassignedLabel = PWCGLabelFactory.makeBriefingChalkBoardLabel("Available Crew");
         unassignedCrewMemberGrid.add(unassignedLabel);
 
-        JLabel assignedAircraftLabel = PWCGLabelFactory.makeBriefingChalkBoardLabel("   ");
-        unassignedCrewMemberGrid.add(assignedAircraftLabel);
+        JLabel availableTanksLabel = PWCGLabelFactory.makeBriefingChalkBoardLabel("Available Company Tanks");
+        unassignedCrewMemberGrid.add(availableTanksLabel);
 
         JLabel payloadLabel = PWCGLabelFactory.makeBriefingChalkBoardLabel("   ");
         unassignedCrewMemberGrid.add(payloadLabel);

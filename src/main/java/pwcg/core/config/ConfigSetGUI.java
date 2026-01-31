@@ -28,9 +28,9 @@ public class ConfigSetGUI
 		configSet.addConfigItem(ConfigItemKeys.MissionDescriptionFontSizeKey, new ConfigItem("12"));
         configSet.addConfigItem(ConfigItemKeys.MissionDescriptionFontKey, new ConfigItem("Serif"));
         configSet.addConfigItem(ConfigItemKeys.UseToolTipKey, new ConfigItem("1"));
-        configSet.addConfigItem(ConfigItemKeys.ScreenSizeAutoKey, new ConfigItem("0"));
-        configSet.addConfigItem(ConfigItemKeys.ScreenSizeHeightKey, new ConfigItem("1366"));
-        configSet.addConfigItem(ConfigItemKeys.ScreenSizeWidthKey, new ConfigItem("768"));
+        configSet.addConfigItem(ConfigItemKeys.ScreenSizeAutoKey, new ConfigItem("1"));
+        configSet.addConfigItem(ConfigItemKeys.ScreenSizeHeightKey, new ConfigItem("1920"));
+        configSet.addConfigItem(ConfigItemKeys.ScreenSizeWidthKey, new ConfigItem("1080"));
         configSet.addConfigItem(ConfigItemKeys.ShowFrontLineEditorKey, new ConfigItem("0"));
 		return configSet;
 	}

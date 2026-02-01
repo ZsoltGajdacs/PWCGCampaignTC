@@ -42,7 +42,7 @@ public class CampaignHomeGUILeftPanelBuilder
         makeSpacedmenuItem(buttonPanel, "Personnel", "CampPersonnel", "Personnel actions: add crewMember, manage coop crewMembers, reference crewMember, skin management");        
         makeSpacedmenuItem(buttonPanel, "Activity", "CampActivity", "Campaign activities: leave, transfer, journal, company logs");        
         makeSpacedmenuItem(buttonPanel, "Intelligence", "CampIntel", "View intelligence: report, map, depot, emergency resupply");
-        makeSpacedmenuItem(buttonPanel, "Battle Map", "CampBattleMap", "View recent battles and front lines");
+        makeSpacedmenuItem(buttonPanel, "Campaign Map", "CampBattleMap", "View recent battles and front lines");
         makeSpacedmenuItem(buttonPanel, "Configuration", "CampConfig", "Set configuration for this campaign: simple and advanced");
         makeSpacedmenuItem(buttonPanel, "Leave Campaign", "CampMainMenu", "Return to PWCG main menu");
         makeSpacedmenuItem(buttonPanel, "Report Error", "CampError", "Bundle up data files for error reporting");

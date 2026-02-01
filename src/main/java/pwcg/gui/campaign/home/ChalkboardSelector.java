@@ -6,11 +6,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.swing.ButtonGroup;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import pwcg.campaign.Campaign;
@@ -34,7 +36,8 @@ public class ChalkboardSelector extends JPanel implements ActionListener
 
     private Campaign campaign;
     private CampaignHomeScreen campaignHome;
-    private ButtonGroup buttonGroup = new ButtonGroup();
+    private Map<String, JButton> buttonsByAction = new HashMap<>();
+    private JButton activeButton;
 
     public ChalkboardSelector(CampaignHomeScreen campaignHome)
     {
@@ -50,53 +53,96 @@ public class ChalkboardSelector extends JPanel implements ActionListener
         JPanel selectorPanel = new JPanel(new GridLayout(0, 3));
         selectorPanel.setOpaque(false);
 
-        JRadioButton crewMembersButton = makeRadioButton("CrewMembers", "CampCrewMembers", "Show company crewMember chalk board");
+        JButton crewMembersButton = makeButton("CrewMembers", "CampCrewMembers", "Show company crewMember chalk board");
         selectorPanel.add(crewMembersButton);
 
-        JRadioButton playerCrewMembersButton = makeRadioButton("Player CrewMembers", "CampPlayerCrewMembers", "Show player crewMembers chalk board");
+        JButton playerCrewMembersButton = makeButton("Player CrewMembers", "CampPlayerCrewMembers", "Show player crewMembers chalk board");
         selectorPanel.add(playerCrewMembersButton);
 
-        JRadioButton topAcesButton = makeRadioButton("Top Aces: All", "CampTopAces", "Show top aces chalk board");
+        JButton topAcesButton = makeButton("Top Aces: All", "CampTopAces", "Show top aces chalk board");
         selectorPanel.add(topAcesButton);
 
-        JRadioButton equipmentButton = makeRadioButton("Equipment", "Equipment", "Show equipment chalk board");
+        JButton equipmentButton = makeButton("Equipment", "Equipment", "Show equipment chalk board");
         selectorPanel.add(equipmentButton);
 
         selectorPanel.add(PWCGLabelFactory.makeDummyLabel());
 
-        JRadioButton topAcesForServiceButton = makeRadioButton("Top Aces: Service", "CampTopAcesService", "Show top aces chalk board for your service");
+        JButton topAcesForServiceButton = makeButton("Top Aces: Service", "CampTopAcesService", "Show top aces chalk board for your service");
         selectorPanel.add(topAcesForServiceButton);
 
         selectorPanel.add(PWCGLabelFactory.makeDummyLabel());
         selectorPanel.add(PWCGLabelFactory.makeDummyLabel());
 
-        JRadioButton topAcesNoHistoricalButton = makeRadioButton("Top Aces: Exclude Historical", "CampTopAcesNoHistorical", "Show top aces chalk board with no historical aces");
+        JButton topAcesNoHistoricalButton = makeButton("Top Aces: Exclude Historical", "CampTopAcesNoHistorical", "Show top aces chalk board with no historical aces");
         selectorPanel.add(topAcesNoHistoricalButton); 
         
         this.add(selectorPanel, BorderLayout.CENTER);
+        setActiveButton(crewMembersButton);
     }
 
-    private JRadioButton makeRadioButton(String buttonText, String action, String toolTiptext) throws PWCGException 
+    private JButton makeButton(String buttonText, String action, String toolTiptext) throws PWCGException 
     {
         Color fgColor = ColorMap.CHALK_FOREGROUND;
 
         Font font = PWCGMonitorFonts.getPrimaryFont();
 
-        JRadioButton button = new JRadioButton(buttonText);
+        JButton button = new JButton(buttonText);
         button.setActionCommand(action);
         button.setHorizontalAlignment(SwingConstants.LEFT );
-        button.setBorderPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(1, 4, 1, 4));
         button.setFocusPainted(false);
         button.addActionListener(this);
+        button.setContentAreaFilled(false);
         button.setOpaque(false);
         button.setForeground(fgColor);
         button.setFont(font);
         
         ToolTipManager.setToolTip(button, toolTiptext);
 
-        buttonGroup.add(button);
+        buttonsByAction.put(action, button);
 
         return button;
+    }
+
+    private void setActiveButton(String action)
+    {
+        JButton button = buttonsByAction.get(action);
+        if (button != null)
+        {
+            setActiveButton(button);
+        }
+    }
+
+    private void setActiveButton(JButton button)
+    {
+        if (activeButton != null)
+        {
+            applyActiveStyle(activeButton, false);
+        }
+
+        activeButton = button;
+
+        if (activeButton != null)
+        {
+            applyActiveStyle(activeButton, true);
+        }
+    }
+
+    private void applyActiveStyle(JButton button, boolean isActive)
+    {
+        if (isActive)
+        {
+            button.setOpaque(true);
+            button.setContentAreaFilled(true);
+            button.setBackground(ColorMap.CHALK_BACKGROUND);
+            button.setBorder(BorderFactory.createLineBorder(ColorMap.CHALK_FOREGROUND));
+        }
+        else
+        {
+            button.setOpaque(false);
+            button.setContentAreaFilled(false);
+            button.setBorder(BorderFactory.createEmptyBorder(1, 4, 1, 4));
+        }
     }
 
     @Override
@@ -105,6 +151,8 @@ public class ChalkboardSelector extends JPanel implements ActionListener
         try
         {
             String action = ae.getActionCommand();
+
+            setActiveButton(action);
 
             if (action.equalsIgnoreCase("CampCrewMembers"))
             {

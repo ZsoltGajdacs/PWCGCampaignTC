@@ -13,6 +13,7 @@ import pwcg.core.config.ConfigItemKeys;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.location.Coordinate;
 import pwcg.core.location.CoordinateBox;
+import pwcg.mission.options.BattleMissionType;
 import pwcg.mission.options.MissionOptions;
 import pwcg.mission.options.MissionWeather;
 
@@ -27,13 +28,27 @@ public class MissionGenerator
 
     public Mission makeMission(MissionHumanParticipants participatingPlayers) throws PWCGException
     {
-        return this.makeMission(participatingPlayers, new HashMap<>());
+        return this.makeMission(participatingPlayers, new HashMap<>(), null);
     }
     
     public Mission makeMission(MissionHumanParticipants participatingPlayers, Map<Integer, PwcgRole> companyRoleOverride) throws PWCGException
     {
+        return this.makeMission(participatingPlayers, companyRoleOverride, null);
+    }
+
+    public Mission makeMission(
+            MissionHumanParticipants participatingPlayers,
+            Map<Integer, PwcgRole> companyRoleOverride,
+            BattleMissionType battleMissionType) throws PWCGException
+    {
         MissionOptions missionOptions = new MissionOptions(campaign.getDate());
         missionOptions.createOptions();
+
+        if (battleMissionType == null)
+        {
+            battleMissionType = BattleMissionType.getRandomBattleType();
+        }
+        missionOptions.setBattleMissionType(battleMissionType);
 
         MissionWeather weather = new MissionWeather(campaign, missionOptions.getMissionHour());
         weather.createMissionWeather();
@@ -51,6 +66,7 @@ public class MissionGenerator
     {
         MissionOptions missionOptions = new MissionOptions(campaign.getDate());
         missionOptions.createOptions();
+        missionOptions.setBattleMissionType(BattleMissionType.getRandomBattleType());
 
         campaign.getCampaignConfigManager().setParam(ConfigItemKeys.UseRealisticWeatherKey, "0");
         MissionWeather weather = new MissionWeather(campaign, missionOptions.getMissionHour());
@@ -65,6 +81,7 @@ public class MissionGenerator
     {
         MissionOptions missionOptions = new MissionOptions(campaign.getDate());
         missionOptions.createOptions();
+        missionOptions.setBattleMissionType(BattleMissionType.getRandomBattleType());
 
         campaign.getCampaignConfigManager().setParam(ConfigItemKeys.UseRealisticWeatherKey, "0");
         MissionWeather weather = new MissionWeather(campaign, missionOptions.getMissionHour());

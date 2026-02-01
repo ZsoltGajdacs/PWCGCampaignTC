@@ -11,6 +11,7 @@ import pwcg.campaign.api.ICountry;
 import pwcg.campaign.api.Side;
 import pwcg.campaign.context.Country;
 import pwcg.campaign.factory.CountryFactory;
+import pwcg.campaign.io.json.StaticObjectIOJson;
 import pwcg.campaign.io.json.VehicleDefinitionIOJson;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.utils.IWeight;
@@ -32,6 +33,7 @@ public class VehicleDefinitionManager
     private void readVehicles() throws PWCGException
     {
         allVehiclesDefinitions = VehicleDefinitionIOJson.readJson();
+        allVehiclesDefinitions.addAll(StaticObjectIOJson.readJson());
     }
 
     public List<VehicleDefinition> getAllVehicleDefinitions()
@@ -71,7 +73,7 @@ public class VehicleDefinitionManager
     {
         for (VehicleDefinition definition : allVehiclesDefinitions)
         {
-            if (definition.getVehicleName().equals(vehicleName))
+            if (definition.getVehicleName() != null && definition.getVehicleName().equals(vehicleName))
             {
                 return definition;
             }
@@ -84,7 +86,7 @@ public class VehicleDefinitionManager
     {
         for (VehicleDefinition definition : allVehiclesDefinitions)
         {
-            if (definition.getDisplayName().equals(vehicleName))
+            if (definition.getDisplayName() != null && definition.getDisplayName().equals(vehicleName))
             {
                 return definition;
             }

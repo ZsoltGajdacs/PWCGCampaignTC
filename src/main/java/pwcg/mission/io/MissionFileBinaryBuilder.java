@@ -2,6 +2,10 @@ package pwcg.mission.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import pwcg.campaign.Campaign;
@@ -23,8 +27,9 @@ public class MissionFileBinaryBuilder implements buildCommandPath
         {
             if (canRunResaver())
             {
-                fullCommand = createCommandPath(campaign, fileName);
-                buildBinaryFile(fullCommand);
+                List<String> commandParts = createCommandParts(campaign, fileName);
+                fullCommand = formatCommandForLog(commandParts);
+                buildBinaryFile(commandParts, fullCommand);
             }
         }
         catch (PWCGException pwcge)
@@ -33,29 +38,30 @@ public class MissionFileBinaryBuilder implements buildCommandPath
         }
         catch (Exception e)
         {
-            new  HelpDialog("Failed to create binary mission file for " + fullCommand);
+            new  HelpDialog("Failed to create binary mission file for " + fullCommand + ". Error: " + e.getMessage());
         }
     }
 
-    private static String createCommandPath(Campaign campaign, String fileName) throws PWCGException
+    private static List<String> createCommandParts(Campaign campaign, String fileName) throws PWCGException
     {
-        String resaverExe = formResaverExeCommand();
-        
-        String listFileArg = formListFileArg();
-        String dataDirArg = formDataDirArg(campaign);
-        String missionFilePathArg = formMissionFilePathArg(campaign, fileName);
-
-        String fullCommand = resaverExe + " " + listFileArg + " " + dataDirArg + " " + missionFilePathArg;
-        PWCGLogger.log(LogLevel.INFO, fullCommand);
-        return fullCommand;
+        List<String> commandParts = new ArrayList<>();
+        commandParts.add(formResaverExeCommand());
+        commandParts.add("-t");
+        commandParts.add("-d");
+        commandParts.add(formDataDirArg(campaign));
+        commandParts.add("-f");
+        commandParts.add(formMissionFilePathArg(campaign, fileName));
+        return commandParts;
     }
     
-    private static void buildBinaryFile(String fullCommand) throws PWCGException
+    private static void buildBinaryFile(List<String> commandParts, String fullCommand) throws PWCGException
     {
         try
         {
             File workingDir = new File(PWCGDirectorySimulatorManager.getInstance().getMissionRewritePath());
-            Process process = Runtime.getRuntime().exec(fullCommand, null, workingDir);
+            ProcessBuilder processBuilder = new ProcessBuilder(commandParts);
+            processBuilder.directory(workingDir);
+            Process process = processBuilder.start();
             int binaryBuildTimeout = ConfigManagerGlobal.getInstance().getIntConfigParam(ConfigItemKeys.BuildBinaryTimeoutKey);
             boolean status = process.waitFor(binaryBuildTimeout, TimeUnit.MINUTES);
             if (status == true)
@@ -65,22 +71,17 @@ public class MissionFileBinaryBuilder implements buildCommandPath
             else
             {
                 PWCGLogger.log(LogLevel.INFO, "Failed to create binary mission file for: " + fullCommand);
-                new  HelpDialog("Failed to create binary mission file for " + fullCommand);
+                new  HelpDialog("Failed to create binary mission file for " + fullCommand + ". Error: Unknown error");
             }
         }
         catch (IOException ioe)
         {
-            new  HelpDialog("Failed to create binary mission file for " + fullCommand);
+            new  HelpDialog("Failed to create binary mission file for " + fullCommand + ". Error: " + ioe.getMessage());
         }
         catch (InterruptedException ioe)
         {
             new  HelpDialog("Timed out trying to create binary mission file for " + fullCommand);
         }
-    }
-
-    private static String formListFileArg()
-    {
-        return " -t ";
     }
 
     public static boolean canRunResaver() throws PWCGException
@@ -102,29 +103,49 @@ public class MissionFileBinaryBuilder implements buildCommandPath
 
     private static String formResaverExeCommand() throws PWCGException
     {
-        String resaverExe = PWCGDirectorySimulatorManager.getInstance().getMissionRewritePath() + "MissionResaver.exe";
-        resaverExe = "\"" + resaverExe + "\"";
-        return resaverExe;
+        Path resaverExePath = Paths.get(PWCGDirectorySimulatorManager.getInstance().getMissionRewritePath(), "MissionResaver.exe");
+        return resaverExePath.toString();
     }
 
     private static String formDataDirArg(Campaign campaign) throws PWCGException
     {
         String dataDir = PWCGDirectorySimulatorManager.getInstance().getSimulatorDataDir();
-        if (dataDir.endsWith("\\"))
+        Path dataPath = Paths.get(dataDir);
+        String normalized = dataPath.normalize().toString();
+        if (normalized.endsWith(File.separator))
         {
-            dataDir = dataDir.substring(0, dataDir.length() - 1);
+            normalized = normalized.substring(0, normalized.length() - 1);
         }
-
-        String dataDirArg = " -d \"" + dataDir + "\"";
-        return dataDirArg;
+        return normalized;
     }
 
     private static String formMissionFilePathArg(Campaign campaign, String fileName) throws PWCGException
     {
         String filepath = PWCGDirectorySimulatorManager.getInstance().getMissionFilePath(campaign);
-        filepath = filepath + fileName + ".mission";
-        String missionFilePathArg = " -f \"" + filepath + "\"";
-        return missionFilePathArg;
+        Path missionPath = Paths.get(filepath, fileName + ".mission");
+        return missionPath.normalize().toString();
+    }
+
+    private static String formatCommandForLog(List<String> commandParts)
+    {
+        StringBuilder builder = new StringBuilder();
+        for (String part : commandParts)
+        {
+            if (builder.length() > 0)
+            {
+                builder.append(' ');
+            }
+            if (part.contains(" "))
+            {
+                builder.append('"').append(part).append('"');
+            }
+            else
+            {
+                builder.append(part);
+            }
+        }
+        PWCGLogger.log(LogLevel.INFO, builder.toString());
+        return builder.toString();
     }
 
 }

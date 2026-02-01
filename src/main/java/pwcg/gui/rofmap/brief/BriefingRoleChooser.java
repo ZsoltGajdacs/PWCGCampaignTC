@@ -35,6 +35,7 @@ import pwcg.gui.utils.PWCGLabelFactory;
 import pwcg.gui.utils.PwcgBorderFactory;
 import pwcg.gui.utils.SpacerPanelFactory;
 import pwcg.mission.MissionHumanParticipants;
+import pwcg.mission.options.BattleMissionType;
 
 public class BriefingRoleChooser extends ImageResizingPanel implements ActionListener
 {
@@ -44,6 +45,7 @@ public class BriefingRoleChooser extends ImageResizingPanel implements ActionLis
     private CampaignHomeGuiBriefingWrapper campaignHomeGuiBriefingWrapper;
     private MissionHumanParticipants participatingPlayers;
     private Map<Integer, JComboBox<String>> companyToRoleMapping = new HashMap<>();
+    private JComboBox<String> battleMissionTypeSelector;
 
     public BriefingRoleChooser(
             Campaign campaign, 
@@ -109,6 +111,12 @@ public class BriefingRoleChooser extends ImageResizingPanel implements ActionLis
         roleSelectionGrid.setOpaque(false);
         roleSelectionGrid.setLayout(new GridLayout(0, 2));
 
+        JLabel battleMissionTypeLabel = PWCGLabelFactory.makeTransparentLabel(
+            "Battle Mission Type", ColorMap.PAPER_FOREGROUND, PWCGMonitorFonts.getPrimaryFont(), SwingConstants.LEFT);
+        battleMissionTypeSelector = makeBattleMissionTypeSelector();
+        roleSelectionGrid.add(battleMissionTypeLabel);
+        roleSelectionGrid.add(battleMissionTypeSelector);
+
         for (CrewMember participatingPlayer : participatingPlayers.getAllParticipatingPlayers())
         {
             int companyId = participatingPlayer.getCompanyId();
@@ -163,7 +171,12 @@ public class BriefingRoleChooser extends ImageResizingPanel implements ActionLis
             if (action.equalsIgnoreCase("CreateMission"))
             {
                 Map<Integer, PwcgRole> companyRoleOverride = buildRoleOverrideMap();
-                MissionGeneratorHelper.showBriefingMap(campaign, campaignHomeGuiBriefingWrapper, participatingPlayers, companyRoleOverride);
+                MissionGeneratorHelper.showBriefingMap(
+                        campaign,
+                        campaignHomeGuiBriefingWrapper,
+                        participatingPlayers,
+                        companyRoleOverride,
+                        getSelectedBattleMissionType());
             }
             else if (action.equalsIgnoreCase("ScrubMission"))
             {
@@ -191,6 +204,28 @@ public class BriefingRoleChooser extends ImageResizingPanel implements ActionLis
             }
         }
         return companyRoleOverride;
+    }
+
+    private JComboBox<String> makeBattleMissionTypeSelector()
+    {
+        JComboBox<String> selector = new JComboBox<>();
+        for (BattleMissionType missionType : BattleMissionType.values())
+        {
+            selector.addItem(missionType.getDescription());
+        }
+        selector.setSelectedIndex(0);
+        return selector;
+    }
+
+    private BattleMissionType getSelectedBattleMissionType()
+    {
+        if (battleMissionTypeSelector == null)
+        {
+            return null;
+        }
+
+        String selectedDescription = (String) battleMissionTypeSelector.getSelectedItem();
+        return BattleMissionType.fromDescription(selectedDescription);
     }
 }
 

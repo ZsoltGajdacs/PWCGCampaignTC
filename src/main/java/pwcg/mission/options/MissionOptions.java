@@ -14,6 +14,7 @@ public class MissionOptions
     private int aqmId = 0;
 
     private MissionType missionType = MissionType.SINGLE_MISSION;
+    private BattleMissionType battleMissionType = null;
 
     private String playerConfig = "";
     private MissionTime missionTime = null;
@@ -85,6 +86,11 @@ public class MissionOptions
         return missionType;
     }
 
+    public BattleMissionType getBattleMissionType()
+    {
+        return battleMissionType;
+    }
+
     public int getMissionHour()
     {
         if (missionTime == null)
@@ -93,5 +99,10 @@ public class MissionOptions
         }
 
         return missionTime.getMissionHour();
+    }
+
+    public void setBattleMissionType(BattleMissionType battleMissionType)
+    {
+        this.battleMissionType = battleMissionType;
     }
 }

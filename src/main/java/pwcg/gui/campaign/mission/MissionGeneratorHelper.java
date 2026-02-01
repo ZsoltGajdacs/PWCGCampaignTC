@@ -14,6 +14,7 @@ import pwcg.gui.sound.MusicManager;
 import pwcg.gui.sound.SoundManager;
 import pwcg.mission.Mission;
 import pwcg.mission.MissionHumanParticipants;
+import pwcg.mission.options.BattleMissionType;
 
 public class MissionGeneratorHelper
 {
@@ -21,11 +22,17 @@ public class MissionGeneratorHelper
     public static void showBriefingMap(Campaign campaign, CampaignHomeGuiBriefingWrapper campaignHomeGuiBriefingWrapper,
             MissionHumanParticipants participatingPlayers, Map<Integer, PwcgRole> companyRoleOverride) throws PWCGException
     {
+        showBriefingMap(campaign, campaignHomeGuiBriefingWrapper, participatingPlayers, companyRoleOverride, null);
+    }
+
+    public static void showBriefingMap(Campaign campaign, CampaignHomeGuiBriefingWrapper campaignHomeGuiBriefingWrapper,
+            MissionHumanParticipants participatingPlayers, Map<Integer, PwcgRole> companyRoleOverride, BattleMissionType battleMissionType) throws PWCGException
+    {
         MusicManager.playMissionBriefingTheme();
         SoundManager.getInstance().playSound("Typewriter.WAV");
 
         GuiMissionInitiator missionInitiator = new GuiMissionInitiator(campaign, participatingPlayers);
-        Mission mission = missionInitiator.makeMission(companyRoleOverride);
+        Mission mission = missionInitiator.makeMission(companyRoleOverride, battleMissionType);
 
         BriefingDescriptionScreen briefingMap = new BriefingDescriptionScreen(campaignHomeGuiBriefingWrapper, mission);
         briefingMap.makePanels();

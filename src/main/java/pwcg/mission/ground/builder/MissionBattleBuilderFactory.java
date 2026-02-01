@@ -6,6 +6,7 @@ import pwcg.core.exception.PWCGException;
 import pwcg.mission.Mission;
 import pwcg.mission.ground.builder.amphibious.AmphibiousAssaultBuilder;
 import pwcg.mission.ground.builder.amphibious.AmphibiousPlatoonBuilder;
+import pwcg.mission.options.BattleMissionType;
 
 public class MissionBattleBuilderFactory
 {   
@@ -15,6 +16,13 @@ public class MissionBattleBuilderFactory
         if (amphibiousAssault != null)
         {
             return new AmphibiousAssaultBuilder(mission, amphibiousAssault);
+        }
+
+        BattleMissionType battleMissionType = mission.getMissionOptions().getBattleMissionType();
+        if (battleMissionType != null
+            && (battleMissionType == BattleMissionType.ATTACK_FORTIFICATION || battleMissionType == BattleMissionType.DEFEND_FORTIFICATION))
+        {
+            return new FortificationBattleBuilder(mission);
         }
         
         return new MissionBattleBuilder(mission);

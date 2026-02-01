@@ -20,38 +20,38 @@ public class BriefingTankPicker
         this.parent = parent;
     }
 
-    public Integer pickPlane(Integer crewMemberSerialNumber) throws PWCGException
-    {       
+    public Integer pickTank(Integer crewMemberSerialNumber) throws PWCGException
+    {
         List<EquippedTank> companyTanks = missionEditHandler.getSortedUnassignedTanks();
         Object[] possibilities = new Object[companyTanks.size()];
         for (int i = 0; i < companyTanks.size(); ++i)
         {
-            EquippedTank plane = companyTanks.get(i);
+            EquippedTank tank = companyTanks.get(i);
             PickerEntry entry = new PickerEntry();
-            entry.description = plane.getDisplayName();
-            entry.plane = plane;
+            entry.description = tank.getDisplayName();
+            entry.tank = tank;
             possibilities[i] = entry;
         }
-        
-        PickerEntry pickedPlane = (PickerEntry)JOptionPane.showInputDialog(
-                parent, 
-                "Select Plane", 
-                "Select Plane", 
-                JOptionPane.PLAIN_MESSAGE, 
-                null, 
-                possibilities, 
+
+        PickerEntry pickedTank = (PickerEntry)JOptionPane.showInputDialog(
+                parent,
+                "Select Tank",
+                "Select Tank",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                possibilities,
                 null);
-        
-        if (pickedPlane != null)
-            return pickedPlane.plane.getSerialNumber();
+
+        if (pickedTank != null)
+            return pickedTank.tank.getSerialNumber();
 
         return null;
-    }    
+    }
 
     private static class PickerEntry
     {
         public String description;
-        public EquippedTank plane;
+        public EquippedTank tank;
 
         public String toString()
         {

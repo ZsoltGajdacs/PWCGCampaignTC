@@ -317,7 +317,6 @@ public class FrontLinesForMap
         this.frontLinesAllied = frontLinesAllied;
     }
 
-
     public void setFrontLinesAxis(List<FrontLinePoint> frontLinesAxis)
     {
         this.frontLinesAxis = frontLinesAxis;

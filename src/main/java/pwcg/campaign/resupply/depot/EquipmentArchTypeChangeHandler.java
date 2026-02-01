@@ -43,18 +43,18 @@ public class EquipmentArchTypeChangeHandler
             Equipment companyEquipment = campaign.getEquipmentManager().getEquipmentForCompany(company.getCompanyId());
             if (companyEquipment != null)
             {
-                Set<Integer> planesToRemove = new HashSet<>();
-                for (EquippedTank plane : companyEquipment.getActiveEquippedTanks().values())
+                Set<Integer> tanksToRemove = new HashSet<>();
+                for (EquippedTank tank : companyEquipment.getActiveEquippedTanks().values())
                 {
-                    boolean isActiveArchType = company.isPlaneInActiveCompanyArchTypes(newDate, plane);
+                    boolean isActiveArchType = company.isPlaneInActiveCompanyArchTypes(newDate, tank);
                     if (!isActiveArchType)
                     {
-                        planesToRemove.add(plane.getSerialNumber());
+                        tanksToRemove.add(tank.getSerialNumber());
                         companysToEquip.add(company);
                     }
                 }
 
-                for (Integer tankSerialNumber : planesToRemove)
+                for (Integer tankSerialNumber : tanksToRemove)
                 {
                     companyEquipment.deactivateEquippedTankFromCompany(tankSerialNumber, campaign.getDate());
                 }

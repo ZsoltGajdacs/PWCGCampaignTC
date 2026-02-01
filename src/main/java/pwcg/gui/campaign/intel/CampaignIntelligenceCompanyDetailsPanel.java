@@ -166,7 +166,7 @@ public class CampaignIntelligenceCompanyDetailsPanel extends JPanel
     private String formCompanyEquipmentDesc(Company company) throws PWCGException
     {
         StringBuffer intelBuffer = new StringBuffer("");
-        formAircraftInventory(company, intelBuffer);
+        formTankInventory(company, intelBuffer);
         intelBuffer.append("\n");
         return intelBuffer.toString();
     }
@@ -193,19 +193,19 @@ public class CampaignIntelligenceCompanyDetailsPanel extends JPanel
         }
     }
 
-    private void formAircraftInventory(Company company, StringBuffer intelBuffer) throws PWCGException
+    private void formTankInventory(Company company, StringBuffer intelBuffer) throws PWCGException
     {
-        String aircraftInventoryText = InternationalizationManager.getTranslation("Aircraft On Inventory");
+        String tankInventoryText = InternationalizationManager.getTranslation("Tanks On Inventory");
 
-        intelBuffer.append("\n        " + aircraftInventoryText + "\n");        
-        intelBuffer.append("        ----------------------------------------\n");          
-        Map<Integer, EquippedTank> aircraftOnInventory = campaign.getEquipmentManager().getEquipmentForCompany(company.getCompanyId()).getActiveEquippedTanks();
-        List<EquippedTank> sortedAircraftOnInventory = TankSorter.sortEquippedTanksByGoodness(new ArrayList<EquippedTank>(aircraftOnInventory.values()));
-        for (int i = 0; i < sortedAircraftOnInventory.size(); ++i)
+        intelBuffer.append("\n        " + tankInventoryText + "\n");
+        intelBuffer.append("        ----------------------------------------\n");
+        Map<Integer, EquippedTank> tanksOnInventory = campaign.getEquipmentManager().getEquipmentForCompany(company.getCompanyId()).getActiveEquippedTanks();
+        List<EquippedTank> sortedTanksOnInventory = TankSorter.sortEquippedTanksByGoodness(new ArrayList<EquippedTank>(tanksOnInventory.values()));
+        for (int i = 0; i < sortedTanksOnInventory.size(); ++i)
         {
-            EquippedTank plane = sortedAircraftOnInventory.get(i);
-            intelBuffer.append("            " + plane.getDisplayName());
-            intelBuffer.append(".\n");          
+            EquippedTank tank = sortedTanksOnInventory.get(i);
+            intelBuffer.append("            " + tank.getDisplayName());
+            intelBuffer.append(".\n");
         }
     }
 }

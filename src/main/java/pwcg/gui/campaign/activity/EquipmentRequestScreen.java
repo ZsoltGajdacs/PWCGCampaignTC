@@ -52,9 +52,9 @@ public class EquipmentRequestScreen extends ImageResizingPanel implements Action
     private static final long serialVersionUID = 1L;
 
     private Campaign campaign = null;
-    private Map<Integer, JCheckBox> aircraftRetireChecklist = new TreeMap<>();
-    private Map<Integer, JCheckBox> aircraftChangeChecklist = new TreeMap<>();
-    private JComboBox<String> replacementAircraftTypeSelector;
+    private Map<Integer, JCheckBox> tankRetireChecklist = new TreeMap<>();
+    private Map<Integer, JCheckBox> tankChangeChecklist = new TreeMap<>();
+    private JComboBox<String> replacementTankTypeSelector;
 
     public EquipmentRequestScreen(Campaign campaign)
     {
@@ -153,15 +153,15 @@ public class EquipmentRequestScreen extends ImageResizingPanel implements Action
 
         for (int serialNumber : equipment.getActiveEquippedTanks().keySet())
         {
-            EquippedTank plane = equipment.getEquippedTank(serialNumber);
-            if (!plane.isEquipmentRequest())
+            EquippedTank tank = equipment.getEquippedTank(serialNumber);
+            if (!tank.isEquipmentRequest())
             {
                 continue;
             }
-            
-            JCheckBox aircraftCheckBox = makeCheckBox(plane.getDisplayName());
-            aircraftRetireChecklist.put(plane.getSerialNumber(), aircraftCheckBox);
-            equipmentRetirementSelectionPanel.add(aircraftCheckBox);
+
+            JCheckBox tankCheckBox = makeCheckBox(tank.getDisplayName());
+            tankRetireChecklist.put(tank.getSerialNumber(), tankCheckBox);
+            equipmentRetirementSelectionPanel.add(tankCheckBox);
         }
         
         for (int i = 0; i < 2; ++i)
@@ -203,15 +203,15 @@ public class EquipmentRequestScreen extends ImageResizingPanel implements Action
 
         for (int serialNumber : equipment.getActiveEquippedTanks().keySet())
         {
-            EquippedTank plane = equipment.getEquippedTank(serialNumber);
-            if (plane.isEquipmentRequest())
+            EquippedTank tank = equipment.getEquippedTank(serialNumber);
+            if (tank.isEquipmentRequest())
             {
                 continue;
             }
-            
-            JCheckBox aircraftCheckBox = makeCheckBox(plane.getDisplayName());
-            aircraftChangeChecklist.put(plane.getSerialNumber(), aircraftCheckBox);
-            equipmentChangeSelectionGrid.add(aircraftCheckBox);
+
+            JCheckBox tankCheckBox = makeCheckBox(tank.getDisplayName());
+            tankChangeChecklist.put(tank.getSerialNumber(), tankCheckBox);
+            equipmentChangeSelectionGrid.add(tankCheckBox);
         }
         
         for (int i = 0; i < 1; ++i)
@@ -228,32 +228,32 @@ public class EquipmentRequestScreen extends ImageResizingPanel implements Action
 
     private JPanel makeReplacementAircraftSelectionPanel() throws PWCGException
     {
-        ITankTypeFactory planeTypeFactory = PWCGContext.getInstance().getPlayerTankTypeFactory();
+        ITankTypeFactory tankTypeFactory = PWCGContext.getInstance().getPlayerTankTypeFactory();
         CrewMember referencePlayer = campaign.getReferencePlayer();
         ICountry country = CountryFactory.makeCountryByCountry(referencePlayer.getCountry());
         Company company = PWCGContext.getInstance().getCompanyManager().getCompany(referencePlayer.getCompanyId());
         PwcgRoleCategory roleCategory = company.getCompanyRoles().selectCompanyPrimaryRoleCategory(campaign.getDate());
-        List<TankTypeInformation> availableTankTypes = planeTypeFactory.getAvailablePlayerTankTypes(country, roleCategory, campaign.getDate());        
+        List<TankTypeInformation> availableTankTypes = tankTypeFactory.getAvailablePlayerTankTypes(country, roleCategory, campaign.getDate());        
 
-        replacementAircraftTypeSelector = new JComboBox<String>();
-        replacementAircraftTypeSelector.setOpaque(false);
+        replacementTankTypeSelector = new JComboBox<String>();
+        replacementTankTypeSelector.setOpaque(false);
         if (!availableTankTypes.isEmpty())
         {
-            for (TankTypeInformation planeType : availableTankTypes)
+            for (TankTypeInformation tankType : availableTankTypes)
             {
-                replacementAircraftTypeSelector.addItem(planeType.getDisplayName());
+                replacementTankTypeSelector.addItem(tankType.getDisplayName());
             }
-            replacementAircraftTypeSelector.setSelectedIndex(availableTankTypes.size()-1);
+            replacementTankTypeSelector.setSelectedIndex(availableTankTypes.size()-1);
         }
-        
 
-        JLabel titleLabel = PWCGLabelFactory.makePaperLabelLarge("Select Plane Type To Convert To");
-        
+
+        JLabel titleLabel = PWCGLabelFactory.makePaperLabelLarge("Select Tank Type To Convert To");
+
         JPanel replacementDropDownGrid = new JPanel(new GridLayout(0,1));
         replacementDropDownGrid.setOpaque(false);
 
         replacementDropDownGrid.add(titleLabel);
-        replacementDropDownGrid.add(replacementAircraftTypeSelector);
+        replacementDropDownGrid.add(replacementTankTypeSelector);
                 
         for (int i = 0; i < 2; ++i)
         {
@@ -327,54 +327,54 @@ public class EquipmentRequestScreen extends ImageResizingPanel implements Action
 
     private void processEquipmentRequests() throws PWCGException
     {
-        changeRequestedPlanes();        
-        retireRequestedPlanes();        
+        changeRequestedTanks();
+        retireRequestedTanks();
         campaign.write();
         updateEquipmentChangeUI();
     }
 
-    private void changeRequestedPlanes() throws PWCGException
+    private void changeRequestedTanks() throws PWCGException
     {
-        List<Integer> serialNumbersOfChangedPlanes = new ArrayList<>();
-        for (int serialNumber : aircraftChangeChecklist.keySet())
+        List<Integer> serialNumbersOfChangedTanks = new ArrayList<>();
+        for (int serialNumber : tankChangeChecklist.keySet())
         {
-            JCheckBox checkBox = aircraftChangeChecklist.get(serialNumber);
+            JCheckBox checkBox = tankChangeChecklist.get(serialNumber);
             if (checkBox.isSelected())
             {
-                serialNumbersOfChangedPlanes.add(serialNumber);
+                serialNumbersOfChangedTanks.add(serialNumber);
             }
         }
-        
-        if (!serialNumbersOfChangedPlanes.isEmpty())
+
+        if (!serialNumbersOfChangedTanks.isEmpty())
         {
-            String planeTypeToChangeTo = (String) replacementAircraftTypeSelector.getSelectedItem();
-            
+            String tankTypeToChangeTo = (String) replacementTankTypeSelector.getSelectedItem();
+
             CrewMember referencePlayer = campaign.getReferencePlayer();
             Company company = PWCGContext.getInstance().getCompanyManager().getCompany(referencePlayer.getCompanyId());
-    
-            campaign.getEquipmentManager().actOnEquipmentRequest(company, serialNumbersOfChangedPlanes, planeTypeToChangeTo);
+
+            campaign.getEquipmentManager().actOnEquipmentRequest(company, serialNumbersOfChangedTanks, tankTypeToChangeTo);
         }
     }
 
-    private void retireRequestedPlanes() throws PWCGException
+    private void retireRequestedTanks() throws PWCGException
     {
-        for (int serialNumber : aircraftRetireChecklist.keySet())
+        for (int serialNumber : tankRetireChecklist.keySet())
         {
-            JCheckBox checkBox = aircraftRetireChecklist.get(serialNumber);
+            JCheckBox checkBox = tankRetireChecklist.get(serialNumber);
             if (!checkBox.isSelected())
             {
                 continue;
             }
-            
+
             campaign.getEquipmentManager().destroyTank(serialNumber, campaign.getDate());
         }
     }
 
     private void updateEquipmentChangeUI() throws PWCGException
     {
-        aircraftRetireChecklist.clear();
-        aircraftChangeChecklist.clear();
-        replacementAircraftTypeSelector = null;
+        tankRetireChecklist.clear();
+        tankChangeChecklist.clear();
+        replacementTankTypeSelector = null;
 
         this.removeAll();
         makePanels();

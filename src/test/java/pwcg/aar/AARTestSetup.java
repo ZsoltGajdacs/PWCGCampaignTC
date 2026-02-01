@@ -68,10 +68,10 @@ public abstract class AARTestSetup
     @Mock protected TankAce ace2;
     @Mock protected TankAce ace3;
     @Mock protected TankAce ace4;
-    @Mock protected EquippedTank enemyPlane1;
-    @Mock protected EquippedTank plane1;
-    @Mock protected EquippedTank plane2;
-    @Mock protected EquippedTank plane3;
+    @Mock protected EquippedTank enemyTank1;
+    @Mock protected EquippedTank tank1;
+    @Mock protected EquippedTank tank2;
+    @Mock protected EquippedTank tank3;
     @Mock protected ArmedService frenchAirForce;
     @Mock protected ArmedService germanAirForce;
     
@@ -198,20 +198,20 @@ public abstract class AARTestSetup
         Mockito.when(ace3.getCountry()).thenReturn(Country.RUSSIA);
         Mockito.when(ace4.getCountry()).thenReturn(Country.RUSSIA);
         
-        Mockito.when(enemyPlane1.getCompanyId()).thenReturn(CompanyTestProfile.GROSS_DEUTSCHLAND_PROFILE.getCompanyId());
-        Mockito.when(plane1.getCompanyId()).thenReturn(CompanyTestProfile.THIRD_DIVISION_PROFILE.getCompanyId());
-        Mockito.when(plane2.getCompanyId()).thenReturn(CompanyTestProfile.THIRD_DIVISION_PROFILE.getCompanyId());
-        Mockito.when(plane3.getCompanyId()).thenReturn(CompanyTestProfile.THIRD_DIVISION_PROFILE.getCompanyId());
-        
-        Mockito.when(enemyPlane1.getSerialNumber()).thenReturn(SerialNumber.TANK_STARTING_SERIAL_NUMBER+100);
-        Mockito.when(plane1.getSerialNumber()).thenReturn(SerialNumber.TANK_STARTING_SERIAL_NUMBER);
-        Mockito.when(plane2.getSerialNumber()).thenReturn(SerialNumber.TANK_STARTING_SERIAL_NUMBER+1);
-        Mockito.when(plane3.getSerialNumber()).thenReturn(SerialNumber.TANK_STARTING_SERIAL_NUMBER+2);
-        
-        Mockito.when(enemyPlane1.determinePrimaryRoleCategory()).thenReturn(PwcgRoleCategory.FIGHTER);
-        Mockito.when(plane1.determinePrimaryRoleCategory()).thenReturn(PwcgRoleCategory.FIGHTER);
-        Mockito.when(plane2.determinePrimaryRoleCategory()).thenReturn(PwcgRoleCategory.FIGHTER);
-        Mockito.when(plane3.determinePrimaryRoleCategory()).thenReturn(PwcgRoleCategory.FIGHTER);
+        Mockito.when(enemyTank1.getCompanyId()).thenReturn(CompanyTestProfile.GROSS_DEUTSCHLAND_PROFILE.getCompanyId());
+        Mockito.when(tank1.getCompanyId()).thenReturn(CompanyTestProfile.THIRD_DIVISION_PROFILE.getCompanyId());
+        Mockito.when(tank2.getCompanyId()).thenReturn(CompanyTestProfile.THIRD_DIVISION_PROFILE.getCompanyId());
+        Mockito.when(tank3.getCompanyId()).thenReturn(CompanyTestProfile.THIRD_DIVISION_PROFILE.getCompanyId());
+
+        Mockito.when(enemyTank1.getSerialNumber()).thenReturn(SerialNumber.TANK_STARTING_SERIAL_NUMBER+100);
+        Mockito.when(tank1.getSerialNumber()).thenReturn(SerialNumber.TANK_STARTING_SERIAL_NUMBER);
+        Mockito.when(tank2.getSerialNumber()).thenReturn(SerialNumber.TANK_STARTING_SERIAL_NUMBER+1);
+        Mockito.when(tank3.getSerialNumber()).thenReturn(SerialNumber.TANK_STARTING_SERIAL_NUMBER+2);
+
+        Mockito.when(enemyTank1.determinePrimaryRoleCategory()).thenReturn(PwcgRoleCategory.FIGHTER);
+        Mockito.when(tank1.determinePrimaryRoleCategory()).thenReturn(PwcgRoleCategory.FIGHTER);
+        Mockito.when(tank2.determinePrimaryRoleCategory()).thenReturn(PwcgRoleCategory.FIGHTER);
+        Mockito.when(tank3.determinePrimaryRoleCategory()).thenReturn(PwcgRoleCategory.FIGHTER);
     }
 
 }

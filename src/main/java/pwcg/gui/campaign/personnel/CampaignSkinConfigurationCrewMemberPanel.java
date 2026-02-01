@@ -225,7 +225,7 @@ public class CampaignSkinConfigurationCrewMemberPanel extends ImageResizingPanel
         JPanel aircraftButtonGrid = new JPanel(new GridLayout(0, 1));
         aircraftButtonGrid.setOpaque(false);
 
-        String labelText = InternationalizationManager.getTranslation("Company Aircraft");
+        String labelText = InternationalizationManager.getTranslation("Company Tanks");
         JLabel label = PWCGLabelFactory.makeTransparentLabel(labelText, ColorMap.PAPER_FOREGROUND, PWCGMonitorFonts.getPrimaryFont(), SwingConstants.LEFT);
         aircraftButtonGrid.add(label);
 

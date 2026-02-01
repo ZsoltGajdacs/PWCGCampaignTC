@@ -81,14 +81,14 @@ public class EquippedTank extends Vehicle
         this.serialNumber = serialNumber;
     }
     
-    public int getPlaneStatus()
+    public int getTankStatus()
     {
         return tankStatus;
     }
 
-    public void setTankStatus(int planeStatus)
+    public void setTankStatus(int tankStatus)
     {
-        this.tankStatus = planeStatus;
+        this.tankStatus = tankStatus;
     }
 
     public Date getDateRemovedFromService()
@@ -111,14 +111,14 @@ public class EquippedTank extends Vehicle
         this.companyId = companyId;
     }
 
-    public String getAircraftIdCode()
+    public String getTankIdCode()
     {
         return tankIdCode;
     }
 
-    public void setTankIdCode(String aircraftIdCode)
+    public void setTankIdCode(String tankIdCode)
     {
-        this.tankIdCode = aircraftIdCode;
+        this.tankIdCode = tankIdCode;
     }
 
     public boolean isEquipmentRequest()

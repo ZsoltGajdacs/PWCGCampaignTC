@@ -69,8 +69,8 @@ public class EquipmentUpgradeHandler
                 EquippedTank replacementTank = equipmentDepot.removeEquippedTankFromDepot(equipmentUpgrade.getUpgrade().getSerialNumber());
                 equipmentForCompany.addEquippedTankToCompany(campaign, company.getCompanyId(), replacementTank);
                 
-                EquippedTank replacedPlane = equipmentForCompany.removeEquippedTank(equipmentUpgrade.getReplacedPlane().getSerialNumber());
-                equipmentDepot.addTankToDepot(replacedPlane);
+                EquippedTank replacedTank = equipmentForCompany.removeEquippedTank(equipmentUpgrade.getReplacedPlane().getSerialNumber());
+                equipmentDepot.addTankToDepot(replacedTank);
 
                 EquipmentResupplyRecord equipmentResupplyRecord = new EquipmentResupplyRecord(replacementTank, company.getCompanyId());
                 equipmentResupplyData.addEquipmentResupplyRecord(equipmentResupplyRecord);
@@ -80,8 +80,8 @@ public class EquipmentUpgradeHandler
 
     private List<EquippedTank> getTanksForCompanyWorstToBest(Equipment equipmentForCompany) throws PWCGException
     {
-        Map<Integer, EquippedTank> planesForCompany = equipmentForCompany.getActiveEquippedTanks();
-        List<EquippedTank> sortedTanks = TankSorter.sortEquippedTanksByGoodness(new ArrayList<EquippedTank>(planesForCompany.values()));
+        Map<Integer, EquippedTank> tanksForCompany = equipmentForCompany.getActiveEquippedTanks();
+        List<EquippedTank> sortedTanks = TankSorter.sortEquippedTanksByGoodness(new ArrayList<EquippedTank>(tanksForCompany.values()));
         Collections.reverse(sortedTanks);
         return sortedTanks;
     }

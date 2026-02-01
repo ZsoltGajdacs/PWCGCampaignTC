@@ -47,21 +47,21 @@ public class CampaignEquipmentArchtypeChangeHandlerTest
         assertNotTankArchType(campaign, "tiger");
     }
     
-    private void assertTankArchType(Campaign campaign, String planeArchTypeName)
+    private void assertTankArchType(Campaign campaign, String tankArchTypeName)
     {
     	Equipment equipment = campaign.getEquipmentManager().getEquipmentForCompany(CompanyTestProfile.GROSS_DEUTSCHLAND_PZIV_PROFILE.getCompanyId());
-        for (EquippedTank plane : equipment.getActiveEquippedTanks().values())
+        for (EquippedTank tank : equipment.getActiveEquippedTanks().values())
         {
-            assert(plane.getArchType().equals(planeArchTypeName));
+            assert(tank.getArchType().equals(tankArchTypeName));
         }
     }
-    
-    private void assertNotTankArchType(Campaign campaign, String planeArchTypeName)
+
+    private void assertNotTankArchType(Campaign campaign, String tankArchTypeName)
     {
     	Equipment equipment = campaign.getEquipmentManager().getEquipmentForCompany(CompanyTestProfile.GROSS_DEUTSCHLAND_PZIV_PROFILE.getCompanyId());
-        for (EquippedTank plane : equipment.getActiveEquippedTanks().values())
+        for (EquippedTank tank : equipment.getActiveEquippedTanks().values())
         {
-            assert(!(plane.getArchType().equals(planeArchTypeName)));
+            assert(!(tank.getArchType().equals(tankArchTypeName)));
         }
     }
 

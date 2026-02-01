@@ -23,44 +23,44 @@ public class Equipment
 
     public Map<Integer, EquippedTank> getAvailableDepotTanks()
     {
-        Map<Integer, EquippedTank> availableDepotPlanes = new HashMap<>();
+        Map<Integer, EquippedTank> availableDepotTanks = new HashMap<>();
         for (EquippedTank equippedTank : equippedTanks.values())
         {
-            if (equippedTank.getPlaneStatus() == TankStatus.STATUS_DEPOT)
+            if (equippedTank.getTankStatus() == TankStatus.STATUS_DEPOT)
             {
-                availableDepotPlanes.put(equippedTank.getSerialNumber(), equippedTank);
+                availableDepotTanks.put(equippedTank.getSerialNumber(), equippedTank);
             }
         }
-        return availableDepotPlanes;
+        return availableDepotTanks;
     }
 
     public Map<Integer, EquippedTank> getActiveEquippedTanks()
     {
-        Map<Integer, EquippedTank> activeEquippedPlanes = new TreeMap<>();
+        Map<Integer, EquippedTank> activeEquippedTanks = new TreeMap<>();
         for (EquippedTank equippedTank : equippedTanks.values())
         {
-            if (equippedTank.getPlaneStatus() == TankStatus.STATUS_DEPLOYED && equippedTank.getDateRemovedFromService() == null)
+            if (equippedTank.getTankStatus() == TankStatus.STATUS_DEPLOYED && equippedTank.getDateRemovedFromService() == null)
             {
-                activeEquippedPlanes.put(equippedTank.getSerialNumber(), equippedTank);
+                activeEquippedTanks.put(equippedTank.getSerialNumber(), equippedTank);
             }
         }
-        return activeEquippedPlanes;
+        return activeEquippedTanks;
     }
 
     public Map<Integer, EquippedTank> getRecentlyInactiveEquippedTanks(Date date) throws PWCGException
     {
-        Map<Integer, EquippedTank> recentlyInactiveEquippedPlanes = new HashMap<>();
+        Map<Integer, EquippedTank> recentlyInactiveTanks = new HashMap<>();
         for (EquippedTank equippedTank : equippedTanks.values())
         {
             if (equippedTank.getDateRemovedFromService() != null)
             {
                 if (equippedTank.getDateRemovedFromService().after(DateUtils.removeTimeDays(date, 7)))
                 {
-                    recentlyInactiveEquippedPlanes.put(equippedTank.getSerialNumber(), equippedTank);
+                    recentlyInactiveTanks.put(equippedTank.getSerialNumber(), equippedTank);
                 }
             }
         }
-        return recentlyInactiveEquippedPlanes;
+        return recentlyInactiveTanks;
     }
 
     public boolean isCompanyEquipmentViable()
@@ -107,18 +107,18 @@ public class Equipment
 
     public List<EquippedTank> getTanksForArchTypes(List<String> activeArchTypes)
     {
-        List<EquippedTank> planesForArchType = new ArrayList<>();
+        List<EquippedTank> tanksForArchType = new ArrayList<>();
         for (EquippedTank equippedTank : equippedTanks.values())
         {
             for (String archTypeName : activeArchTypes)
             {
                 if (equippedTank.getArchType().equals(archTypeName))
                 {
-                    planesForArchType.add(equippedTank);
+                    tanksForArchType.add(equippedTank);
                 }
             }
         }
-        return planesForArchType;
+        return tanksForArchType;
     }
 
     public List<String> getArchTypes()

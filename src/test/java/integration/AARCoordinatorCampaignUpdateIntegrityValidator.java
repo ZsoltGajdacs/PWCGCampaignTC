@@ -89,11 +89,11 @@ public class AARCoordinatorCampaignUpdateIntegrityValidator
 
     private void validateEquipmentLossesInMemory() throws PWCGException
     {
-        for (LogTank lostPlane : equipmentLosses.values())
+        for (LogTank lostTank : equipmentLosses.values())
         {
-            EquippedTank lostPlaneFromEquipment = campaign.getEquipmentManager().getEquipmentForCompany(lostPlane.getCompanyId()).getEquippedTank(lostPlane.getTankSerialNumber());
-            assert (lostPlaneFromEquipment != null);
-            assert (lostPlaneFromEquipment.getPlaneStatus() == TankStatus.STATUS_DESTROYED);
+            EquippedTank lostTankFromEquipment = campaign.getEquipmentManager().getEquipmentForCompany(lostTank.getCompanyId()).getEquippedTank(lostTank.getTankSerialNumber());
+            assert (lostTankFromEquipment != null);
+            assert (lostTankFromEquipment.getTankStatus() == TankStatus.STATUS_DESTROYED);
         }
     }
 }

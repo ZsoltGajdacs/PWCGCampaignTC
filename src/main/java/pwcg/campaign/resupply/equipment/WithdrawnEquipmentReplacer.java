@@ -31,83 +31,83 @@ public class WithdrawnEquipmentReplacer
     
     public int replaceWithdrawnEquipment() throws PWCGException
     {
-        int planesRemoved = removeWithdrawnPlanes();
-        int planesAdded = replaceWithNewPlanes(planesRemoved);
-        return planesAdded;
+        int tanksRemoved = removeWithdrawnTanks();
+        int tanksAdded = replaceWithNewTanks(tanksRemoved);
+        return tanksAdded;
     }
 
-    private int removeWithdrawnPlanes()
+    private int removeWithdrawnTanks()
     {
-        int planesRemoved = 0;
-        for (EquippedTank plane: equipment.getActiveEquippedTanks().values())
+        int tanksRemoved = 0;
+        for (EquippedTank tank: equipment.getActiveEquippedTanks().values())
         {
-            if (isWithdrawPlane(plane))
+            if (isWithdrawnTank(tank))
             {
-                equipment.deactivateEquippedTankFromCompany(plane.getSerialNumber(), campaign.getDate());
-                ++planesRemoved;
+                equipment.deactivateEquippedTankFromCompany(tank.getSerialNumber(), campaign.getDate());
+                ++tanksRemoved;
             }
         }
 
-        return planesRemoved;
+        return tanksRemoved;
     }
-    
-    private boolean isWithdrawPlane(EquippedTank plane)
+
+    private boolean isWithdrawnTank(EquippedTank tank)
     {
-        if (campaign.getDate().before(plane.getWithdrawal()))
+        if (campaign.getDate().before(tank.getWithdrawal()))
         {
             return false;
         }
-        
-        if (plane.isEquipmentRequest())
+
+        if (tank.isEquipmentRequest())
         {
             return false;
         }
-        
+
         return true;
     }
-    
-    private int replaceWithNewPlanes(int planesRemoved) throws PWCGException
+
+    private int replaceWithNewTanks(int tanksRemoved) throws PWCGException
     {
-        int numberOfPlanesToAdd = calculatePlanesNeeded(planesRemoved);
-        for (int i = 0; i < numberOfPlanesToAdd; ++i)
+        int numberOfTanksToAdd = calculateTanksNeeded(tanksRemoved);
+        for (int i = 0; i < numberOfTanksToAdd; ++i)
         {
-            String planeTypeName = determineTankType();
-            if (!planeTypeName.isEmpty())
+            String tankTypeName = determineTankType();
+            if (!tankTypeName.isEmpty())
             {
-                addPlaneToCompany(planeTypeName);
+                addTankToCompany(tankTypeName);
             }
         }
-        
-        return numberOfPlanesToAdd;
+
+        return numberOfTanksToAdd;
     }
 
-    private int calculatePlanesNeeded(int planesRemoved)
+    private int calculateTanksNeeded(int tanksRemoved)
     {
         int minNeeded = Company.MIN_REEQUIPMENT_SIZE - equipment.getActiveEquippedTanks().size();
-        int numNeeded = planesRemoved;
-        if (minNeeded > planesRemoved)
+        int numNeeded = tanksRemoved;
+        if (minNeeded > tanksRemoved)
         {
             numNeeded = minNeeded;
         }
-        
+
         return numNeeded;
     }
 
     private String determineTankType() throws PWCGException
     {
-        String planeArchTypeName = chooseArchTypeForCompany();
-        if (!planeArchTypeName.isEmpty())
+        String tankArchTypeName = chooseArchTypeForCompany();
+        if (!tankArchTypeName.isEmpty())
         {
-            TankArchType planeArchType = PWCGContext.getInstance().getPlayerTankTypeFactory().getTankArchType(planeArchTypeName);
-            String planeTypeName = EquipmentReplacementUtils.getTypeForReplacement(campaign.getDate(), planeArchType);
-            return planeTypeName;
+            TankArchType tankArchType = PWCGContext.getInstance().getPlayerTankTypeFactory().getTankArchType(tankArchTypeName);
+            String tankTypeName = EquipmentReplacementUtils.getTypeForReplacement(campaign.getDate(), tankArchType);
+            return tankTypeName;
         }
         else
         {
             return "";
         }
     }
-    
+
     private String chooseArchTypeForCompany() throws PWCGException
     {
         List<String> archTypes = determineAvailableArchTypes();
@@ -125,13 +125,13 @@ public class WithdrawnEquipmentReplacer
     private List<String> determineAvailableArchTypes() throws PWCGException
     {
         List<String> availableArchTypes = new ArrayList<>();
-        for (String planeArchTypeName : equipment.getArchTypes())
+        for (String tankArchTypeName : equipment.getArchTypes())
         {
-            TankArchType planeArchType = PWCGContext.getInstance().getPlayerTankTypeFactory().getTankArchType(planeArchTypeName);
-            String planeTypeName = EquipmentReplacementUtils.getTypeForReplacement(campaign.getDate(), planeArchType);
-            if (planeTypeName != null && !planeTypeName.isEmpty())
+            TankArchType tankArchType = PWCGContext.getInstance().getPlayerTankTypeFactory().getTankArchType(tankArchTypeName);
+            String tankTypeName = EquipmentReplacementUtils.getTypeForReplacement(campaign.getDate(), tankArchType);
+            if (tankTypeName != null && !tankTypeName.isEmpty())
             {
-                availableArchTypes.add(planeArchTypeName);
+                availableArchTypes.add(tankArchTypeName);
             }
             else
             {
@@ -141,9 +141,9 @@ public class WithdrawnEquipmentReplacer
         return availableArchTypes;
     }
 
-    private void addPlaneToCompany(String planeTypeName) throws PWCGException
+    private void addTankToCompany(String tankTypeName) throws PWCGException
     {
-        EquippedTank equippedTank = TankEquipmentFactory.makeTankForCompany(campaign, planeTypeName, company);
+        EquippedTank equippedTank = TankEquipmentFactory.makeTankForCompany(campaign, tankTypeName, company);
         equipment.addEquippedTankToCompany(campaign, company.getCompanyId(), equippedTank);
     }
 }

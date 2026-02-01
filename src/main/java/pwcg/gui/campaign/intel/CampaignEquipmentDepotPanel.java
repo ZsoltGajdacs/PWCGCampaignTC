@@ -109,18 +109,18 @@ public class CampaignEquipmentDepotPanel extends JPanel
 
     private void createDepotForRole(PwcgRoleCategory roleCategory, JPanel depotBodyPanel) throws PWCGException
     {
-        List<EquippedTank> aircraftForRole = getDepotAircraftForRole(roleCategory);
-        if (aircraftForRole.size() > 0)
+        List<EquippedTank> tanksForRole = getDepotTanksForRole(roleCategory);
+        if (tanksForRole.size() > 0)
         {
             JPanel depotRolePanel = new JPanel(new BorderLayout());
             depotRolePanel.setOpaque(false);
-            
-            String aircraftForRoleReport = formAircraftInventory(aircraftForRole, roleCategory);
-            
-            JTextArea aircraftForRoleText = createDepotText();
-            aircraftForRoleText.setText(aircraftForRoleReport);
-            depotRolePanel.add(aircraftForRoleText, BorderLayout.NORTH);
-            
+
+            String tanksForRoleReport = formTankInventory(tanksForRole, roleCategory);
+
+            JTextArea tanksForRoleText = createDepotText();
+            tanksForRoleText.setText(tanksForRoleReport);
+            depotRolePanel.add(tanksForRoleText, BorderLayout.NORTH);
+
             depotBodyPanel.add(depotRolePanel);
         }
     }
@@ -139,34 +139,34 @@ public class CampaignEquipmentDepotPanel extends JPanel
         return serviceDepotText;
     }
 
-    private String formAircraftInventory(List<EquippedTank> aircraftForRole, PwcgRoleCategory roleCategory) throws PWCGException
+    private String formTankInventory(List<EquippedTank> tanksForRole, PwcgRoleCategory roleCategory) throws PWCGException
     {
-        Map<String, Integer> planeCount = new TreeMap<>();
-        for (EquippedTank plane : aircraftForRole)
+        Map<String, Integer> tankCount = new TreeMap<>();
+        for (EquippedTank tank : tanksForRole)
         {
-            if (!planeCount.containsKey(plane.getDisplayName()))
+            if (!tankCount.containsKey(tank.getDisplayName()))
             {
-                planeCount.put(plane.getDisplayName(), 0);
+                tankCount.put(tank.getDisplayName(), 0);
             }
-            
-            int count = planeCount.get(plane.getDisplayName());
+
+            int count = tankCount.get(tank.getDisplayName());
             ++count;
-            planeCount.put(plane.getDisplayName(), count);
+            tankCount.put(tank.getDisplayName(), count);
         }
-        
+
         StringBuffer depoStatusBuffer = new StringBuffer();
-        depoStatusBuffer.append("\n  " + roleCategory.getRoleCategoryDescription() + "\n");        
-        for (String planeDesc : planeCount.keySet())
+        depoStatusBuffer.append("\n  " + roleCategory.getRoleCategoryDescription() + "\n");
+        for (String tankDesc : tankCount.keySet())
         {
-            int count = planeCount.get(planeDesc);
-            depoStatusBuffer.append("    " + planeDesc + ": " + count);
-            depoStatusBuffer.append(".\n");          
+            int count = tankCount.get(tankDesc);
+            depoStatusBuffer.append("    " + tankDesc + ": " + count);
+            depoStatusBuffer.append(".\n");
         }
-        
+
         return depoStatusBuffer.toString();
     }
-    
-    private List<EquippedTank> getDepotAircraftForRole(PwcgRoleCategory roleCategory) throws PWCGException
+
+    private List<EquippedTank> getDepotTanksForRole(PwcgRoleCategory roleCategory) throws PWCGException
     {
         EquipmentDepot equipmentDepot = campaign.getEquipmentManager().getEquipmentDepotForService(service.getServiceId());
         return equipmentDepot.getDepotAircraftForRole(roleCategory);

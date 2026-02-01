@@ -52,15 +52,15 @@ public class CampaignEquipmentChalkboard extends ImageResizingPanel
         this.setBorder(PwcgBorderFactory.createCampaignHomeChalkboardBoxBorder());
 
         CrewMember referencePlayer = campaign.findReferencePlayer();
-        Map<Integer, EquippedTank> planesForCompany = campaign.getEquipmentManager().getEquipmentForCompany(referencePlayer.getCompanyId()).getActiveEquippedTanks();
+        Map<Integer, EquippedTank> tanksForCompany = campaign.getEquipmentManager().getEquipmentForCompany(referencePlayer.getCompanyId()).getActiveEquippedTanks();
 
-        JPanel equipmentPanel = createEquipmentListPanel(campaign, planesForCompany, referencePlayer.getCompanyId());
+        JPanel equipmentPanel = createEquipmentListPanel(campaign, tanksForCompany, referencePlayer.getCompanyId());
         this.add(equipmentPanel, BorderLayout.CENTER);
     }
 
-    private JPanel createEquipmentListPanel(Campaign campaign, Map<Integer, EquippedTank> planesForCompany, int companyId) throws PWCGException
+    private JPanel createEquipmentListPanel(Campaign campaign, Map<Integer, EquippedTank> tanksForCompany, int companyId) throws PWCGException
     {
-        List<EquippedTank> sortedAircraftOnInventory = TankSorter.sortEquippedTanksByGoodness(new ArrayList<EquippedTank>(planesForCompany.values()));
+        List<EquippedTank> sortedTanksOnInventory = TankSorter.sortEquippedTanksByGoodness(new ArrayList<EquippedTank>(tanksForCompany.values()));
 
         Font font = PWCGMonitorFonts.getChalkboardFont();
 
@@ -79,12 +79,12 @@ public class CampaignEquipmentChalkboard extends ImageResizingPanel
         constraints.gridy = 0;
         equipmentChalkboardPanel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
 
-        String aircraftTypeLabelText = InternationalizationManager.getTranslation("Aircraft Type");
-        JLabel aircraftTypeLabel = PWCGLabelFactory.makeTransparentLabel(aircraftTypeLabelText, ColorMap.CHALK_FOREGROUND, font, SwingConstants.LEFT);
+        String tankTypeLabelText = InternationalizationManager.getTranslation("Tank Type");
+        JLabel tankTypeLabel = PWCGLabelFactory.makeTransparentLabel(tankTypeLabelText, ColorMap.CHALK_FOREGROUND, font, SwingConstants.LEFT);
         constraints.weightx = 0.15;
         constraints.gridx = 1;
         constraints.gridy = 0;
-        equipmentChalkboardPanel.add(aircraftTypeLabel, constraints);
+        equipmentChalkboardPanel.add(tankTypeLabel, constraints);
 
         String lSerialNumberText = InternationalizationManager.getTranslation("Serial Number");
         JLabel lSerialNumber = PWCGLabelFactory.makeTransparentLabel(lSerialNumberText, ColorMap.CHALK_FOREGROUND, font, SwingConstants.RIGHT);
@@ -93,36 +93,36 @@ public class CampaignEquipmentChalkboard extends ImageResizingPanel
         constraints.gridy = 0;
         equipmentChalkboardPanel.add(lSerialNumber, constraints);
 
-        String lAircraftIdCodeText = InternationalizationManager.getTranslation("ID Code");
-        JLabel lAircraftIdCode = PWCGLabelFactory.makeTransparentLabel(lAircraftIdCodeText, ColorMap.CHALK_FOREGROUND, font, SwingConstants.RIGHT);
+        String lTankIdCodeText = InternationalizationManager.getTranslation("ID Code");
+        JLabel lTankIdCode = PWCGLabelFactory.makeTransparentLabel(lTankIdCodeText, ColorMap.CHALK_FOREGROUND, font, SwingConstants.RIGHT);
         constraints.weightx = 0.1;
         constraints.gridx = 3;
         constraints.gridy = 0;
-        equipmentChalkboardPanel.add(lAircraftIdCode, constraints);
+        equipmentChalkboardPanel.add(lTankIdCode, constraints);
 
         constraints.gridx = 4;
         constraints.gridy = 0;
         equipmentChalkboardPanel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
 
         int i = 1;
-        for (EquippedTank plane : sortedAircraftOnInventory)
+        for (EquippedTank tank : sortedTanksOnInventory)
         {
             constraints.weightx = 0.15;
             constraints.gridx = 0;
             constraints.gridy = i;
             equipmentChalkboardPanel.add(PWCGLabelFactory.makeDummyLabel(), constraints);
 
-            JLabel aircraftNameLabel = PWCGLabelFactory.makeTransparentLabel(plane.getDisplayName(), ColorMap.CHALK_FOREGROUND, font, SwingConstants.LEFT);
+            JLabel tankNameLabel = PWCGLabelFactory.makeTransparentLabel(tank.getDisplayName(), ColorMap.CHALK_FOREGROUND, font, SwingConstants.LEFT);
             constraints.weightx = 0.15;
             constraints.gridx = 1;
             constraints.gridy = i;
-            equipmentChalkboardPanel.add(aircraftNameLabel, constraints);
+            equipmentChalkboardPanel.add(tankNameLabel, constraints);
 
-            JLabel aircraftSerialNumberLabel = PWCGLabelFactory.makeTransparentLabel("" + plane.getSerialNumber(), ColorMap.CHALK_FOREGROUND, font, SwingConstants.RIGHT);
+            JLabel tankSerialNumberLabel = PWCGLabelFactory.makeTransparentLabel("" + tank.getSerialNumber(), ColorMap.CHALK_FOREGROUND, font, SwingConstants.RIGHT);
             constraints.weightx = 0.1;
             constraints.gridx = 2;
             constraints.gridy = i;
-            equipmentChalkboardPanel.add(aircraftSerialNumberLabel, constraints);
+            equipmentChalkboardPanel.add(tankSerialNumberLabel, constraints);
 
             constraints.gridx = 4;
             constraints.gridy = i;
@@ -131,7 +131,7 @@ public class CampaignEquipmentChalkboard extends ImageResizingPanel
             ++i;
         }
 
-        addEquipmentSummary(equipmentChalkboardPanel, constraints, font, planesForCompany.size(), companyId, i);
+        addEquipmentSummary(equipmentChalkboardPanel, constraints, font, tanksForCompany.size(), companyId, i);
 
         return equipmentChalkboardPanel;
     }

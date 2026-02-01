@@ -54,7 +54,7 @@ public class MissionBlocks
 
     private List<FixedPosition> adjustBlockDamage() throws PWCGException
     {
-        MissionBlockDamageDecorator missionBlockDamage = new MissionBlockDamageDecorator();      
+        MissionBlockDamageDecorator missionBlockDamage = new MissionBlockDamageDecorator(mission.getCampaign());      
         return missionBlockDamage.setDamageToFixedPositions(structuresForMission, mission.getCampaign().getDate());
     }
 

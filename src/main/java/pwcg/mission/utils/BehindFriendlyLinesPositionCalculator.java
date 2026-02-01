@@ -2,6 +2,7 @@ package pwcg.mission.utils;
 
 import java.util.Date;
 
+import pwcg.campaign.Campaign;
 import pwcg.campaign.api.Side;
 import pwcg.campaign.context.FrontLinesForMap;
 import pwcg.campaign.context.PWCGContext;
@@ -14,7 +15,9 @@ public class BehindFriendlyLinesPositionCalculator
 
     public static Coordinate getPointBehindFriendlyLines(Coordinate nearFrontPosition, Coordinate homePosition, int distance, Date date, Side side) throws PWCGException
     {
-        FrontLinesForMap frontLines = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
+        Campaign campaign = PWCGContext.getInstance().getCampaign();
+        FrontLinesForMap frontLines = (campaign != null) ? campaign.getFrontLinesForCampaign(date)
+                : PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
         Coordinate nearbyFriendlyFrontPosition = frontLines.findCloseFrontPositionForSide(nearFrontPosition, 15000, side).getPosition();
         double angleFrontToHome = MathUtils.calcAngle(nearFrontPosition, homePosition);
         Coordinate rendezvousLocation = MathUtils.calcNextCoord(nearbyFriendlyFrontPosition, angleFrontToHome, distance);

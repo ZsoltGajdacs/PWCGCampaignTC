@@ -72,7 +72,7 @@ public class MissionBlockSmoke
 
     private boolean isNearFront(FixedPosition fixedPosition) throws PWCGException
     {
-        FrontLinesForMap frontLinesForMap = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(mission.getCampaign().getDate());
+        FrontLinesForMap frontLinesForMap = mission.getCampaign().getFrontLinesForCampaign(mission.getCampaign().getDate());
 
         FrontLinePoint closestAlliedPosition = frontLinesForMap.findClosestFrontPositionForSide(fixedPosition.getPosition(), Side.ALLIED);
         double distanceToAlliedLines = MathUtils.calcDist(fixedPosition.getPosition(), closestAlliedPosition.getPosition());

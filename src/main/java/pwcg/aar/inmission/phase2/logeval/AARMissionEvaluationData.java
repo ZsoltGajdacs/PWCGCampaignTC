@@ -7,6 +7,7 @@ import java.util.Map;
 
 import pwcg.aar.inmission.phase2.logeval.missionresultentity.LogBase;
 import pwcg.aar.inmission.phase2.logeval.missionresultentity.LogCrewMember;
+import pwcg.aar.inmission.phase2.logeval.missionresultentity.LogNonPlayerVehicle;
 import pwcg.aar.inmission.phase2.logeval.missionresultentity.LogTank;
 import pwcg.aar.inmission.phase2.logeval.missionresultentity.LogVictory;
 import pwcg.core.exception.PWCGException;
@@ -14,6 +15,7 @@ import pwcg.core.exception.PWCGException;
 public class AARMissionEvaluationData
 {
     private Map <String, LogTank> planeAiEntities = new HashMap <>();
+    private Map <String, LogNonPlayerVehicle> groundAiEntities = new HashMap <>();
     private List<LogVictory> victoryResults = new ArrayList <>();
     private List<LogCrewMember> crewMembersInMission = new ArrayList<>();
     private List<LogBase> chronologicalEvents = new ArrayList<>();
@@ -52,6 +54,16 @@ public class AARMissionEvaluationData
     public void setPlaneAiEntities(Map<String, LogTank> planeAiEntities)
     {
         this.planeAiEntities = planeAiEntities;
+    }
+
+    public Map<String, LogNonPlayerVehicle> getGroundAiEntities()
+    {
+        return groundAiEntities;
+    }
+
+    public void setGroundAiEntities(Map<String, LogNonPlayerVehicle> groundAiEntities)
+    {
+        this.groundAiEntities = groundAiEntities;
     }
 
     public List<LogVictory> getVictoryResults()

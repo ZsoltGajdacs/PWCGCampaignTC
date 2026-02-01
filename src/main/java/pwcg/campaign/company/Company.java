@@ -16,6 +16,7 @@ import pwcg.campaign.api.IRankHelper;
 import pwcg.campaign.api.Side;
 import pwcg.campaign.context.Country;
 import pwcg.campaign.context.FrontLinePoint;
+import pwcg.campaign.context.FrontLinesForMap;
 import pwcg.campaign.context.FrontMapIdentifier;
 import pwcg.campaign.context.MapForBaseFinder;
 import pwcg.campaign.context.PWCGContext;
@@ -489,7 +490,10 @@ public class Company implements ICompanyMission
     {
         Side enemySide = determineEnemyCountry(date).getSide();
         Coordinate companyPosition = determineCurrentPosition(date);
-        FrontLinePoint closestFrontPosition = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date).findClosestFrontPositionForSide(companyPosition, enemySide);
+        Campaign campaign = PWCGContext.getInstance().getCampaign();
+        FrontLinesForMap frontLinesForMap = (campaign != null) ? campaign.getFrontLinesForCampaign(date)
+            : PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
+        FrontLinePoint closestFrontPosition = frontLinesForMap.findClosestFrontPositionForSide(companyPosition, enemySide);
         double distanceToFront = MathUtils.calcDist(companyPosition, closestFrontPosition.getPosition());
 
         TCProductSpecificConfiguration productSpecificConfiguration = new TCProductSpecificConfiguration();

@@ -8,7 +8,11 @@ import java.util.List;
 import pwcg.aar.ui.events.model.CompanyMoveEvent;
 import pwcg.campaign.company.Company;
 import pwcg.campaign.company.CompanyManager;
+import pwcg.campaign.battle.CampaignBattleRecord;
+import pwcg.campaign.context.CampaignFrontLines;
+import pwcg.campaign.context.FrontLinesForMap;
 import pwcg.campaign.context.FrontMapIdentifier;
+import pwcg.campaign.context.PWCGMap;
 import pwcg.campaign.context.MapFinderForCampaign;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.context.PWCGDirectoryUserManager;
@@ -40,6 +44,7 @@ public class Campaign
     private CampaignPersonnelManager personnelManager;
     private CampaignEquipmentManager equipmentManager;
     private CompanyMoveEvent companyMoveEvent;
+    private CampaignFrontLines campaignFrontLines;
 
     public Campaign()
     {
@@ -65,6 +70,90 @@ public class Campaign
         verifyRepresentativePlayer();
         
         return true;
+    }
+
+    public CampaignFrontLines getCampaignFrontLines()
+    {
+        return campaignFrontLines;
+    }
+
+    public void addBattleRecord(CampaignBattleRecord record)
+    {
+        if (record != null)
+        {
+            campaignData.getRecentBattleRecords().add(record);
+        }
+    }
+
+    public List<CampaignBattleRecord> getBattleRecords()
+    {
+        return campaignData.getRecentBattleRecords();
+    }
+
+    public void setCampaignFrontLines(CampaignFrontLines campaignFrontLines)
+    {
+        this.campaignFrontLines = campaignFrontLines;
+    }
+
+    public CampaignFrontLines getOrCreateCampaignFrontLines(Date date) throws PWCGException
+    {
+        FrontMapIdentifier mapIdentifier = PWCGContext.getInstance().getCurrentMap().getMapIdentifier();
+        if (campaignFrontLines == null || !campaignFrontLines.isForMap(mapIdentifier))
+        {
+            FrontLinesForMap baselineFrontLines = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
+            campaignFrontLines = CampaignFrontLines.fromBaseline(baselineFrontLines, mapIdentifier);
+        }
+        return campaignFrontLines;
+    }
+
+    public FrontLinesForMap getFrontLinesForCampaign(Date date) throws PWCGException
+    {
+        CampaignFrontLines frontLines = getOrCreateCampaignFrontLines(date);
+        if (frontLines != null)
+        {
+            FrontLinesForMap campaignFrontLinesForMap = frontLines.getFrontLinesForMap();
+            if (campaignFrontLinesForMap != null)
+            {
+                return campaignFrontLinesForMap;
+            }
+        }
+
+        if (PWCGContext.getInstance().getCurrentMap() == null)
+        {
+            FrontMapIdentifier mapIdentifier = getCampaignMap();
+            if (mapIdentifier != null)
+            {
+                PWCGContext.getInstance().changeContext(mapIdentifier);
+            }
+        }
+
+        FrontLinesForMap baselineFrontLines = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
+        if (baselineFrontLines == null)
+        {
+            FrontMapIdentifier mapIdentifier = getCampaignMap();
+            if (mapIdentifier != null)
+            {
+                PWCGMap map = PWCGContext.getInstance().getMapByMapId(mapIdentifier);
+                if (map != null)
+                {
+                    map.configure();
+                    PWCGContext.getInstance().changeContext(mapIdentifier);
+                    baselineFrontLines = map.getFrontLinesForMap(date);
+                }
+            }
+
+            if (baselineFrontLines == null)
+            {
+                PWCGContext.getInstance().configurePwcgMaps();
+                baselineFrontLines = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
+            }
+        }
+        return baselineFrontLines;
+    }
+
+    public FrontLinesForMap getBaselineFrontLines(Date date) throws PWCGException
+    {
+        return PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
     }
 
     private void verifyRepresentativePlayer() throws PWCGException

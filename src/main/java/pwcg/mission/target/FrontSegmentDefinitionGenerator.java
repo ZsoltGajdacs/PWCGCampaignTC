@@ -93,7 +93,11 @@ public class FrontSegmentDefinitionGenerator
 
     private double calculateBattleOrientation(Side assaultingSide) throws PWCGException
     {
-        FrontLinesForMap frontLines = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaign.getDate());
+        FrontLinesForMap frontLines = campaign.getFrontLinesForCampaign(campaign.getDate());
+        if (frontLines == null)
+        {
+            frontLines = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaign.getDate());
+        }
         int closestFrontLines = frontLines.findIndexForClosestPosition(objective.getPosition(), assaultingSide);
         Coordinate frontLinePosition = frontLines.getCoordinates(closestFrontLines, assaultingSide);
 

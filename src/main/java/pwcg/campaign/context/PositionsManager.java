@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import pwcg.campaign.Campaign;
 import pwcg.campaign.api.ICountry;
 import pwcg.campaign.api.Side;
 import pwcg.core.exception.PWCGException;
@@ -83,7 +84,9 @@ public class PositionsManager
 										    int odds) throws PWCGException 
 	{
 		
-		FrontLinesForMap frontLineMarker =  PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
+		Campaign campaign = PWCGContext.getInstance().getCampaign();
+		FrontLinesForMap frontLineMarker = (campaign != null) ? campaign.getFrontLinesForCampaign(date)
+			: PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
 		List<FrontLinePoint>frontLines = frontLineMarker.getFrontLines(side);
 
 		for (int i = 1; i < frontLines.size(); ++i)

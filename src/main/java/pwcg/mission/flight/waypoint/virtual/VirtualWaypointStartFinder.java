@@ -5,6 +5,7 @@ import java.util.List;
 
 import pwcg.campaign.api.Side;
 import pwcg.campaign.context.FrontLinePoint;
+import pwcg.campaign.context.FrontLinesForMap;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.location.CoordinateBox;
@@ -101,7 +102,18 @@ public class VirtualWaypointStartFinder
     {
         Side side = flight.getCountry().getSide();
         Date campaignDate = flight.getCampaign().getDate();
-        FrontLinePoint closestFrontPosition = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaignDate).findClosestFrontPositionForSide(vwpCoordinate.getPosition(), side);
+        FrontLinesForMap frontLines = flight.getCampaign().getFrontLinesForCampaign(campaignDate);
+        if (frontLines == null)
+        {
+            frontLines = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaignDate);
+        }
+
+        if (frontLines == null)
+        {
+            return Double.MAX_VALUE;
+        }
+
+        FrontLinePoint closestFrontPosition = frontLines.findClosestFrontPositionForSide(vwpCoordinate.getPosition(), side);
         double vwpDistanceToFront = MathUtils.calcDist(closestFrontPosition.getPosition(), vwpCoordinate.getPosition());
         return vwpDistanceToFront;
     }

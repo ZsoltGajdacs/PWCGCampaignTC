@@ -17,6 +17,7 @@ import pwcg.gui.campaign.crewmember.CampaignCrewMemberScreen;
 import pwcg.gui.campaign.intel.CampaignIntelScreen;
 import pwcg.gui.campaign.mission.CampaignMissionScreen;
 import pwcg.gui.campaign.personnel.CampaignPersonnelScreen;
+import pwcg.gui.rofmap.campaignmap.CampaignBattleMapGUI;
 import pwcg.gui.dialogs.ErrorDialog;
 import pwcg.gui.utils.UIUtils;
 
@@ -60,6 +61,10 @@ public class CampaignHomeAction
             else if (action.equals("CampIntel"))
             {
                 showIntel();
+            }
+            else if (action.equals("CampBattleMap"))
+            {
+                showBattleMap();
             }
             else if (action.equals("CampConfig"))
             {
@@ -134,6 +139,13 @@ public class CampaignHomeAction
         CampaignIntelScreen intelGUI = new CampaignIntelScreen(campaign);
         intelGUI.makePanels();
         CampaignGuiContextManager.getInstance().pushToContextStack(intelGUI);
+    }
+
+    private void showBattleMap() throws PWCGException
+    {
+        CampaignBattleMapGUI battleMapGUI = new CampaignBattleMapGUI(campaign);
+        battleMapGUI.makePanels();
+        CampaignGuiContextManager.getInstance().pushToContextStack(battleMapGUI);
     }
 
     private void showConfig() throws PWCGException

@@ -41,7 +41,7 @@ public class PathAlongFront
     private void initializePathing(PathAlongFrontData pathAlongFrontData) throws PWCGException
     {
         frontLineSide = pathAlongFrontData.getSide().getOppositeSide();
-        frontLinesForMap =  PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(pathAlongFrontData.getDate());
+        frontLinesForMap = pathAlongFrontData.getMission().getCampaign().getFrontLinesForCampaign(pathAlongFrontData.getDate());
         frontLines = frontLinesForMap.getFrontLines(frontLineSide);
         remainingPathDistance = pathAlongFrontData.getPathDistance();
         determineFrontPointMovementDirection();

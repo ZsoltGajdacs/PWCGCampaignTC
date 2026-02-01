@@ -67,6 +67,7 @@ public class AAREvaluator
 
         AARMissionEvaluationData evaluationData = new AARMissionEvaluationData();
         evaluationData.setPlaneAiEntities(aarVehicleBuilder.getLogTanks());
+        evaluationData.setGroundAiEntities(aarVehicleBuilder.getLogGroundUNits());
         evaluationData.setVictoryResults(aarVictoryEvaluator.getVictoryResults());
         evaluationData.setCrewMembersInMission(crewBuilder.buildCrewMembersFromLogTanks());
         evaluationData.setChronologicalEvents(aarChronologicalEventListBuilder.getChronologicalEvents());

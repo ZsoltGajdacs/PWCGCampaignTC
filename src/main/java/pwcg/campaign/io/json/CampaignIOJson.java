@@ -32,6 +32,7 @@ public class CampaignIOJson
 
         CampaignPersonnelIOJson.writeJson(campaign);
         CampaignEquipmentIOJson.writeJson(campaign);
+        CampaignFrontLinesIOJson.writeJson(campaign);
     }
 
     public static void readJson(Campaign campaign) throws PWCGException
@@ -47,6 +48,7 @@ public class CampaignIOJson
 
         CampaignPersonnelIOJson.readJson(campaign);
         CampaignEquipmentIOJson.readJson(campaign);
+        CampaignFrontLinesIOJson.readJson(campaign);
     }
 
     private static void readCampaignAces(Campaign campaign, String campaignDir) throws PWCGException

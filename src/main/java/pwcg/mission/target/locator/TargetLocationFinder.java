@@ -82,14 +82,14 @@ public class TargetLocationFinder
     
     public Coordinate findLocationBehindEnemyLines() throws PWCGException
     {
-        FrontLinesForMap frontLinesForMap = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaign.getDate());        
+        FrontLinesForMap frontLinesForMap = campaign.getFrontLinesForCampaign(campaign.getDate());        
         Coordinate flightTargetCoordinates = frontLinesForMap.findPositionBehindLinesForSide(targetGeneralLocation, radius, 10000, 20000, side);
         return flightTargetCoordinates;
     }
     
     public Coordinate findLocationAtFront() throws PWCGException
     {
-        FrontLinesForMap frontLinesForMap = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaign.getDate());
+        FrontLinesForMap frontLinesForMap = campaign.getFrontLinesForCampaign(campaign.getDate());
         FrontLinePoint targetCountryFrontPoint = frontLinesForMap.findCloseFrontPositionForSide(targetGeneralLocation, radius, side);
 
         if (targetCountryFrontPoint == null)

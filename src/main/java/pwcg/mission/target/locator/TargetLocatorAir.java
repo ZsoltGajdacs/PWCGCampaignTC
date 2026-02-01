@@ -3,7 +3,6 @@ package pwcg.mission.target.locator;
 import java.util.List;
 
 import pwcg.campaign.context.FrontLinesForMap;
-import pwcg.campaign.context.PWCGContext;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.location.Coordinate;
 import pwcg.mission.flight.FlightInformation;
@@ -49,7 +48,7 @@ public class TargetLocatorAir
         if (!shuffledGroundUnits.isEmpty())
         {
             Coordinate battleCoordinate = shuffledGroundUnits.get(0).getPosition().copy();
-            FrontLinesForMap frontLinesForMap = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(flightInformation.getCampaign().getDate());
+            FrontLinesForMap frontLinesForMap = flightInformation.getCampaign().getFrontLinesForCampaign(flightInformation.getCampaign().getDate());
             Coordinate targetCoordinate = frontLinesForMap.findClosestFrontCoordinateForSide(battleCoordinate, flightInformation.getCountry().getSide());
             return targetCoordinate;
         }

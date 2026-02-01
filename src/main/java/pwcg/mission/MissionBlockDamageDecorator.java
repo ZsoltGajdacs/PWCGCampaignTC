@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pwcg.campaign.Campaign;
 import pwcg.campaign.api.Side;
 import pwcg.campaign.context.FrontLinesForMap;
 import pwcg.campaign.context.PWCGContext;
@@ -21,6 +22,13 @@ public class MissionBlockDamageDecorator
 {
     private static final int DISTANCE_TO_FRONT_LINE_FOR_DAMAGE = 20000;
     private static final int SAFE_DISTANCE_TO_AIRFIELD = 3000;
+
+    private Campaign campaign;
+
+    public MissionBlockDamageDecorator(Campaign campaign)
+    {
+        this.campaign = campaign;
+    }
 
     public List<FixedPosition> setDamageToFixedPositions(List<FixedPosition> fixedPositions, Date date) throws PWCGException
     {
@@ -45,7 +53,7 @@ public class MissionBlockDamageDecorator
     
     private boolean isCloseToFront(FixedPosition fixedPosition,Date date) throws PWCGException
     {
-        FrontLinesForMap frontLinesForMap = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
+        FrontLinesForMap frontLinesForMap = campaign.getFrontLinesForCampaign(date);
         
         Coordinate closestAllied = frontLinesForMap.findClosestFrontCoordinateForSide(fixedPosition.getPosition(), Side.ALLIED);
         if (MathUtils.calcDist(fixedPosition.getPosition(), closestAllied) < DISTANCE_TO_FRONT_LINE_FOR_DAMAGE)

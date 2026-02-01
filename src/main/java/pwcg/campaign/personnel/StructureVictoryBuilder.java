@@ -2,6 +2,7 @@ package pwcg.campaign.personnel;
 
 import java.util.Date;
 
+import pwcg.campaign.Campaign;
 import pwcg.campaign.api.Side;
 import pwcg.campaign.company.Company;
 import pwcg.campaign.context.FrontLinePoint;
@@ -117,7 +118,9 @@ public class StructureVictoryBuilder
         Coordinate companyPosition = victorCrewMember.determineCompany().determineCurrentPosition(date);
         if (companyPosition != null)
         {
-            FrontLinesForMap frontLines = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
+            Campaign campaign = PWCGContext.getInstance().getCampaign();
+            FrontLinesForMap frontLines = (campaign != null) ? campaign.getFrontLinesForCampaign(date)
+                    : PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(date);
             FrontLinePoint eventPosition = frontLines.findCloseFrontPositionForSide(companyPosition, 100000, enemySide);
     
             eventLocationDescription =  PWCGContext.getInstance().getCurrentMap().getGroupManager().getTownFinder().findClosestTown(eventPosition.getPosition()).getName();

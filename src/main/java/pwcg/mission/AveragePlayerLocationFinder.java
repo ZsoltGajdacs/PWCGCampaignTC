@@ -6,7 +6,6 @@ import java.util.List;
 import pwcg.campaign.Campaign;
 import pwcg.campaign.api.Side;
 import pwcg.campaign.context.FrontLinesForMap;
-import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.crewmember.CrewMember;
 import pwcg.core.exception.PWCGException;
 import pwcg.core.location.Coordinate;
@@ -53,7 +52,7 @@ public class AveragePlayerLocationFinder
 
     private Coordinate adjustLocationForMapEdgeProximity(Coordinate centralLocation) throws PWCGException
     {
-        FrontLinesForMap frontLinesForMap = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaign.getDate());
+        FrontLinesForMap frontLinesForMap = campaign.getFrontLinesForCampaign(campaign.getDate());
 
         // No mistake here: if distance from edge is less than medium then move it by small
         

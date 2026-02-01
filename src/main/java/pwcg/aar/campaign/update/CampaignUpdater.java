@@ -5,6 +5,7 @@ import java.util.Date;
 import pwcg.aar.data.AARContext;
 import pwcg.aar.data.CampaignUpdateData;
 import pwcg.aar.tabulate.campaignupdate.AARCampaignUpdateTabulator;
+import pwcg.campaign.battle.CampaignBattleRecord;
 import pwcg.campaign.Campaign;
 import pwcg.campaign.context.PWCGContext;
 import pwcg.campaign.personnel.InitialCompanyBuilder;
@@ -40,6 +41,11 @@ public class CampaignUpdater
         EquipmentUpdater companyEquipmentUpdater = new EquipmentUpdater(campaign, campaignUpdateData);
         companyEquipmentUpdater.equipmentUpdatesForCompanys();
 
+        CampaignFrontLineUpdater frontLineUpdater = new CampaignFrontLineUpdater(campaign, aarContext);
+        frontLineUpdater.updateFrontLines();
+
+        recordBattleSummary();
+
         ServiceChangeHandler serviceChangeHandler = new ServiceChangeHandler(campaign);
         serviceChangeHandler.handleChangeOfService(aarContext.getNewDate());
 
@@ -70,5 +76,15 @@ public class CampaignUpdater
         
         InitialCompanyBuilder initialCompanyBuilder = new InitialCompanyBuilder();
         initialCompanyBuilder.buildNewCompanies(campaign);
+    }
+
+    private void recordBattleSummary() throws PWCGException
+    {
+        CampaignBattleRecordBuilder recordBuilder = new CampaignBattleRecordBuilder();
+        CampaignBattleRecord record = recordBuilder.build(campaign, aarContext);
+        if (record != null)
+        {
+            campaign.addBattleRecord(record);
+        }
     }
  }

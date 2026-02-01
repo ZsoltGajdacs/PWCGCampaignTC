@@ -117,7 +117,7 @@ public class MissionObjectiveBuilder
 
     private Coordinate findfrontPositionNearCompany() throws PWCGException
     {
-        FrontLinesForMap frontLinesForMap = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaign.getDate());
+        FrontLinesForMap frontLinesForMap = campaign.getFrontLinesForCampaign(campaign.getDate());
         Coordinate companyCoordinate = company.determineCurrentPosition(campaign.getDate());
         Coordinate closestFront = frontLinesForMap.findClosestFrontCoordinateForSide(companyCoordinate, company.getCountry().getSide());
 
@@ -278,7 +278,7 @@ public class MissionObjectiveBuilder
 
     private boolean isCloseToFront(Coordinate position, Side defendingSide) throws PWCGException
     {
-        double distance = PWCGContext.getInstance().getCurrentMap().getFrontLinesForMap(campaign.getDate()).findClosestFriendlyPositionDistance(position, defendingSide);
+        double distance = campaign.getFrontLinesForCampaign(campaign.getDate()).findClosestFriendlyPositionDistance(position, defendingSide);
         if (distance < 20000)
         {
             return true;

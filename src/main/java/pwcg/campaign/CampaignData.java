@@ -1,9 +1,12 @@
 package pwcg.campaign;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import pwcg.campaign.battle.CampaignBattleRecord;
 import pwcg.campaign.crewmember.SerialNumber;
 
 @Getter
@@ -17,4 +20,5 @@ public class CampaignData
     private CampaignMode campaignMode = CampaignMode.CAMPAIGN_MODE_NONE;
     private SerialNumber serialNumber = new SerialNumber();
     private int referencePlayerSerialNumber = 0;
+    private List<CampaignBattleRecord> recentBattleRecords = new ArrayList<>();
 }
